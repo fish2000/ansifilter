@@ -1125,7 +1125,7 @@ void CodeGenerator::processInput()
                 }
                 i=seqEnd+1;
             } else {
-             ++i;
+                ++i;
             }
           } else  if (cur==0x1a && line.length() - i > 6){
             // skip SAUCE info section
@@ -1161,6 +1161,7 @@ void CodeGenerator::processInput()
 
             if (line.length() - i > 2){              
               next = line[i+1]&0xff;
+              
               //move index behind CSI
               if ( (cur==0x1b && next==0x5b) || ( cur==0xc2 && next==0x9b) ) {
                   ++i;
@@ -1168,6 +1169,7 @@ void CodeGenerator::processInput()
                   // restore a unicode sequence if the two digit CSI is not matched
                   // ansiweather -l Berlin,DE | ansifilter -T
                   if (cur==0xc2 || cur==0x1b) *out << maskCharacter(cur);
+
               }
               
               // http://linuxcommand.org/lc3_adv_tput.php
@@ -1206,7 +1208,7 @@ void CodeGenerator::processInput()
                   isGrepOutput = isKSeq && isascii(line[seqEnd+1]) && line[seqEnd+1] !=13 && line[seqEnd+1] != 27;
                   
                   if (   line[seqEnd]=='s' || line[seqEnd]=='u'
-                    || (isKSeq && !isGrepOutput)   ){
+                    || (isKSeq && !isGrepOutput) ){
                       i=line.length()+1;
                       omitNewLine = isKSeq; // \n may follow K
                   }
@@ -1217,16 +1219,20 @@ void CodeGenerator::processInput()
                 cur= line[i-1]&0xff;
                 next = line[i]&0xff;
                 
+
                 //ignore content of two and single byte sequences (no CSI)
                 if (cur==0x1b && (  next==0x50 || next==0x5d || next==0x58
-                  ||next==0x5e||next==0x5f) )
+                  || next==0x5e||next==0x5f 
+                  // || next==0x37 || next==0x38
+                    
+                ) ) // DECSC seq
                 {
                   seqEnd=i;
                   //find string end
                   while ( seqEnd<line.length() 
                       && (line[seqEnd]&0xff)!=0x9e 
                       && line[seqEnd]!=0x07 
-                      && (line[seqEnd]&0xff)!=0x3b /* 0x5d + 0; */ ) {
+                      && (line[seqEnd]&0xff)!=0x3b ) {
                         ++seqEnd;
                     }
                     
@@ -1234,6 +1240,13 @@ void CodeGenerator::processInput()
                         seqEnd++;
                  
                     i=seqEnd+1;
+                } else if (cur==0x1b && ( 
+                   next==0x37 || next==0x38
+                    
+                ) ) // DECSC seq
+                {
+                    if (line[seqEnd+1]==0x1b)
+                        ++i;
                 }
               }
             } else {
