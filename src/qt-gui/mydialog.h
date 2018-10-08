@@ -75,7 +75,9 @@ public slots:
                 void on_pbClipboard_clicked();
                 void on_pbSelectMapFile_clicked();
                 void on_cbParseAsciiArt_clicked();
-                
+                void on_cbIgnClearSeq_clicked();
+
+
                 void on_cbIgnoreSequences_stateChanged();
                 void on_cbWatchFile_stateChanged();
                 void on_sbWidth_valueChanged(int i);

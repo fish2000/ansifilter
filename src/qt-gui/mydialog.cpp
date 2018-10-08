@@ -64,6 +64,8 @@ MyDialog::MyDialog(QWidget * parent, Qt::WindowFlags f):QDialog(parent, f)
     dlg.spinBoxWrap->setValue(settings.value("linewrap").toInt());
     dlg.sbWidth->setValue(settings.value("width").toInt());
     dlg.sbHeight->setValue(settings.value("height").toInt());
+    dlg.cbIgnClearSeq->setChecked(settings.value("ignoreclearseq").toBool());
+
     settings.endGroup();
     settings.beginGroup("paths");
     //inputFileName = settings.value("infile").toString();
@@ -99,6 +101,7 @@ void MyDialog::closeEvent(QCloseEvent *event)
     settings.setValue("map", dlg.leColorMapPath->text());
     settings.setValue("fragment", dlg.cbFragment->isChecked());
     settings.setValue("ignoreseq", dlg.cbIgnoreSequences->isChecked());
+    settings.setValue("ignoreclearseq", dlg.cbIgnClearSeq->isChecked());
     settings.setValue("parseart", dlg.cbParseAsciiArt->isChecked());
     settings.setValue("cbOmitVersion", dlg.cbOmitVersion->isChecked());
     settings.setValue("ansiformat", dlg.comboAnsiFormat->currentIndex());
@@ -182,6 +185,7 @@ void MyDialog::plausibility()
     dlg.sbHeight->setEnabled(dlg.gbAsciiArt->isEnabled());
     dlg.lblWidth->setEnabled(dlg.gbAsciiArt->isEnabled());
     dlg.sbWidth->setEnabled(dlg.gbAsciiArt->isEnabled());
+    dlg.cbIgnClearSeq->setEnabled(!dlg.cbParseAsciiArt->isChecked());
     dlg.cbWatchFile->setEnabled(!dlg.cbParseAsciiArt->isChecked());
 }
 
@@ -250,6 +254,8 @@ void MyDialog::on_pbSaveAs_clicked()
     generator->setPlainOutput(dlg.cbIgnoreSequences->isChecked());
     generator->setOmitVersionInfo(dlg.cbOmitVersion->isChecked());
 
+    generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+
     if (dlg.cbParseAsciiArt->isChecked()){
         switch (dlg.comboAnsiFormat->currentIndex()){
             case 0:
@@ -298,6 +304,8 @@ void MyDialog::on_pbClipboard_clicked()
 	
     unique_ptr<ansifilter::CodeGenerator> generator(ansifilter::CodeGenerator::getInstance(ansifilter::TEXT));
     generator->setPreformatting ( ansifilter::WRAP_SIMPLE, dlg.spinBoxWrap->value());
+    generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+
     QString outString = QString(generator->generateStringFromFile( inputFileName.toStdString ()).c_str() ) ;
 
     if(!outString.isEmpty()) {
@@ -331,6 +339,7 @@ void MyDialog::showFile()
     generator->setEncoding(dlg.comboEncoding->currentText().toStdString());
     generator->setFragmentCode(false);
     generator->setPlainOutput(dlg.cbIgnoreSequences->isChecked());
+    generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
 
     if (dlg.cbParseAsciiArt->isChecked()){
         switch (dlg.comboAnsiFormat->currentIndex()){
@@ -408,6 +417,11 @@ void MyDialog::on_comboFont_currentIndexChanged(int idx)
     showFile();
 }
 void MyDialog::on_comboEncoding_currentIndexChanged(int idx)
+{
+    showFile();
+}
+
+void MyDialog::on_cbIgnClearSeq_clicked()
 {
     showFile();
 }

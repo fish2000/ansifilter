@@ -118,6 +118,10 @@ public:
     /** \return True if output should not contain a version info comment */    
     bool omitVersionInfo() const;
     
+    /** \return True if clear sequences (ESC K) should be ignored */
+    bool ignoreClearSeq() const;
+
+    
     /** \return Document title */
     string getDocumentTitle() const ;
 
@@ -149,7 +153,9 @@ private:
 
     bool opt_omit_trailing_cr;
     bool opt_omit_version_info;
+    bool opt_ignoreClear;
 
+    
     // name of single output file
     string outFilename;
     string docTitle;

@@ -36,39 +36,40 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 using namespace std;  
     
 const Arg_parser::Option options[] = {
-    { 'a', "anchors",   Arg_parser::no },
-    { 'd', "doc-title", Arg_parser::yes },
-    { 'e', "encoding",  Arg_parser::yes },
-    { 'f', "fragment",  Arg_parser::no  },
-    { 'F', "font",      Arg_parser::yes },
-    { 'h', "help",      Arg_parser::no  },
-    { 'H', "html",      Arg_parser::no  },
+    { 'a', "anchors",    Arg_parser::no },
+    { 'd', "doc-title",  Arg_parser::yes },
+    { 'e', "encoding",   Arg_parser::yes },
+    { 'f', "fragment",   Arg_parser::no  },
+    { 'F', "font",       Arg_parser::yes },
+    { 'h', "help",       Arg_parser::no  },
+    { 'H', "html",       Arg_parser::no  },
     { 'M', "pango",      Arg_parser::no  },
-    { 'i', "input",     Arg_parser::yes },
+    { 'i', "input",      Arg_parser::yes },
     { 'l', "line-numbers", Arg_parser::no },
-    { 'L', "latex",     Arg_parser::no  },
-    { 'P', "tex",       Arg_parser::no  },
-    { 'B', "bbcode",    Arg_parser::no  },
-    { 'o', "output",    Arg_parser::yes },
-    { 'O', "outdir",    Arg_parser::yes },
-    { 'p', "plain",     Arg_parser::no  },
-    { 'r', "style-ref", Arg_parser::yes },
-    { 'R', "rtf",       Arg_parser::no  },
-    { 's', "font-size", Arg_parser::yes },
-    { 't', "tail",      Arg_parser::no  },
-    { 'T', "text",      Arg_parser::no  },
-    { 'w', "wrap",      Arg_parser::yes },
-    { 'v', "version",   Arg_parser::no  },
-    { 'V', "version",   Arg_parser::no  },
+    { 'L', "latex",      Arg_parser::no  },
+    { 'P', "tex",        Arg_parser::no  },
+    { 'B', "bbcode",     Arg_parser::no  },
+    { 'o', "output",     Arg_parser::yes },
+    { 'O', "outdir",     Arg_parser::yes },
+    { 'p', "plain",      Arg_parser::no  },
+    { 'r', "style-ref",  Arg_parser::yes },
+    { 'R', "rtf",        Arg_parser::no  },
+    { 's', "font-size",  Arg_parser::yes },
+    { 't', "tail",       Arg_parser::no  },
+    { 'T', "text",       Arg_parser::no  },
+    { 'w', "wrap",       Arg_parser::yes },
+    { 'v', "version",    Arg_parser::no  },
+    { 'V', "version",    Arg_parser::no  },
     { 'W', "wrap-no-numbers", Arg_parser::no  },
-    { 'X', "art-cp437", Arg_parser::no  },
-    { 'U', "art-bin",   Arg_parser::no  },
+    { 'X', "art-cp437",  Arg_parser::no  },
+    { 'U', "art-bin",    Arg_parser::no  },
     { 'D', "art-tundra", Arg_parser::no  },
     { 'Y', "art-width",  Arg_parser::yes  },
     { 'Z', "art-height", Arg_parser::yes  },
-    { 'm', "map",       Arg_parser::yes },
-    { 'N', "no-trailing-nl", Arg_parser::no  },
+    { 'm', "map",        Arg_parser::yes },
+    { 'N', "no-trailing-nl",  Arg_parser::no  },
     { 'C', "no-version-info", Arg_parser::no  },
+    { 'k', "ignore-clear",    Arg_parser::no  },
     
     {  0,  0,           Arg_parser::no  }
 };
@@ -88,6 +89,7 @@ CmdLineOptions::CmdLineOptions( const int argc, const char *argv[] ):
     opt_asciiTundra(false),
     opt_omit_trailing_cr(false),
     opt_omit_version_info(false),
+    opt_ignoreClear(false),
     encodingName("ISO-8859-1"),
     font("Courier New"),
     fontSize("10pt"),
@@ -251,6 +253,9 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
         case 'C':
             opt_omit_version_info=true;
             break;
+        case 'k':
+            opt_ignoreClear=true;
+            break;
         default:
             cerr << "ansifilter: option parsing failed" << endl;
         }
@@ -339,6 +344,11 @@ bool CmdLineOptions::parseAsciiBin() const{
 bool CmdLineOptions::parseAsciiTundra() const{
   return opt_asciiTundra;
 }
+
+bool CmdLineOptions::ignoreClearSeq() const {
+    return opt_ignoreClear;
+}
+
 int CmdLineOptions::getAsciiArtWidth() const {
   return asciiArtWidth;   
 }

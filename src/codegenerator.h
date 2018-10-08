@@ -219,10 +219,13 @@ public:
 
     /** \param b set to true if input is an ASCII art BIN file*/
     void setParseAsciiBin(bool flag);
-    
-    
+        
     /** \param b set to true if input is an Tundra art BIN file*/
     void setParseAsciiTundra(bool flag);
+
+    /** \param b set to true if K clear sequences should be ignored*/
+    void setIgnoreClearSeq(bool flag);
+
     
     /** \param b set dimensions of ASCII art virtual console */
     void setAsciiArtSize(int width, int height);
@@ -367,7 +370,7 @@ private:
     bool ignoreFormatting; ///< ignore color and font face information
     bool readAfterEOF;     ///< continue reading after EOF occoured
     bool omitTrailingCR;   ///< do not print EOL at the end of output
-
+    bool ignClearSeq;      ///< ignore clear sequence ESC K
     
     TDChar* termBuffer;
     int curX, curY, memX, memY, maxY; ///< cursor position for Codepage 437 sequences

@@ -71,6 +71,7 @@ void ANSIFilterApp::printHelp()
     cout << "  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
     cout << "  -F, --font=<font>      Set HTML/RTF font face\n";
+    cout << "  -k, --ignore-clear     Do not adhere to clear (ESC K) commands\n";
     cout << "  -l, --line-numbers     Print line numbers in output file\n";
     cout << "  -m, --map=<path>       Read color mapping file (see README)\n";
     cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX stylesheet path\n";
@@ -162,6 +163,7 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setParseCodePage437(options.parseCP437());
         generator->setParseAsciiBin(options.parseAsciiBin());
         generator->setParseAsciiTundra(options.parseAsciiTundra());
+        generator->setIgnoreClearSeq(options.ignoreClearSeq());
 
         generator->setAsciiArtSize(options.getAsciiArtWidth(), options.getAsciiArtHeight());
         generator->setOmitTrailingCR(options.omitTrailingCR());

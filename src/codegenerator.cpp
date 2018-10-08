@@ -104,6 +104,7 @@ CodeGenerator::CodeGenerator(ansifilter::OutputType type)
      ignoreFormatting(false),
      readAfterEOF(false),
      omitTrailingCR(false),
+     ignClearSeq(false),
      termBuffer(NULL),
      curX(0),
      curY(0),
@@ -146,6 +147,11 @@ void CodeGenerator::setParseAsciiBin(bool flag){
 void CodeGenerator::setParseAsciiTundra(bool flag){
     parseAsciiTundra = flag; 
 }
+
+void CodeGenerator::setIgnoreClearSeq(bool flag) {
+    ignClearSeq = flag;
+}
+
 void CodeGenerator::setAsciiArtSize(int width, int height){
     if (width>0) asciiArtWidth = width;
     if (height>0) asciiArtHeight = height;
@@ -1204,7 +1210,7 @@ void CodeGenerator::processInput()
                   }
 
                   // fix K sequences (iterm2/grep)
-                  isKSeq =  line[seqEnd]=='K' ;
+                  isKSeq =  line[seqEnd]=='K' && !ignClearSeq ;
                   isGrepOutput = isKSeq && isascii(line[seqEnd+1]) && line[seqEnd+1] !=13 && line[seqEnd+1] != 27;
                   
                   if (   line[seqEnd]=='s' || line[seqEnd]=='u'
