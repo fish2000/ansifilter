@@ -11,17 +11,6 @@ Ansifilter handles text files containing ANSI terminal escape codes.
 The command sequences may be stripped or be interpreted to generate formatted
 output (HTML, RTF, TeX, LaTeX, BBCode, Pango).
 
-
-== CONTENT:
-
-1. Quick introduction
-2. Platforms
-3. Features
-4. Environment variables
-5. Color mapping
-6. Contact
-
-
 ===  Quick introduction
 
 ................................................................................
@@ -50,6 +39,7 @@ Format options:
   -e, --encoding         Set HTML/RTF encoding (must match input file encoding)
   -f, --fragment         Omit HTML header and footer
   -F, --font=<font>      Set HTML/RTF font face
+  -k, --ignore-clear     Do not adhere to clear (ESC K) commands
   -l, --line-numbers     Print line numbers in output file
   -m, --map=<path>       Read color mapping file (see README)
   -r, --style-ref=<rf>   Set HTML/TeX/LaTeX stylesheet path
@@ -92,9 +82,9 @@ Ansifilter is currently available for Linux and Win32 platforms.
 
 Ansifilter understands most CSI sequences. Support for ANSI art files (based on
 codepage 437 and ANSI.SYS sequences, BIN/XBIN and Tundra files) is enabled with 
-the --art-cp437 and --art-bin options.
-Parsing XBIN files overrides --art-width, --art-height and --map options.
-Parsing TND files overrides --art-width and --map options.
+the `--art-cp437` and `--art-bin` options.
+Parsing XBIN files overrides `--art-width`, `--art-height` and `--map` options.
+Parsing TND files overrides `--art-width` and `--map` options.
 
 Supported SGR parameters:
 
@@ -116,12 +106,12 @@ Some options like Blink are not supported by all output formats (like RTF).
 
 The command line version recognizes these variables:
 
-ANSIFILTER_OPTIONS: may contain command line options, but no input file paths.
+`ANSIFILTER_OPTIONS`: may contain command line options, but no input file paths.
 
 
 === Color mapping
 
-The basic ANSI color set can be adjusted with a color map file (--map option). 
+The basic ANSI color set can be adjusted with a color map file (`--map` option). 
 This text configuration overrides these color codes:
 
 ................................................................................
