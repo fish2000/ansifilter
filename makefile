@@ -52,8 +52,8 @@ install:
 	${MKDIR} ${DESTDIR}${bin_dir}
 
 	${INSTALL_DATA} ./man/ansifilter.1.gz ${DESTDIR}${man_dir}
-	${INSTALL_DATA} ./README ${DESTDIR}${doc_dir}
-	${INSTALL_DATA} ./ChangeLog ${DESTDIR}${doc_dir}
+	${INSTALL_DATA} ./README.adoc ${DESTDIR}${doc_dir}
+	${INSTALL_DATA} ./ChangeLog.adoc ${DESTDIR}${doc_dir}
 	${INSTALL_DATA} ./COPYING ${DESTDIR}${doc_dir}
 	${INSTALL_DATA} ./INSTALL ${DESTDIR}${doc_dir}
 	${INSTALL_PROGRAM} ./src/ansifilter ${DESTDIR}${bin_dir}
@@ -89,7 +89,7 @@ help:
 	@echo "This makefile offers the following options:"
 	@echo
 	@echo "(all)            Compile."
-	@echo "all-gui          Compile Qt GUI (requires Qt 4.x)"
+	@echo "all-gui          Compile Qt GUI (requires Qt 5.x)"
 	@echo "install*         Copy all data files to ${data_dir}."
 	@echo "clean            Remove object files and binary."
 	@echo "uninstall*       Remove ansifilter files from system."
