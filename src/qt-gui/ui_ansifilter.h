@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ansifilter.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.3
+** Created by: Qt User Interface Compiler version 5.11.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,8 @@
 #define UI_ANSIFILTER_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
@@ -21,7 +20,6 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -57,7 +55,7 @@ public:
     QCheckBox *cbOmitVersion;
     QCheckBox *cbIgnoreSequences;
     QCheckBox *cbFragment;
-    QSpacerItem *horizontalSpacer_3;
+    QCheckBox *cbIgnClearSeq;
     QGroupBox *gbAsciiArt;
     QGridLayout *gridLayout_5;
     QHBoxLayout *horizontalLayout_3;
@@ -193,6 +191,13 @@ public:
         horizontalLayout_6->addWidget(label_4);
 
         comboFormat = new QComboBox(groupBox);
+        comboFormat->addItem(QString());
+        comboFormat->addItem(QString());
+        comboFormat->addItem(QString());
+        comboFormat->addItem(QString());
+        comboFormat->addItem(QString());
+        comboFormat->addItem(QString());
+        comboFormat->addItem(QString());
         comboFormat->setObjectName(QStringLiteral("comboFormat"));
         comboFormat->setEnabled(true);
 
@@ -229,9 +234,10 @@ public:
 
         gridLayout_2->addWidget(cbFragment, 0, 1, 1, 1);
 
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        cbIgnClearSeq = new QCheckBox(groupBox);
+        cbIgnClearSeq->setObjectName(QStringLiteral("cbIgnClearSeq"));
 
-        gridLayout_2->addItem(horizontalSpacer_3, 1, 1, 1, 1);
+        gridLayout_2->addWidget(cbIgnClearSeq, 1, 1, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout_2);
@@ -252,6 +258,9 @@ public:
         horizontalLayout_3->addWidget(cbParseAsciiArt);
 
         comboAnsiFormat = new QComboBox(gbAsciiArt);
+        comboAnsiFormat->addItem(QString());
+        comboAnsiFormat->addItem(QString());
+        comboAnsiFormat->addItem(QString());
         comboAnsiFormat->setObjectName(QStringLiteral("comboAnsiFormat"));
         comboAnsiFormat->setEnabled(false);
         comboAnsiFormat->setEditable(false);
@@ -346,6 +355,20 @@ public:
         gridLayout_3->addWidget(lblEncoding, 1, 0, 1, 2);
 
         comboEncoding = new QComboBox(groupBox);
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
+        comboEncoding->addItem(QString());
         comboEncoding->setObjectName(QStringLiteral("comboEncoding"));
         sizePolicy6.setHeightForWidth(comboEncoding->sizePolicy().hasHeightForWidth());
         comboEncoding->setSizePolicy(sizePolicy6);
@@ -485,130 +508,128 @@ public:
 
     void retranslateUi(QDialog *Dialog)
     {
-        Dialog->setWindowTitle(QApplication::translate("Dialog", "ANSIFilter", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("Dialog", "ANSIFilter", Q_NULLPTR));
+        Dialog->setWindowTitle(QApplication::translate("Dialog", "ANSIFilter", nullptr));
+        groupBox->setTitle(QApplication::translate("Dialog", "ANSIFilter", nullptr));
 #ifndef QT_NO_TOOLTIP
-        pbFileOpen->setToolTip(QApplication::translate("Dialog", "Open a text file.", Q_NULLPTR));
+        pbFileOpen->setToolTip(QApplication::translate("Dialog", "Open a text file.", nullptr));
 #endif // QT_NO_TOOLTIP
-        pbFileOpen->setText(QApplication::translate("Dialog", "Open File", Q_NULLPTR));
+        pbFileOpen->setText(QApplication::translate("Dialog", "Open File", nullptr));
 #ifndef QT_NO_TOOLTIP
-        pbSaveAs->setToolTip(QApplication::translate("Dialog", "Save the opened file as text, HTML, LaTeX, Plain TeX, BBCode or RTF.", Q_NULLPTR));
+        pbSaveAs->setToolTip(QApplication::translate("Dialog", "Save the opened file as text, HTML, LaTeX, Plain TeX, BBCode or RTF.", nullptr));
 #endif // QT_NO_TOOLTIP
-        pbSaveAs->setText(QApplication::translate("Dialog", "Save as", Q_NULLPTR));
+        pbSaveAs->setText(QApplication::translate("Dialog", "Save as", nullptr));
 #ifndef QT_NO_TOOLTIP
-        pbClipboard->setToolTip(QApplication::translate("Dialog", "Copy opened file as plain text to clipboard", Q_NULLPTR));
+        pbClipboard->setToolTip(QApplication::translate("Dialog", "Copy opened file as plain text to clipboard", nullptr));
 #endif // QT_NO_TOOLTIP
-        pbClipboard->setText(QApplication::translate("Dialog", "Copy to clipboard", Q_NULLPTR));
+        pbClipboard->setText(QApplication::translate("Dialog", "Copy to clipboard", nullptr));
 #ifndef QT_NO_TOOLTIP
-        lblDrop->setToolTip(QApplication::translate("Dialog", "You may drop a file on this window.", Q_NULLPTR));
+        lblDrop->setToolTip(QApplication::translate("Dialog", "You may drop a file on this window.", nullptr));
 #endif // QT_NO_TOOLTIP
         lblDrop->setText(QString());
-        label_4->setText(QApplication::translate("Dialog", "Output format:", Q_NULLPTR));
-        comboFormat->clear();
-        comboFormat->insertItems(0, QStringList()
-         << QApplication::translate("Dialog", "Text", Q_NULLPTR)
-         << QApplication::translate("Dialog", "HTML", Q_NULLPTR)
-         << QApplication::translate("Dialog", "RTF", Q_NULLPTR)
-         << QApplication::translate("Dialog", "LaTeX", Q_NULLPTR)
-         << QApplication::translate("Dialog", "TeX", Q_NULLPTR)
-         << QApplication::translate("Dialog", "BBCode", Q_NULLPTR)
-         << QApplication::translate("Dialog", "Pango Markup", Q_NULLPTR)
-        );
+        label_4->setText(QApplication::translate("Dialog", "Output format:", nullptr));
+        comboFormat->setItemText(0, QApplication::translate("Dialog", "Text", nullptr));
+        comboFormat->setItemText(1, QApplication::translate("Dialog", "HTML", nullptr));
+        comboFormat->setItemText(2, QApplication::translate("Dialog", "RTF", nullptr));
+        comboFormat->setItemText(3, QApplication::translate("Dialog", "LaTeX", nullptr));
+        comboFormat->setItemText(4, QApplication::translate("Dialog", "TeX", nullptr));
+        comboFormat->setItemText(5, QApplication::translate("Dialog", "BBCode", nullptr));
+        comboFormat->setItemText(6, QApplication::translate("Dialog", "Pango Markup", nullptr));
+
 #ifndef QT_NO_TOOLTIP
-        cbOmitVersion->setToolTip(QApplication::translate("Dialog", "Do not include version info comment", Q_NULLPTR));
+        cbOmitVersion->setToolTip(QApplication::translate("Dialog", "Do not include version info comment", nullptr));
 #endif // QT_NO_TOOLTIP
-        cbOmitVersion->setText(QApplication::translate("Dialog", "Omit version info", Q_NULLPTR));
+        cbOmitVersion->setText(QApplication::translate("Dialog", "Omit version info", nullptr));
 #ifndef QT_NO_TOOLTIP
-        cbIgnoreSequences->setToolTip(QApplication::translate("Dialog", "Show and save files ignoring the contained ANSI formatting information.", Q_NULLPTR));
+        cbIgnoreSequences->setToolTip(QApplication::translate("Dialog", "Show and save files ignoring the contained ANSI formatting information.", nullptr));
 #endif // QT_NO_TOOLTIP
-        cbIgnoreSequences->setText(QApplication::translate("Dialog", "Omit styling in output", Q_NULLPTR));
+        cbIgnoreSequences->setText(QApplication::translate("Dialog", "Omit styling in output", nullptr));
 #ifndef QT_NO_TOOLTIP
-        cbFragment->setToolTip(QApplication::translate("Dialog", "Save HTML without header and footer to paste it into existing documents.", Q_NULLPTR));
+        cbFragment->setToolTip(QApplication::translate("Dialog", "Save HTML without header and footer to paste it into existing documents.", nullptr));
 #endif // QT_NO_TOOLTIP
-        cbFragment->setText(QApplication::translate("Dialog", "Omit header and footer", Q_NULLPTR));
-        gbAsciiArt->setTitle(QApplication::translate("Dialog", "ANSI art options", Q_NULLPTR));
+        cbFragment->setText(QApplication::translate("Dialog", "Omit header and footer", nullptr));
 #ifndef QT_NO_TOOLTIP
-        cbParseAsciiArt->setToolTip(QApplication::translate("Dialog", "Enable parsing of ANSI art files.", Q_NULLPTR));
+        cbIgnClearSeq->setToolTip(QApplication::translate("Dialog", "Do not adhere to clear (ESC K) commands", nullptr));
 #endif // QT_NO_TOOLTIP
-        cbParseAsciiArt->setText(QApplication::translate("Dialog", "Enable ANSI art", Q_NULLPTR));
-        comboAnsiFormat->clear();
-        comboAnsiFormat->insertItems(0, QStringList()
-         << QApplication::translate("Dialog", "Codepage 437", Q_NULLPTR)
-         << QApplication::translate("Dialog", "BIN/XBIN", Q_NULLPTR)
-         << QApplication::translate("Dialog", "Tundra", Q_NULLPTR)
-        );
+        cbIgnClearSeq->setText(QApplication::translate("Dialog", "Ignore Clear Sequences", nullptr));
+        gbAsciiArt->setTitle(QApplication::translate("Dialog", "ANSI art options", nullptr));
 #ifndef QT_NO_TOOLTIP
-        comboAnsiFormat->setToolTip(QApplication::translate("Dialog", "Select the ANSI art file format", Q_NULLPTR));
+        cbParseAsciiArt->setToolTip(QApplication::translate("Dialog", "Enable parsing of ANSI art files.", nullptr));
 #endif // QT_NO_TOOLTIP
-        lblWidth->setText(QApplication::translate("Dialog", "Width", Q_NULLPTR));
+        cbParseAsciiArt->setText(QApplication::translate("Dialog", "Enable ANSI art", nullptr));
+        comboAnsiFormat->setItemText(0, QApplication::translate("Dialog", "Codepage 437", nullptr));
+        comboAnsiFormat->setItemText(1, QApplication::translate("Dialog", "BIN/XBIN", nullptr));
+        comboAnsiFormat->setItemText(2, QApplication::translate("Dialog", "Tundra", nullptr));
+
 #ifndef QT_NO_TOOLTIP
-        sbWidth->setToolTip(QApplication::translate("Dialog", "Set the ASCII art image width (default: 80). This setting is ignored with XBIN input.", Q_NULLPTR));
+        comboAnsiFormat->setToolTip(QApplication::translate("Dialog", "Select the ANSI art file format", nullptr));
 #endif // QT_NO_TOOLTIP
-        lblHeight->setText(QApplication::translate("Dialog", "Height", Q_NULLPTR));
+        lblWidth->setText(QApplication::translate("Dialog", "Width", nullptr));
 #ifndef QT_NO_TOOLTIP
-        sbHeight->setToolTip(QApplication::translate("Dialog", "Set the ASCII art image height (default: 150). This setting is ignored with XBIN input.", Q_NULLPTR));
+        sbWidth->setToolTip(QApplication::translate("Dialog", "Set the ASCII art image width (default: 80). This setting is ignored with XBIN input.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_2->setText(QApplication::translate("Dialog", "Tit&le:", Q_NULLPTR));
+        lblHeight->setText(QApplication::translate("Dialog", "Height", nullptr));
 #ifndef QT_NO_TOOLTIP
-        leTitle->setToolTip(QApplication::translate("Dialog", "Set the output document title.", Q_NULLPTR));
+        sbHeight->setToolTip(QApplication::translate("Dialog", "Set the ASCII art image height (default: 150). This setting is ignored with XBIN input.", nullptr));
 #endif // QT_NO_TOOLTIP
-        lblEncoding->setText(QApplication::translate("Dialog", "E&ncoding:", Q_NULLPTR));
-        comboEncoding->clear();
-        comboEncoding->insertItems(0, QStringList()
-         << QApplication::translate("Dialog", "ISO-8859-1", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-2", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-3", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-4", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-6", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-7", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-8", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-9", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-10", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-11", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-13", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-14", Q_NULLPTR)
-         << QApplication::translate("Dialog", "ISO-8859-15", Q_NULLPTR)
-         << QApplication::translate("Dialog", "UTF-8", Q_NULLPTR)
-        );
+        label_2->setText(QApplication::translate("Dialog", "Tit&le:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        comboEncoding->setToolTip(QApplication::translate("Dialog", "Set the encoding (has to match input file encoding).", Q_NULLPTR));
+        leTitle->setToolTip(QApplication::translate("Dialog", "Set the output document title.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_3->setText(QApplication::translate("Dialog", "Line wrap:", Q_NULLPTR));
+        lblEncoding->setText(QApplication::translate("Dialog", "E&ncoding:", nullptr));
+        comboEncoding->setItemText(0, QApplication::translate("Dialog", "ISO-8859-1", nullptr));
+        comboEncoding->setItemText(1, QApplication::translate("Dialog", "ISO-8859-2", nullptr));
+        comboEncoding->setItemText(2, QApplication::translate("Dialog", "ISO-8859-3", nullptr));
+        comboEncoding->setItemText(3, QApplication::translate("Dialog", "ISO-8859-4", nullptr));
+        comboEncoding->setItemText(4, QApplication::translate("Dialog", "ISO-8859-6", nullptr));
+        comboEncoding->setItemText(5, QApplication::translate("Dialog", "ISO-8859-7", nullptr));
+        comboEncoding->setItemText(6, QApplication::translate("Dialog", "ISO-8859-8", nullptr));
+        comboEncoding->setItemText(7, QApplication::translate("Dialog", "ISO-8859-9", nullptr));
+        comboEncoding->setItemText(8, QApplication::translate("Dialog", "ISO-8859-10", nullptr));
+        comboEncoding->setItemText(9, QApplication::translate("Dialog", "ISO-8859-11", nullptr));
+        comboEncoding->setItemText(10, QApplication::translate("Dialog", "ISO-8859-13", nullptr));
+        comboEncoding->setItemText(11, QApplication::translate("Dialog", "ISO-8859-14", nullptr));
+        comboEncoding->setItemText(12, QApplication::translate("Dialog", "ISO-8859-15", nullptr));
+        comboEncoding->setItemText(13, QApplication::translate("Dialog", "UTF-8", nullptr));
+
 #ifndef QT_NO_TOOLTIP
-        spinBoxWrap->setToolTip(QApplication::translate("Dialog", "Wrap lines after given char count (0 disables wrapping).", Q_NULLPTR));
+        comboEncoding->setToolTip(QApplication::translate("Dialog", "Set the encoding (has to match input file encoding).", nullptr));
+#endif // QT_NO_TOOLTIP
+        label_3->setText(QApplication::translate("Dialog", "Line wrap:", nullptr));
+#ifndef QT_NO_TOOLTIP
+        spinBoxWrap->setToolTip(QApplication::translate("Dialog", "Wrap lines after given char count (0 disables wrapping).", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        comboFont->setToolTip(QApplication::translate("Dialog", "Set the output font.", Q_NULLPTR));
+        comboFont->setToolTip(QApplication::translate("Dialog", "Set the output font.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_5->setText(QApplication::translate("Dialog", "Color map file:", Q_NULLPTR));
+        label_5->setText(QApplication::translate("Dialog", "Color map file:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        leColorMapPath->setToolTip(QApplication::translate("Dialog", "Color map file (see README for details). This setting is ignored with XBIN input.", Q_NULLPTR));
+        leColorMapPath->setToolTip(QApplication::translate("Dialog", "Color map file (see README for details). This setting is ignored with XBIN input.", nullptr));
 #endif // QT_NO_TOOLTIP
 #ifndef QT_NO_TOOLTIP
-        pbSelectMapFile->setToolTip(QApplication::translate("Dialog", "Select a color map configuration file. ", Q_NULLPTR));
+        pbSelectMapFile->setToolTip(QApplication::translate("Dialog", "Select a color map configuration file. ", nullptr));
 #endif // QT_NO_TOOLTIP
-        pbSelectMapFile->setText(QApplication::translate("Dialog", "...", Q_NULLPTR));
+        pbSelectMapFile->setText(QApplication::translate("Dialog", "...", nullptr));
 #ifndef QT_NO_TOOLTIP
-        pbAbout->setToolTip(QApplication::translate("Dialog", "Show information about this program.", Q_NULLPTR));
+        pbAbout->setToolTip(QApplication::translate("Dialog", "Show information about this program.", nullptr));
 #endif // QT_NO_TOOLTIP
-        pbAbout->setText(QApplication::translate("Dialog", "About", Q_NULLPTR));
+        pbAbout->setText(QApplication::translate("Dialog", "About", nullptr));
 #ifndef QT_NO_TOOLTIP
-        pbExit->setToolTip(QApplication::translate("Dialog", "Quit this program.", Q_NULLPTR));
+        pbExit->setToolTip(QApplication::translate("Dialog", "Quit this program.", nullptr));
 #endif // QT_NO_TOOLTIP
-        pbExit->setText(QApplication::translate("Dialog", "Quit", Q_NULLPTR));
-        lblInFilePath->setText(QApplication::translate("Dialog", "Input file:", Q_NULLPTR));
+        pbExit->setText(QApplication::translate("Dialog", "Quit", nullptr));
+        lblInFilePath->setText(QApplication::translate("Dialog", "Input file:", nullptr));
 #ifndef QT_NO_TOOLTIP
-        textEdit->setToolTip(QApplication::translate("Dialog", "Output preview", Q_NULLPTR));
+        textEdit->setToolTip(QApplication::translate("Dialog", "Output preview", nullptr));
 #endif // QT_NO_TOOLTIP
         textEdit->setHtml(QApplication::translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Monospace'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Noto Sans,Courier New';\">Please open a file.</span></p></body></html>", Q_NULLPTR));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Noto Sans,Courier New';\">Please open a file.</span></p></body></html>", nullptr));
 #ifndef QT_NO_TOOLTIP
-        cbWatchFile->setToolTip(QApplication::translate("Dialog", "Update view if input file changes, Do not apply with big or fast growing input files.", Q_NULLPTR));
+        cbWatchFile->setToolTip(QApplication::translate("Dialog", "Update view if input file changes, Do not apply with big or fast growing input files.", nullptr));
 #endif // QT_NO_TOOLTIP
-        cbWatchFile->setText(QApplication::translate("Dialog", "Watch this file", Q_NULLPTR));
+        cbWatchFile->setText(QApplication::translate("Dialog", "Watch this file", nullptr));
     } // retranslateUi
 
 };

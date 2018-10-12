@@ -3,10 +3,15 @@
 # See INSTALL for instructions.
 
 # afl-g++ for preparing fuzzing tests
+
 CC=g++
+#CC=clang++
 
 # Added -std=c++11 because of auto_ptr to unique_ptr transition
 CXXFLAGS= -Wall -O2 -DNDEBUG -std=c++11 -fPIC
+#CXXFLAGS= -O0 -ggdb -std=c++11 -fPIC
+#CXXFLAGS="-DNDEBUG -g2 -O3 -march=i686" 
+#cov-build --dir cov-int make -j 2
 
 LDFLAGS=
 

@@ -311,17 +311,14 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+         <widget class="QCheckBox" name="cbIgnClearSeq">
+          <property name="toolTip">
+           <string>Do not adhere to clear (ESC K) commands</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
+          <property name="text">
+           <string>Ignore Clear Sequences</string>
           </property>
-         </spacer>
+         </widget>
         </item>
        </layout>
       </item>

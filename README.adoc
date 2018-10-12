@@ -1,34 +1,19 @@
+= ANSIFILTER MANUAL
+André Simon
+v2.11, October 2018
 
-*** Since Github is now part of Mordor Corp, the ansifilter Git repo       ***
-*** moved to https://gitlab.com/saalen/ansifilter                          ***
-
--------------------------------------------------------------------------------
----  ANSIFILTER MANUAL - Version 2.9  ---------------------- NOVEMBER 2017 ---
--------------------------------------------------------------------------------
 
 OSI Certified Open Source Software
 
--------------------------------------------------------------------------------
+== OVERVIEW
 
 Ansifilter handles text files containing ANSI terminal escape codes.
 The command sequences may be stripped or be interpreted to generate formatted
 output (HTML, RTF, TeX, LaTeX, BBCode, Pango).
 
+===  Quick introduction
 
-CONTENT:
--------------------------------------------------------------------------------
-
-1. Quick introduction
-2. Platforms
-3. Features
-4. Environment variables
-5. Color mapping
-6. Contact
-
-
-1.  Quick introduction
--------------------------------------------------------------------------------
-
+................................................................................
 Invocation: ansifilter [OPTION]... [FILE]...
 
 ansifilter handles text files containing ANSI terminal escape codes.
@@ -54,6 +39,7 @@ Format options:
   -e, --encoding         Set HTML/RTF encoding (must match input file encoding)
   -f, --fragment         Omit HTML header and footer
   -F, --font=<font>      Set HTML/RTF font face
+  -k, --ignore-clear     Do not adhere to clear (ESC K) commands
   -l, --line-numbers     Print line numbers in output file
   -m, --map=<path>       Read color mapping file (see README)
   -r, --style-ref=<rf>   Set HTML/TeX/LaTeX stylesheet path
@@ -85,58 +71,62 @@ The ANSI art file formats BIN, XBIN and TND cannot be read from stdin.
 
 The GUI version (ansifilter-gui) also accepts the first command line argument
 as input file name.
+................................................................................
 
-
-2.  Platforms
--------------------------------------------------------------------------------
+=== Platforms
 
 Ansifilter is currently available for Linux and Win32 platforms.
 
 
-3.  Features
--------------------------------------------------------------------------------
+=== Features
 
 Ansifilter understands most CSI sequences. Support for ANSI art files (based on
 codepage 437 and ANSI.SYS sequences, BIN/XBIN and Tundra files) is enabled with 
-the --art-cp437 and --art-bin options.
-Parsing XBIN files overrides --art-width, --art-height and --map options.
-Parsing TND files overrides --art-width and --map options.
+the `--art-cp437` and `--art-bin` options.
+Parsing XBIN files overrides `--art-width`, `--art-height` and `--map` options.
+Parsing TND files overrides `--art-width` and `--map` options.
 
 Supported SGR parameters:
+
+................................................................................
 
 Formatting: Bold, Underline, Italic, Blink
 Colors:     Black, Red, Green, Yellow, Blue, Magenta, Cyan, White;
             xterm 256 color modes;
             16m true color modes
 Other:      Conceal/Reveal, Image positive/negative
+................................................................................
+
 
 All commands which issue the listed formatting options are supported.
 Some options like Blink are not supported by all output formats (like RTF).
 
 
-4.  ENVIRONMENT VARIABLES
--------------------------------------------------------------------------------
+=== ENVIRONMENT VARIABLES
 
 The command line version recognizes these variables:
 
-ANSIFILTER_OPTIONS: may contain command line options, but no input file paths.
+`ANSIFILTER_OPTIONS`: may contain command line options, but no input file paths.
 
 
-5.  Color mapping
--------------------------------------------------------------------------------
+=== Color mapping
 
-The basic ANSI color set can be adjusted with a color map file (--map option). 
+The basic ANSI color set can be adjusted with a color map file (`--map` option). 
 This text configuration overrides these color codes:
+
+................................................................................
 
 Normal: Black (0), Red (1), Green (2), Yellow (3), Blue (4), Magenta (5), 
         Cyan (6), Gray (7)
 Bright: DarkGray (8), Red (9), Green (10), Yellow (11), Blue (12), Magenta (13),
         Cyan (14), White (15)
+................................................................................
 
 File format:
 
 <0..15> = <HTML color code>
 
+................................................................................
 Example file content:
 
 1= #0000aa
@@ -154,17 +144,18 @@ Example file content:
 13= #ff55ff
 14= #ffff55
 15= #ffffff
+................................................................................
 
 
-6.  Contact
--------------------------------------------------------------------------------
+
+=== Contact
 
 Andre Simon
 andre.simon1@gmx.de
 http://www.andre-simon.de/
 
+Github project with Git repository, bug tracker:
+https://gitlab.com/saalen/ansifilter
+
 sf.net project with SVN repository, download mirror, bug tracker, help forum:
 http://sourceforge.net/projects/ansifilter/
-
-Github project with Git repository, bug tracker:
-https://github.com/andre-simon/ansifilter

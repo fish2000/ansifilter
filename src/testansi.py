@@ -75,3 +75,6 @@ print ( "1234567890 12345 67890 1234567890 12345 67890 1234567890123456789012345
 print ( "Ignore:\033[=1hEND\n")
 print ( "Ignore:\033[?25lEND\n")
 print ( "Ignore:\033[0GEND\n")
+
+#ESC[1GESC[KESC[34m 0:00.60ESC[m^O /usr/bin/gmake -f client.mkESC[m^O
+print ( "\0337\0338\0337\0338\0337\0338\n")
