@@ -13,7 +13,7 @@ compile:
   # Compile our app
   - make
   # Verify that our compiled app works properly with a custom "test" script
-  - ./src/ci_test.sh
+  - bash ./src/ci_test.sh
   # Save the compiled output from the above for downloading via GitLab and in Gitlab 8.6 to use in future build steps
   #artifacts:
   #  paths:
