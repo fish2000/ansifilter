@@ -68,10 +68,11 @@ public:
     QSpacerItem *horizontalSpacer;
     QLabel *lblHeight;
     QSpinBox *sbHeight;
-    QSpacerItem *verticalSpacer_5;
     QGridLayout *gridLayout_3;
-    QLabel *label_2;
+    QLabel *lblTitle;
     QLineEdit *leTitle;
+    QLabel *lblStyleFile;
+    QLineEdit *leStyleFile;
     QLabel *lblEncoding;
     QComboBox *comboEncoding;
     QLabel *label_3;
@@ -321,21 +322,17 @@ public:
 
         verticalLayout_2->addWidget(gbAsciiArt);
 
-        verticalSpacer_5 = new QSpacerItem(20, 5, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        verticalLayout_2->addItem(verticalSpacer_5);
-
         gridLayout_3 = new QGridLayout();
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
-        label_2 = new QLabel(groupBox);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        lblTitle = new QLabel(groupBox);
+        lblTitle->setObjectName(QStringLiteral("lblTitle"));
         QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Minimum);
         sizePolicy5.setHorizontalStretch(0);
         sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(label_2->sizePolicy().hasHeightForWidth());
-        label_2->setSizePolicy(sizePolicy5);
+        sizePolicy5.setHeightForWidth(lblTitle->sizePolicy().hasHeightForWidth());
+        lblTitle->setSizePolicy(sizePolicy5);
 
-        gridLayout_3->addWidget(label_2, 0, 0, 1, 1);
+        gridLayout_3->addWidget(lblTitle, 0, 0, 1, 1);
 
         leTitle = new QLineEdit(groupBox);
         leTitle->setObjectName(QStringLiteral("leTitle"));
@@ -347,12 +344,22 @@ public:
 
         gridLayout_3->addWidget(leTitle, 0, 1, 1, 2);
 
+        lblStyleFile = new QLabel(groupBox);
+        lblStyleFile->setObjectName(QStringLiteral("lblStyleFile"));
+
+        gridLayout_3->addWidget(lblStyleFile, 1, 0, 1, 1);
+
+        leStyleFile = new QLineEdit(groupBox);
+        leStyleFile->setObjectName(QStringLiteral("leStyleFile"));
+
+        gridLayout_3->addWidget(leStyleFile, 1, 1, 1, 2);
+
         lblEncoding = new QLabel(groupBox);
         lblEncoding->setObjectName(QStringLiteral("lblEncoding"));
         sizePolicy1.setHeightForWidth(lblEncoding->sizePolicy().hasHeightForWidth());
         lblEncoding->setSizePolicy(sizePolicy1);
 
-        gridLayout_3->addWidget(lblEncoding, 1, 0, 1, 2);
+        gridLayout_3->addWidget(lblEncoding, 2, 0, 1, 1);
 
         comboEncoding = new QComboBox(groupBox);
         comboEncoding->addItem(QString());
@@ -374,17 +381,17 @@ public:
         comboEncoding->setSizePolicy(sizePolicy6);
         comboEncoding->setEditable(true);
 
-        gridLayout_3->addWidget(comboEncoding, 1, 2, 1, 1);
+        gridLayout_3->addWidget(comboEncoding, 2, 2, 1, 1);
 
         label_3 = new QLabel(groupBox);
         label_3->setObjectName(QStringLiteral("label_3"));
 
-        gridLayout_3->addWidget(label_3, 2, 0, 1, 2);
+        gridLayout_3->addWidget(label_3, 3, 0, 1, 1);
 
         spinBoxWrap = new QSpinBox(groupBox);
         spinBoxWrap->setObjectName(QStringLiteral("spinBoxWrap"));
 
-        gridLayout_3->addWidget(spinBoxWrap, 2, 2, 1, 1);
+        gridLayout_3->addWidget(spinBoxWrap, 3, 2, 1, 1);
 
         comboFont = new QFontComboBox(groupBox);
         comboFont->setObjectName(QStringLiteral("comboFont"));
@@ -392,7 +399,7 @@ public:
         font.setFamily(QStringLiteral("Liberation Mono"));
         comboFont->setCurrentFont(font);
 
-        gridLayout_3->addWidget(comboFont, 3, 0, 1, 3);
+        gridLayout_3->addWidget(comboFont, 4, 0, 1, 2);
 
 
         verticalLayout_2->addLayout(gridLayout_3);
@@ -491,7 +498,7 @@ public:
         horizontalLayout_2->addLayout(verticalLayout);
 
 #ifndef QT_NO_SHORTCUT
-        label_2->setBuddy(leTitle);
+        lblTitle->setBuddy(leTitle);
         lblEncoding->setBuddy(comboEncoding);
 #endif // QT_NO_SHORTCUT
         QWidget::setTabOrder(cbIgnoreSequences, cbFragment);
@@ -571,9 +578,13 @@ public:
 #ifndef QT_NO_TOOLTIP
         sbHeight->setToolTip(QApplication::translate("Dialog", "Set the ASCII art image height (default: 150). This setting is ignored with XBIN input.", nullptr));
 #endif // QT_NO_TOOLTIP
-        label_2->setText(QApplication::translate("Dialog", "Tit&le:", nullptr));
+        lblTitle->setText(QApplication::translate("Dialog", "Tit&le:", nullptr));
 #ifndef QT_NO_TOOLTIP
         leTitle->setToolTip(QApplication::translate("Dialog", "Set the output document title.", nullptr));
+#endif // QT_NO_TOOLTIP
+        lblStyleFile->setText(QApplication::translate("Dialog", "Style file:", nullptr));
+#ifndef QT_NO_TOOLTIP
+        leStyleFile->setToolTip(QApplication::translate("Dialog", "Enter the name of a referenced stylesheet file here.", nullptr));
 #endif // QT_NO_TOOLTIP
         lblEncoding->setText(QApplication::translate("Dialog", "E&ncoding:", nullptr));
         comboEncoding->setItemText(0, QApplication::translate("Dialog", "ISO-8859-1", nullptr));

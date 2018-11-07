@@ -53,6 +53,7 @@ MyDialog::MyDialog(QWidget * parent, Qt::WindowFlags f):QDialog(parent, f)
     settings.beginGroup("format");
     dlg.leTitle->setText(settings.value("title").toString());
     dlg.leColorMapPath->setText(settings.value("map").toString());
+    dlg.leStyleFile->setText(settings.value("stylefile").toString());
     dlg.cbFragment->setChecked(settings.value("fragment").toBool());
     dlg.cbIgnoreSequences->setChecked(settings.value("ignoreseq").toBool());
     dlg.cbParseAsciiArt->setChecked(settings.value("parseart").toBool());
@@ -99,6 +100,7 @@ void MyDialog::closeEvent(QCloseEvent *event)
     settings.beginGroup("format");
     settings.setValue("title", dlg.leTitle->text());
     settings.setValue("map", dlg.leColorMapPath->text());
+    settings.setValue("stylefile", dlg.leStyleFile->text());
     settings.setValue("fragment", dlg.cbFragment->isChecked());
     settings.setValue("ignoreseq", dlg.cbIgnoreSequences->isChecked());
     settings.setValue("ignoreclearseq", dlg.cbIgnClearSeq->isChecked());
@@ -176,9 +178,14 @@ void MyDialog::plausibility()
     dlg.lblEncoding->setEnabled(selIdx==1|| selIdx==2 || selIdx==3);
     dlg.comboEncoding->setEnabled(selIdx==1 || selIdx==2 ||selIdx==3);
     dlg.leTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4);
+    dlg.lblTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4);
+
     dlg.comboFont->setEnabled(selIdx==1||selIdx==2||selIdx==6);
     dlg.cbOmitVersion->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
-   // dlg.gbAsciiArt->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
+    dlg.leStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
+    dlg.lblStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
+
+    // dlg.gbAsciiArt->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.comboAnsiFormat->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.artSizeFrame->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.lblHeight->setEnabled(dlg.gbAsciiArt->isEnabled());
@@ -255,6 +262,7 @@ void MyDialog::on_pbSaveAs_clicked()
     generator->setOmitVersionInfo(dlg.cbOmitVersion->isChecked());
 
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+    generator->setStyleSheet(dlg.leStyleFile->text().toStdString());
 
     if (dlg.cbParseAsciiArt->isChecked()){
         switch (dlg.comboAnsiFormat->currentIndex()){

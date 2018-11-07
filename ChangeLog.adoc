@@ -1,6 +1,12 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.12
 
+07.11.2018
+
+ - fixed -w char count if line contains escape sequences (thanks to Jason James)
+ - GUI: added stylesheet input filed (suggested by Davor Petri?)
+ 
 === ansifilter 2.11
 
 10.10.2018

@@ -17,7 +17,7 @@ LDFLAGS=
 
 SOURCES=arg_parser.o stringtools.o cmdlineoptions.o main.o platform_fs.o\
 codegenerator.o htmlgenerator.o pangogenerator.o texgenerator.o latexgenerator.o rtfgenerator.o\
-plaintextgenerator.o bbcodegenerator.o elementstyle.o stylecolour.o preformatter.o
+plaintextgenerator.o bbcodegenerator.o elementstyle.o stylecolour.o
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=ansifilter
