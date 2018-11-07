@@ -35,7 +35,6 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #include <wctype.h>
 
 #include "elementstyle.h"
-#include "preformatter.h"
 
 #include "enums.h"
 #include "stringtools.h"
@@ -319,9 +318,6 @@ protected:
     
     ElementStyle elementStyle;
 
-    /** Class for line wrapping and tab replacement*/
-    PreFormatter preFormatter;
-    
 private:
 
     CodeGenerator(const CodeGenerator&) {}
@@ -376,6 +372,8 @@ private:
     int curX, curY, memX, memY, maxY; ///< cursor position for Codepage 437 sequences
     int asciiArtWidth;  ///< virtual console column count
     int asciiArtHeight; ///< virtual console line count
+    unsigned int lineWrapLen; ///< max line length before wrapping
+
     
     ElementStyle memStyle;
     

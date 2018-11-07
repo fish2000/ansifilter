@@ -112,7 +112,8 @@ CodeGenerator::CodeGenerator(ansifilter::OutputType type)
      memY(0),
      maxY(0),
      asciiArtWidth(80),
-     asciiArtHeight(150)
+     asciiArtHeight(150),
+     lineWrapLen(0)
 {
     elementStyle.setFgColour(rgb2html(workingPalette[0]));
 }
@@ -197,13 +198,8 @@ void CodeGenerator::setPreformatting ( WrapMode lineWrappingStyle,
                                        unsigned int lineLength
                                      )
 {
-    if ( lineLength>0 ) {
-        preFormatter.setWrap ( true );
-        preFormatter.setWrapIndentBraces ( lineWrappingStyle==WRAP_DEFAULT );
-        preFormatter.setWrapLineLength ( lineLength );
-        preFormatter.setReplaceTabs ( false );
-        //preFormatter.setNumberSpaces ( numberSpaces );
-    }
+    
+    lineWrapLen = lineLength;
 }
 
 ParseError CodeGenerator::generateFile (const string &inFileName,
@@ -1051,6 +1047,7 @@ void CodeGenerator::processInput()
   
   string line;
   size_t i=0;
+  size_t plainTxtCnt=0;
   bool tagOpen=false;
   bool isGrepOutput=false;
   bool isKSeq=false;
@@ -1064,25 +1061,12 @@ void CodeGenerator::processInput()
   while (true) {
     
     bool eof=false;
-    if ( preFormatter.isEnabled() ) {
-      if ( !preFormatter.hasMoreLines() ) {
-        eof=!getline(*in, line);
-        preFormatter.setLine ( line );
-        ++lineNumber;
-        numberCurrentLine = true;
-      } else {
-        if( !omitNewLine  && numberWrappedLines)
-          ++lineNumber;
-        numberCurrentLine = numberWrappedLines;
-      }
-      
-      line = preFormatter.getNextLine();
-    } else {
-      eof=!getline(*in, line);
-      if( !omitNewLine )
-        ++lineNumber;
-      numberCurrentLine = true;
-    }
+    
+    eof=!getline(*in, line);
+    if( !omitNewLine )
+    ++lineNumber;
+    numberCurrentLine = true;
+
     if (eof) {
       // imitate tail bahaviour, continue to read after EOF
       if (readAfterEOF) {
@@ -1105,6 +1089,7 @@ void CodeGenerator::processInput()
       omitNewLine = false;
       
       i=0;
+      plainTxtCnt=0;
       size_t seqEnd=string::npos;
       
       while (i <line.length() ) {
@@ -1155,6 +1140,15 @@ void CodeGenerator::processInput()
             ++i;
           }  
         } else {
+            
+            // wrap line
+          if (lineWrapLen && plainTxtCnt && plainTxtCnt % lineWrapLen==0) {
+              ++lineNumber;
+              *out << newLineTag; 
+              insertLineNumber();
+              plainTxtCnt=0;
+           }
+          
           
           if ( line.length() - i > 2 && (line[i+1]&0xff)==0x08) i++;  
           if ( cur==0x07) {
@@ -1174,7 +1168,10 @@ void CodeGenerator::processInput()
               } else {
                   // restore a unicode sequence if the two digit CSI is not matched
                   // ansiweather -l Berlin,DE | ansifilter -T
-                  if (cur==0xc2 || cur==0x1b) *out << maskCharacter(cur);
+                  if (cur==0xc2 || cur==0x1b) {
+                      *out << maskCharacter(cur);
+                      ++plainTxtCnt;
+                }
 
               }
               
@@ -1272,12 +1269,16 @@ void CodeGenerator::processInput()
               } else {
                 *out << maskCharacter(line[i]);
                 ++i;
+                ++plainTxtCnt;
               }
           } else {
             // output printable character
             *out << maskCharacter(line[i]);
             ++i;
+            ++plainTxtCnt;
           }
+          
+          
         }
       }
       //if (!parseCP437 && !omitTrailingCR) *out << newLineTag;

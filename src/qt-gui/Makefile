@@ -273,6 +273,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -507,6 +508,7 @@ Makefile: ansifilter-gui.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -721,6 +723,7 @@ Makefile: ansifilter-gui.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/q
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -809,7 +812,6 @@ moc_mydialog.cpp: ui_ansifilter.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		mydialog.h \
 		moc_predefs.h \
@@ -843,7 +845,6 @@ main.o: main.cpp mydialog.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
@@ -853,7 +854,6 @@ mydialog.o: mydialog.cpp mydialog.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mydialog.o mydialog.cpp
@@ -868,7 +868,6 @@ plaintextgenerator.o: ../plaintextgenerator.cpp ../plaintextgenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o plaintextgenerator.o ../plaintextgenerator.cpp
@@ -877,7 +876,6 @@ codegenerator.o: ../codegenerator.cpp ../codegenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h \
 		../pangogenerator.h \
@@ -899,7 +897,6 @@ rtfgenerator.o: ../rtfgenerator.cpp ../charcodes.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rtfgenerator.o ../rtfgenerator.cpp
 
@@ -908,7 +905,6 @@ htmlgenerator.o: ../htmlgenerator.cpp ../htmlgenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o htmlgenerator.o ../htmlgenerator.cpp
@@ -918,7 +914,6 @@ pangogenerator.o: ../pangogenerator.cpp ../pangogenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pangogenerator.o ../pangogenerator.cpp
@@ -928,7 +923,6 @@ texgenerator.o: ../texgenerator.cpp ../texgenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../charcodes.h \
 		../version.h
@@ -939,7 +933,6 @@ latexgenerator.o: ../latexgenerator.cpp ../latexgenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o latexgenerator.o ../latexgenerator.cpp
@@ -949,7 +942,6 @@ bbcodegenerator.o: ../bbcodegenerator.cpp ../bbcodegenerator.h \
 		../elementstyle.h \
 		../stylecolour.h \
 		../enums.h \
-		../preformatter.h \
 		../stringtools.h \
 		../version.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bbcodegenerator.o ../bbcodegenerator.cpp

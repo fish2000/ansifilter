@@ -227,7 +227,7 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
             outDirectory = validateDirPath( arg );
             break;
         case 'w':
-            wrapLineLen=atoi(arg.c_str())-1;
+            wrapLineLen=atoi(arg.c_str());
             break;
         case 'W':
             opt_wrapNoNum=true;
