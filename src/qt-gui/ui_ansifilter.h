@@ -56,6 +56,7 @@ public:
     QCheckBox *cbIgnoreSequences;
     QCheckBox *cbFragment;
     QCheckBox *cbIgnClearSeq;
+    QCheckBox *cbDeriveStyles;
     QGroupBox *gbAsciiArt;
     QGridLayout *gridLayout_5;
     QHBoxLayout *horizontalLayout_3;
@@ -239,6 +240,11 @@ public:
         cbIgnClearSeq->setObjectName(QStringLiteral("cbIgnClearSeq"));
 
         gridLayout_2->addWidget(cbIgnClearSeq, 1, 1, 1, 1);
+
+        cbDeriveStyles = new QCheckBox(groupBox);
+        cbDeriveStyles->setObjectName(QStringLiteral("cbDeriveStyles"));
+
+        gridLayout_2->addWidget(cbDeriveStyles, 2, 0, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout_2);
@@ -558,6 +564,10 @@ public:
         cbIgnClearSeq->setToolTip(QApplication::translate("Dialog", "Do not adhere to clear (ESC K) commands", nullptr));
 #endif // QT_NO_TOOLTIP
         cbIgnClearSeq->setText(QApplication::translate("Dialog", "Ignore Clear Sequences", nullptr));
+#ifndef QT_NO_TOOLTIP
+        cbDeriveStyles->setToolTip(QApplication::translate("Dialog", "Generate Stylesheets based on the formatting information", nullptr));
+#endif // QT_NO_TOOLTIP
+        cbDeriveStyles->setText(QApplication::translate("Dialog", "Derive Stylesheets", nullptr));
         gbAsciiArt->setTitle(QApplication::translate("Dialog", "ANSI art options", nullptr));
 #ifndef QT_NO_TOOLTIP
         cbParseAsciiArt->setToolTip(QApplication::translate("Dialog", "Enable parsing of ANSI art files.", nullptr));
