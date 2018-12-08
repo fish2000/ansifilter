@@ -27,13 +27,12 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef HTMLGENERATOR_H
 #define HTMLGENERATOR_H
 
-#include <string>
-
 #include "codegenerator.h"
 
 namespace ansifilter
 {
 
+    
 /**
    \brief This class generates HTML.
 
@@ -61,6 +60,9 @@ protected:
     string getGeneratorComment();
 
     void insertLineNumber ();
+    
+    bool printDynamicStyleFile ( const string &outPath );
+
 
 private:
 
@@ -80,7 +82,9 @@ private:
     /** \return escaped character*/
     virtual string maskCharacter(unsigned char );
     virtual string maskCP437Character(unsigned char);
+    
 };
+
 
 }
 

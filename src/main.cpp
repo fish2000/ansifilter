@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
 
-    copyright            : (C) 2007-2017 by Andre Simon
+    copyright            : (C) 2007-2018 by Andre Simon
     email                : andre.simon1@gmx.de
 
    Highlight is a universal source code to HTML converter. Syntax highlighting
@@ -81,6 +81,7 @@ void ANSIFilterApp::printHelp()
     cout << "      --no-trailing-nl   Omit trailing newline\n";
     cout << "      --no-version-info  Omit version info comment\n";
     cout << "      --wrap-no-numbers  Omit line numbers of wrapped lines (assumes -l)\n";
+    cout << "      --derived-styles   Output dynamic stylesheets (assumes -H)\n";
     
     cout << "\nANSI art options:\n";
     cout << "      --art-cp437        Parse codepage 437 ANSI art (HTML and RTF output)\n";
@@ -164,13 +165,14 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setParseAsciiBin(options.parseAsciiBin());
         generator->setParseAsciiTundra(options.parseAsciiTundra());
         generator->setIgnoreClearSeq(options.ignoreClearSeq());
+        generator->setApplyDynStyles(options.applyDynStyles());
 
         generator->setAsciiArtSize(options.getAsciiArtWidth(), options.getAsciiArtHeight());
         generator->setOmitTrailingCR(options.omitTrailingCR());
         generator->setOmitVersionInfo(options.omitVersionInfo());
         
         ansifilter::ParseError error = generator->generateFile(inFileList[i], outFilePath);
-
+        
         if (error==ansifilter::BAD_INPUT) {
             std::cerr << "could not read input: " << inFileList[i] << "\n";
             failure=true;
@@ -180,6 +182,12 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         }
         ++i;
     }
+    
+    if (options.applyDynStyles() && !failure) {
+        string styleStyleSheetPath = outDirectory + "derived_styles.css";
+        generator->printDynamicStyleFile(styleStyleSheetPath);
+    }
+    
     return (failure) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 

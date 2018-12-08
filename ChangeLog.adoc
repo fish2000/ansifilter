@@ -1,5 +1,13 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.13
+
+08.12.2018
+
+ - line numbers do not trigger default style span in HTML (https://gitlab.com/saalen/ansifilter/issues/19)
+ - fixed line numbering in batch mode
+ - CLI: added --derived-styles option for HTML output (https://gitlab.com/saalen/ansifilter/issues/11)
+
 === ansifilter 2.12
 
 07.11.2018

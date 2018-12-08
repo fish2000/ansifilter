@@ -95,6 +95,7 @@ CodeGenerator::CodeGenerator(ansifilter::OutputType type)
      numberWrappedLines ( true ), //TODO add option
      numberCurrentLine(false),
      addAnchors(false),
+     applyDynStyles(false),
      omitVersionInfo(false),
      parseCP437(false),
      parseAsciiBin(false),
@@ -116,6 +117,8 @@ CodeGenerator::CodeGenerator(ansifilter::OutputType type)
      lineWrapLen(0)
 {
     elementStyle.setFgColour(rgb2html(workingPalette[0]));
+    // first style: default coloring
+    //documentStyles.push_back(StyleInfo ( rgb2html(workingPalette[0]).substr(1), "", false,  false, false, false, false));
 }
 
 CodeGenerator::~CodeGenerator()
@@ -200,6 +203,11 @@ void CodeGenerator::setPreformatting ( WrapMode lineWrappingStyle,
 {
     
     lineWrapLen = lineLength;
+}
+
+
+void CodeGenerator::setApplyDynStyles(bool flag) {
+    applyDynStyles = flag;
 }
 
 ParseError CodeGenerator::generateFile (const string &inFileName,
@@ -344,6 +352,13 @@ ParseError CodeGenerator::generateFileFromString (const string &sourceStr,
 
     return error;
 }
+
+
+bool CodeGenerator::printDynamicStyleFile ( const string &outPath )
+{
+    return true;
+}
+
 /*
   
  ESC[nL       Inserts n blank lines at cursor line.   (NANSI)
@@ -1053,6 +1068,7 @@ void CodeGenerator::processInput()
   bool isKSeq=false;
 
   bool omitNewLine=false;
+  lineNumber=0;
     
   if (parseCP437){
     allocateTermBuffer();

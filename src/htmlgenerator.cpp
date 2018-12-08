@@ -2,7 +2,7 @@
                      htmlgenerator.cpp  -  description
                              -------------------
 
-    copyright            : (C) 2007-2015 by Andre Simon
+    copyright            : (C) 2007-2018 by Andre Simon
     email                : andre.simon1@gmx.de
  ***************************************************************************/
 
@@ -26,6 +26,7 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #include "htmlgenerator.h"
 #include "version.h"
@@ -46,44 +47,79 @@ HtmlGenerator::HtmlGenerator ():
 string HtmlGenerator::getOpenTag()
 {
     ostringstream fmtStream;
+    string attrName("style");
 
-    if (elementStyle.isBold()) {
-        fmtStream<< "font-weight:bold;";
-    }
-    if (elementStyle.isItalic()) {
-        fmtStream<< "font-style:italic;";
-    }
-    if (elementStyle.isBlink()) {
-        fmtStream<< "text-decoration:blink;";
-    }
-    if (elementStyle.isUnderline()) {
-        fmtStream<< "text-decoration:underline;";
-    }
-    if (elementStyle.isConceal()) {
-        fmtStream<< "display:none;";
-    }
+    if (applyDynStyles){
+        attrName = "class";
+        
+        ostringstream fgColStream;
+         if (elementStyle.isFgColorSet()) {
+            fgColStream << elementStyle.getFgColour().getRed(HTML)
+                        << elementStyle.getFgColour().getGreen(HTML)
+                        << elementStyle.getFgColour().getBlue(HTML);
+         }
+                    
+        ostringstream bgColStream;
+        if (elementStyle.isBgColorSet()) {
 
-    if (elementStyle.isFgColorSet()) {
-        fmtStream << "color:#"
-                  << elementStyle.getFgColour().getRed(HTML)
-                  << elementStyle.getFgColour().getGreen(HTML)
-                  << elementStyle.getFgColour().getBlue(HTML)
-                  << ";";
-    }
+            bgColStream << elementStyle.getBgColour().getRed(HTML)
+                        << elementStyle.getBgColour().getGreen(HTML)
+                        << elementStyle.getBgColour().getBlue(HTML);
+        }                    
+        
+        StyleInfo sInfo( fgColStream.str(), bgColStream.str(), 
+                         elementStyle.isBold(), elementStyle.isItalic(), elementStyle.isConceal(), 
+                         elementStyle.isBlink(), elementStyle.isUnderline() );
+        
+        std::vector<StyleInfo>::iterator fit = std::find(documentStyles.begin(), documentStyles.end(), sInfo );
+        if (fit == documentStyles.end()){
+            documentStyles.push_back(sInfo);
+            fmtStream << "af_"<< documentStyles.size();
+        } else {
+            fmtStream << "af_"<< 1+(int)std::distance(documentStyles.begin(), fit);
+        }
+            
+    } else {
+    
+        if (elementStyle.isBold()) {
+            fmtStream<< "font-weight:bold;";
+        }
+        if (elementStyle.isItalic()) {
+            fmtStream<< "font-style:italic;";
+        }
+        if (elementStyle.isBlink()) {
+            fmtStream<< "text-decoration:blink;";
+        }
+        if (elementStyle.isUnderline()) {
+            fmtStream<< "text-decoration:underline;";
+        }
+        if (elementStyle.isConceal()) {
+            fmtStream<< "display:none;";
+        }
 
-    if (elementStyle.isBgColorSet()) {
-        fmtStream <<"background-color:#"
-                  << elementStyle.getBgColour().getRed(HTML)
-                  << elementStyle.getBgColour().getGreen(HTML)
-                  << elementStyle.getBgColour().getBlue(HTML)
-                  <<";";
+        if (elementStyle.isFgColorSet()) {
+            fmtStream << "color:#"
+                    << elementStyle.getFgColour().getRed(HTML)
+                    << elementStyle.getFgColour().getGreen(HTML)
+                    << elementStyle.getFgColour().getBlue(HTML)
+                    << ";";
+        }
+
+        if (elementStyle.isBgColorSet()) {
+            fmtStream <<"background-color:#"
+                    << elementStyle.getBgColour().getRed(HTML)
+                    << elementStyle.getBgColour().getGreen(HTML)
+                    << elementStyle.getBgColour().getBlue(HTML)
+                    <<";";
+        }
     }
+    
 
     string fmt  = fmtStream.str();
     tagIsOpen = fmt.size()>0;
     if (tagIsOpen) {
         ostringstream spanTag;
-        spanTag<< "<span style=\""<<fmt<<"\">";
+        spanTag<< "<span "<<attrName<<"=\""<<fmt<<"\">";
         return spanTag.str();
     }
     return "";
@@ -125,6 +161,9 @@ string HtmlGenerator::getHeader()
         os << "  color: #e5e5e5;\n";
     }
     os << "}\n\n";
+    os << "span.af_line {\n";
+    os << "  color: gray;\n";
+    os << "}\n\n";
     
     if (parseCP437||parseAsciiBin || parseAsciiTundra) {
      os << "body {  background-color: black; } \n";
@@ -156,6 +195,59 @@ string HtmlGenerator::getFooter()
 void HtmlGenerator::printBody()
 {
     processInput();
+}
+
+bool HtmlGenerator::printDynamicStyleFile ( const string &outPath ) {
+
+    //do not overwrite
+    ifstream infile(outPath.c_str());
+    if (infile.good()) return true;
+    
+    ofstream indexfile ( outPath.c_str() );
+
+    if ( !indexfile.fail() ) {
+        indexfile << "/* CSS generated by ansifilter - styles derived from document formatting\n   Ansifilter will not overwrite this file\n*/\n";
+        
+        for (unsigned int i=0; i<documentStyles.size();i++){
+            StyleInfo sInfo = documentStyles[i];
+            indexfile << "span.af_" << (i+1) <<" {";
+        
+            if (sInfo.isBold) {
+                indexfile<< "font-weight:bold;";
+            }
+            if (sInfo.isItalic) {
+                indexfile<< "font-style:italic;";
+            }
+            if (sInfo.isBlink) {
+                indexfile<< "text-decoration:blink;";
+            }
+            if (sInfo.isUnderLine) {
+                indexfile<< "text-decoration:underline;";
+            }
+            if (sInfo.isConcealed) {
+                indexfile<< "display:none;";
+            }
+
+            if (sInfo.fgColor!="") {
+                indexfile << "color:#"
+                          << sInfo.fgColor
+                          << ";";
+            }
+
+            if (sInfo.bgColor!="") {
+                indexfile << "background-color:#"
+                          << sInfo.bgColor
+                          << ";";
+            }
+            
+            indexfile << "}\n";
+        }
+
+        
+    } else {
+        return false;
+    }
+    return true;
 }
 
 string HtmlGenerator::maskCharacter(unsigned char c)
@@ -717,17 +809,17 @@ void HtmlGenerator::insertLineNumber ()
         ostringstream lnum;
         lnum << setw ( 5 ) << right;
         if( numberCurrentLine ) {
-            *out << getCloseTag();
+            //*out << getCloseTag();
             lnum << lineNumber;
             *out << "<span";
 
             if (addAnchors) {
                 *out << " id=\"l_" << lineNumber<< "\" ";
             }
-            *out << " style=\"color:gray;\">";
+            *out << " class=\"af_line\">";
 
             *out <<lnum.str() <<"</span> ";
-            *out << getOpenTag();
+            //*out << getOpenTag();
         } else {
             *out << lnum.str(); //for indentation
         }

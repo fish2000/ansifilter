@@ -121,6 +121,11 @@ public:
     /** \return True if clear sequences (ESC K) should be ignored */
     bool ignoreClearSeq() const;
 
+    /** \return True if output should contain dynamic style classes instead of inline styles */
+    bool applyDynStyles() const;
+    
+    /** \return True if dynamic styles should be saved to a file */
+    bool genDynStyles() const;
     
     /** \return Document title */
     string getDocumentTitle() const ;
@@ -154,6 +159,9 @@ private:
     bool opt_omit_trailing_cr;
     bool opt_omit_version_info;
     bool opt_ignoreClear;
+    
+    bool opt_applyDynStyles;
+    bool opt_genDynStyles;
 
     
     // name of single output file
