@@ -66,7 +66,7 @@ void ANSIFilterApp::printHelp()
     cout << "  -R, --rtf              Output RTF\n";
     cout << "  -B, --bbcode           Output BBCode\n";
     cout << "\nFormat options:\n";
-    cout << "  -a, --anchors          Add HTML line anchors (assumes -l)\n";
+    cout << "  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)\n";
     cout << "  -d, --doc-title        Set HTML/LaTeX document title\n";
     cout << "  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
@@ -160,7 +160,7 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setPreformatting(ansifilter::WRAP_SIMPLE, options.getWrapLineLength());
         generator->setShowLineNumbers(options.showLineNumbers());
         generator->setWrapNoNumbers(!options.wrapNoNumbers());
-        generator->setAddAnchors(options.addAnchors());
+        generator->setAddAnchors(options.addAnchors(), options.addFunnyAnchors());
         generator->setParseCodePage437(options.parseCP437());
         generator->setParseAsciiBin(options.parseAsciiBin());
         generator->setParseAsciiTundra(options.parseAsciiTundra());

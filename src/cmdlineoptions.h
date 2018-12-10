@@ -127,6 +127,9 @@ public:
     /** \return True if dynamic styles should be saved to a file */
     bool genDynStyles() const;
     
+    bool addFunnyAnchors() const;
+
+    
     /** \return Document title */
     string getDocumentTitle() const ;
 
@@ -162,6 +165,7 @@ private:
     
     bool opt_applyDynStyles;
     bool opt_genDynStyles;
+    bool opt_funny_anchors;
 
     
     // name of single output file

@@ -236,9 +236,10 @@ public:
     }
 
     /** \param b set to true if HTML anchors should be added to line numbers */
-    void setAddAnchors(bool b)
+    void setAddAnchors(bool b, bool self=false)
     {
         addAnchors=b;
+        addFunnyAnchors=self;
     }
 
     /** \param b set to true if the input stream is not closed after reaching EOF */
@@ -361,6 +362,8 @@ protected:
          numberWrappedLines,  ///< also show number of wrapped lines
          numberCurrentLine,   ///< output number of current line
          addAnchors,          ///< add HTML anchor to line number
+         addFunnyAnchors,     ///< add HTML links to themselves
+
          applyDynStyles;      ///< insert dynamic style references instead of inline styles 
     
     bool omitVersionInfo;     ///< do not print version info comment

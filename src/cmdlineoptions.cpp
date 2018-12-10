@@ -36,7 +36,7 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 using namespace std;  
     
 const Arg_parser::Option options[] = {
-    { 'a', "anchors",    Arg_parser::no },
+    { 'a', "anchors",    Arg_parser::maybe },
     { 'd', "doc-title",  Arg_parser::yes },
     { 'e', "encoding",   Arg_parser::yes },
     { 'f', "fragment",   Arg_parser::no  },
@@ -71,7 +71,7 @@ const Arg_parser::Option options[] = {
     { 'C', "no-version-info", Arg_parser::no  },
     { 'k', "ignore-clear",    Arg_parser::no  },
     { 'y', "derived-styles",  Arg_parser::no  },
-    
+   
     {  0,  0,           Arg_parser::no  }
 };
 
@@ -93,6 +93,7 @@ CmdLineOptions::CmdLineOptions( const int argc, const char *argv[] ):
     opt_ignoreClear(false),
     opt_applyDynStyles(false),
     opt_genDynStyles(false),
+    opt_funny_anchors(false),
     encodingName("ISO-8859-1"),
     font("Courier New"),
     fontSize("10pt"),
@@ -161,6 +162,7 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
         */
         case 'a':
             opt_anchors = true;
+            if ( arg=="self" ) opt_funny_anchors=true;
             break;
         case 'B':
             outputType = ansifilter::BBCODE;
@@ -422,6 +424,11 @@ bool CmdLineOptions::addAnchors() const
 {
     return opt_anchors;
 }
+bool CmdLineOptions::addFunnyAnchors() const
+{
+    return opt_funny_anchors;
+}
+
 bool CmdLineOptions::omitEncoding() const
 {
     return StringTools::lowerCase(encodingName)=="none";

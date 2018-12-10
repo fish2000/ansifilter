@@ -161,8 +161,9 @@ string HtmlGenerator::getHeader()
         os << "  color: #e5e5e5;\n";
     }
     os << "}\n\n";
-    os << "span.af_line {\n";
+    os << ".af_line {\n";
     os << "  color: gray;\n";
+    os << "  text-decoration: none;\n";
     os << "}\n\n";
     
     if (parseCP437||parseAsciiBin || parseAsciiTundra) {
@@ -195,6 +196,34 @@ string HtmlGenerator::getFooter()
 void HtmlGenerator::printBody()
 {
     processInput();
+}
+
+void HtmlGenerator::insertLineNumber ()
+{
+  if ( showLineNumbers && !parseCP437) {
+
+        ostringstream lnum;
+        lnum << setw ( 5 ) << right;
+        if ( numberCurrentLine ) {
+            //*out << getCloseTag();
+            lnum << lineNumber;
+            if (addFunnyAnchors)
+                *out << "<a href=\"#l_" << lineNumber<< "\"";
+            else
+                *out << "<span";
+
+            if (addAnchors) {
+                *out << " id=\"l_" << lineNumber<< "\" ";
+            }
+            *out << " class=\"af_line\">";
+
+            *out <<lnum.str() << ( addFunnyAnchors  ? "</a> " : "</span> ");
+            //*out << getOpenTag();
+        } else {
+            *out << lnum.str(); //for indentation
+        }
+    }
+
 }
 
 bool HtmlGenerator::printDynamicStyleFile ( const string &outPath ) {
@@ -801,30 +830,5 @@ string HtmlGenerator::maskCP437Character(unsigned char c)
         }
   }
 };
-
-void HtmlGenerator::insertLineNumber ()
-{
-  if ( showLineNumbers && !parseCP437) {
-
-        ostringstream lnum;
-        lnum << setw ( 5 ) << right;
-        if( numberCurrentLine ) {
-            //*out << getCloseTag();
-            lnum << lineNumber;
-            *out << "<span";
-
-            if (addAnchors) {
-                *out << " id=\"l_" << lineNumber<< "\" ";
-            }
-            *out << " class=\"af_line\">";
-
-            *out <<lnum.str() <<"</span> ";
-            //*out << getOpenTag();
-        } else {
-            *out << lnum.str(); //for indentation
-        }
-    }
-
-}
 
 }
