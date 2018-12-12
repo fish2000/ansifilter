@@ -320,6 +320,16 @@
           </property>
          </widget>
         </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="cbDeriveStyles">
+          <property name="toolTip">
+           <string>Generate Stylesheets based on the formatting information</string>
+          </property>
+          <property name="text">
+           <string>Derive Stylesheets</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>

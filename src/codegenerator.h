@@ -1,7 +1,7 @@
 /***************************************************************************
                           codegenerator.h  -  description
                              -------------------
-    copyright            : (C) 2007-2017 by Andre Simon
+    copyright            : (C) 2007-2018 by Andre Simon
     email                : andre.simon1@gmx.de
  ***************************************************************************/
 
@@ -28,6 +28,7 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 #include <iomanip>
 
 // Avoid problems with isspace and UTF-8 characters, use iswspace instead
@@ -49,6 +50,67 @@ namespace ansifilter
     unsigned char c;
     ElementStyle style;
   };
+  
+  
+  class StyleInfo
+{
+public:
+
+    /// Constructor
+    StyleInfo() :  fgColor ( "" ), bgColor ( "" ),  isBold (false),isItalic (false),isConcealed (false), isBlink (false), isUnderLine (false)
+    {
+    }
+
+    /// Constructor
+    StyleInfo (  const string& fgc, const string& bgc, bool b, bool i, bool c, bool blink, bool ul ) :
+        fgColor ( fgc ), bgColor ( bgc ),isBold ( b ), isItalic ( i ), isConcealed ( c ), isBlink (blink), isUnderLine (ul)
+    {
+    }
+
+    /// Copy Constructor
+    StyleInfo ( const StyleInfo& other )
+    {
+        fgColor = other.fgColor;
+        bgColor = other.bgColor;
+
+        isItalic = other.isItalic;
+        isBold = other.isBold;
+        isConcealed=other.isConcealed;
+        isBlink = other.isBlink;
+        isUnderLine = other.isUnderLine;
+    }
+
+    /// Operator overloading
+    StyleInfo& operator= ( const StyleInfo & other )
+    {
+        fgColor = other.fgColor;
+        bgColor = other.bgColor;
+
+        isItalic = other.isItalic;
+        isBold = other.isBold;
+        isConcealed=other.isConcealed;
+        isBlink = other.isBlink;
+        isUnderLine = other.isUnderLine;
+
+        return *this;
+    }
+    
+    
+    bool operator==(const StyleInfo& r)
+    {
+        return this->fgColor==r.fgColor && this->bgColor==r.bgColor && this->isBold==r.isBold && this->isItalic==r.isItalic && this->isConcealed==r.isConcealed && this->isBlink==r.isBlink && this->isUnderLine==r.isUnderLine;
+              
+    }
+
+    ~StyleInfo()
+    {
+    }
+
+    string fgColor;    ///< foreground color
+    string bgColor;    ///< background color
+    bool isBold, isItalic, isConcealed, isBlink, isUnderLine;  ///< style properties
+   };
+
   
   
 /** \brief Base class for escape sequence parsing.
@@ -115,6 +177,12 @@ public:
     ParseError generateFileFromString (const string &sourceStr,
                                        const string &outFileName,
                                        const string &title);
+
+    /** Generate a stylesheet with the styles found in the document
+    \param outPath Output path
+    \return true if successfull
+     */
+    virtual bool printDynamicStyleFile ( const string &outPath );
     
     /**
      Overrides default colours by user defined values; resets palette to default if mapPath is empty
@@ -168,9 +236,10 @@ public:
     }
 
     /** \param b set to true if HTML anchors should be added to line numbers */
-    void setAddAnchors(bool b)
+    void setAddAnchors(bool b, bool self=false)
     {
         addAnchors=b;
+        addFunnyAnchors=self;
     }
 
     /** \param b set to true if the input stream is not closed after reaching EOF */
@@ -229,6 +298,12 @@ public:
     /** \param b set dimensions of ASCII art virtual console */
     void setAsciiArtSize(int width, int height);
     
+    /** tell parser to use dynamic stylesheets derived from the document's formatting 
+       \param  flag true 
+    */
+    void setApplyDynStyles(bool flag);
+
+    
 protected:
 
     /** \param type Output type */
@@ -283,15 +358,18 @@ protected:
 
     /** Current line number */
     unsigned int lineNumber;
-    bool showLineNumbers,      ///< show line numbers
+    bool showLineNumbers,     ///< show line numbers
          numberWrappedLines,  ///< also show number of wrapped lines
          numberCurrentLine,   ///< output number of current line
-         addAnchors;          ///< add HTML anchor to line number
+         addAnchors,          ///< add HTML anchor to line number
+         addFunnyAnchors,     ///< add HTML links to themselves
+
+         applyDynStyles;      ///< insert dynamic style references instead of inline styles 
     
-    bool omitVersionInfo;   ///< do not print version info comment
-    bool parseCP437; ///< treat input as CP437 file
-    bool parseAsciiBin; ///< treat input as BIN or XBIN file
-    bool parseAsciiTundra; ///< treat input as Tundra file
+    bool omitVersionInfo;     ///< do not print version info comment
+    bool parseCP437;          ///< treat input as CP437 file
+    bool parseAsciiBin;       ///< treat input as BIN or XBIN file
+    bool parseAsciiTundra;    ///< treat input as Tundra file
          
     /** Processes input data */
     void processInput();
@@ -312,11 +390,13 @@ protected:
     
     string rgb2html(int r, int g, int b);
     
-        /// 16 basic colors
+    /// 16 basic colors
     static unsigned char workingPalette[16][3];
     static unsigned char defaultPalette[16][3];
     
     ElementStyle elementStyle;
+    
+    vector<StyleInfo> documentStyles;
 
 private:
 
@@ -370,8 +450,8 @@ private:
     
     TDChar* termBuffer;
     int curX, curY, memX, memY, maxY; ///< cursor position for Codepage 437 sequences
-    int asciiArtWidth;  ///< virtual console column count
-    int asciiArtHeight; ///< virtual console line count
+    int asciiArtWidth;        ///< virtual console column count
+    int asciiArtHeight;       ///< virtual console line count
     unsigned int lineWrapLen; ///< max line length before wrapping
 
     
@@ -403,7 +483,6 @@ private:
      /** @return true if stream begins with Tundra id  */
     bool streamIsTundra();
    
-    
     /// the 6 value iterations in the xterm color cube
     static const unsigned char valuerange[] ;
 };

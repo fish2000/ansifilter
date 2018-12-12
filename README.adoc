@@ -1,6 +1,6 @@
 = ANSIFILTER MANUAL
 André Simon
-v2.11, October 2018
+v2.13, December 2018
 
 
 OSI Certified Open Source Software
@@ -14,6 +14,7 @@ output (HTML, RTF, TeX, LaTeX, BBCode, Pango).
 ===  Quick introduction
 
 ................................................................................
+
 Invocation: ansifilter [OPTION]... [FILE]...
 
 ansifilter handles text files containing ANSI terminal escape codes.
@@ -34,7 +35,7 @@ Output text formats:
   -B, --bbcode           Output BBCode
 
 Format options:
-  -a, --anchors          Add HTML line anchors (assumes -l)
+  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)
   -d, --doc-title        Set HTML/LaTeX document title
   -e, --encoding         Set HTML/RTF encoding (must match input file encoding)
   -f, --fragment         Omit HTML header and footer
@@ -49,9 +50,10 @@ Format options:
       --no-trailing-nl   Omit trailing newline
       --no-version-info  Omit version info comment
       --wrap-no-numbers  Omit line numbers of wrapped lines (assumes -l)
+      --derived-styles   Output dynamic stylesheets (assumes -H)
 
 ANSI art options:
-      --art-cp437        Parse codepage 437 ANSI art (HTML, RTF output)
+      --art-cp437        Parse codepage 437 ANSI art (HTML and RTF output)
       --art-bin          Parse BIN/XBIN ANSI art (HTML output, no stdin)
       --art-tundra       Parse Tundra ANSI art (HTML output, no stdin)
       --art-width        Set ANSI art width (default 80)

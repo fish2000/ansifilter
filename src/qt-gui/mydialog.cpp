@@ -66,6 +66,7 @@ MyDialog::MyDialog(QWidget * parent, Qt::WindowFlags f):QDialog(parent, f)
     dlg.sbWidth->setValue(settings.value("width").toInt());
     dlg.sbHeight->setValue(settings.value("height").toInt());
     dlg.cbIgnClearSeq->setChecked(settings.value("ignoreclearseq").toBool());
+    dlg.cbDeriveStyles->setChecked(settings.value("derivestyles").toBool());
 
     settings.endGroup();
     settings.beginGroup("paths");
@@ -106,6 +107,8 @@ void MyDialog::closeEvent(QCloseEvent *event)
     settings.setValue("ignoreclearseq", dlg.cbIgnClearSeq->isChecked());
     settings.setValue("parseart", dlg.cbParseAsciiArt->isChecked());
     settings.setValue("cbOmitVersion", dlg.cbOmitVersion->isChecked());
+    settings.setValue("derivestyles", dlg.cbDeriveStyles->isChecked());
+
     settings.setValue("ansiformat", dlg.comboAnsiFormat->currentIndex());
     settings.setValue("encoding", dlg.comboEncoding->currentIndex());
     settings.setValue("format", dlg.comboFormat->currentIndex());
@@ -179,6 +182,7 @@ void MyDialog::plausibility()
     dlg.comboEncoding->setEnabled(selIdx==1 || selIdx==2 ||selIdx==3);
     dlg.leTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4);
     dlg.lblTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4);
+    dlg.cbDeriveStyles->setEnabled(selIdx==1);
 
     dlg.comboFont->setEnabled(selIdx==1||selIdx==2||selIdx==6);
     dlg.cbOmitVersion->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
@@ -262,6 +266,11 @@ void MyDialog::on_pbSaveAs_clicked()
     generator->setOmitVersionInfo(dlg.cbOmitVersion->isChecked());
 
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+    generator->setApplyDynStyles(dlg.cbDeriveStyles->isChecked());
+
+    if (dlg.leStyleFile->text().isEmpty() && dlg.cbDeriveStyles->isChecked()&& dlg.comboFormat->currentIndex()==1)
+        dlg.leStyleFile->setText("derived_styles.css");
+
     generator->setStyleSheet(dlg.leStyleFile->text().toStdString());
 
     if (dlg.cbParseAsciiArt->isChecked()){
@@ -280,7 +289,7 @@ void MyDialog::on_pbSaveAs_clicked()
     }
 
     generator->setFont(dlg.comboFont->currentFont().family().toStdString());
-    generator->setPreformatting ( ansifilter::WRAP_SIMPLE, dlg.spinBoxWrap->value());
+    generator->setPreformatting ( ansifilter::WRAP_SIMPLE, static_cast<unsigned int>(dlg.spinBoxWrap->value()) );
     generator->setFontSize("10pt"); //TODO TeX?
 
     if (!generator->setColorMap(dlg.leColorMapPath->text().toStdString())){
@@ -296,6 +305,12 @@ void MyDialog::on_pbSaveAs_clicked()
         QMessageBox::warning(this, "IO Error", "Could not read input file");
     } else {
         outputFileName = outFileName;
+
+        if (dlg.cbDeriveStyles->isChecked() && dlg.comboFormat->currentIndex()==1) {
+            QString styleStyleSheetPath =  QFileInfo(outFileName).absolutePath()  + QDir::separator() + "derived_styles.css";
+            QMessageBox::warning(this, "Color Mapping Error", styleStyleSheetPath);
+            generator->printDynamicStyleFile(styleStyleSheetPath.toStdString());
+        }
     }
     this->setCursor(Qt::ArrowCursor);
 
@@ -311,7 +326,7 @@ void MyDialog::on_pbClipboard_clicked()
     }
 	
     unique_ptr<ansifilter::CodeGenerator> generator(ansifilter::CodeGenerator::getInstance(ansifilter::TEXT));
-    generator->setPreformatting ( ansifilter::WRAP_SIMPLE, dlg.spinBoxWrap->value());
+    generator->setPreformatting ( ansifilter::WRAP_SIMPLE, static_cast<unsigned int>(dlg.spinBoxWrap->value()));
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
 
     QString outString = QString(generator->generateStringFromFile( inputFileName.toStdString ()).c_str() ) ;
@@ -365,7 +380,7 @@ void MyDialog::showFile()
     }
 
     generator->setFont(dlg.comboFont->currentFont().family().toStdString());
-    generator->setPreformatting ( ansifilter::WRAP_SIMPLE, dlg.spinBoxWrap->value());
+    generator->setPreformatting ( ansifilter::WRAP_SIMPLE, static_cast<unsigned int>(dlg.spinBoxWrap->value()) );
     generator->setFontSize("10pt");
     if (!generator->setColorMap(dlg.leColorMapPath->text().toStdString())){
         QMessageBox::warning(this, "Color Mapping Error", "Could not read color map");

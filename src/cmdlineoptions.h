@@ -2,7 +2,7 @@
                           cmdlineoptions.h  -  description
                              -------------------
     begin                : Sun Oct 13 2007
-    copyright            : (C) 2007-2017 by Andre Simon
+    copyright            : (C) 2007-2018 by Andre Simon
     email                : andre.simon1@gmx.de
  ***************************************************************************/
 
@@ -121,6 +121,14 @@ public:
     /** \return True if clear sequences (ESC K) should be ignored */
     bool ignoreClearSeq() const;
 
+    /** \return True if output should contain dynamic style classes instead of inline styles */
+    bool applyDynStyles() const;
+    
+    /** \return True if dynamic styles should be saved to a file */
+    bool genDynStyles() const;
+    
+    bool addFunnyAnchors() const;
+
     
     /** \return Document title */
     string getDocumentTitle() const ;
@@ -154,6 +162,10 @@ private:
     bool opt_omit_trailing_cr;
     bool opt_omit_version_info;
     bool opt_ignoreClear;
+    
+    bool opt_applyDynStyles;
+    bool opt_genDynStyles;
+    bool opt_funny_anchors;
 
     
     // name of single output file
