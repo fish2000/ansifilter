@@ -308,7 +308,6 @@ void MyDialog::on_pbSaveAs_clicked()
 
         if (dlg.cbDeriveStyles->isChecked() && dlg.comboFormat->currentIndex()==1) {
             QString styleStyleSheetPath =  QFileInfo(outFileName).absolutePath()  + QDir::separator() + "derived_styles.css";
-            QMessageBox::warning(this, "Color Mapping Error", styleStyleSheetPath);
             generator->printDynamicStyleFile(styleStyleSheetPath.toStdString());
         }
     }
