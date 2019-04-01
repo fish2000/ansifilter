@@ -37,7 +37,8 @@ enum OutputType {
     TEX,
     LATEX,
     RTF,
-    BBCODE
+    BBCODE,
+    SVG
 };
 
 /** line wrapping modes*/

@@ -2,7 +2,7 @@
                           codegenerator.h  -  description
                              -------------------
     copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
  ***************************************************************************/
 
 /*
@@ -302,6 +302,12 @@ public:
        \param  flag true 
     */
     void setApplyDynStyles(bool flag);
+    
+    /** Set SVG dimensions
+        \param w page width
+        \param h page height
+    */
+    void setSVGSize ( const string& w, const string& h );
 
     
 protected:
@@ -322,6 +328,9 @@ protected:
     /** Tag for inserting line feeds*/
     string newLineTag;
 
+    /** SVG document dimensions */
+    string width, height;
+        
     /** file input*/
     istream *in;
 

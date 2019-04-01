@@ -153,7 +153,7 @@ Example file content:
 === Contact
 
 Andre Simon
-andre.simon1@gmx.de
+a.simon@mailbox.org
 http://www.andre-simon.de/
 
 Github project with Git repository, bug tracker:

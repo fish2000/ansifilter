@@ -2,7 +2,7 @@
                           version.h  -  description
                              -------------------
     copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
  ***************************************************************************/
 
 /*
@@ -25,9 +25,9 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef VERSION_H
 #define VERSION_H
 
-#define ANSIFILTER_VERSION "2.13"
+#define ANSIFILTER_VERSION "2.14"
 
 #define ANSIFILTER_URL   "http://www.andre-simon.de/"
-#define ANSIFILTER_EMAIL "andre.simon1@gmx.de"
+#define ANSIFILTER_EMAIL "a.simon@mailbox.org"
 
 #endif

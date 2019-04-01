@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun Oct 13 2007
     copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
  ***************************************************************************/
 
 /*
@@ -71,6 +71,10 @@ const Arg_parser::Option options[] = {
     { 'C', "no-version-info", Arg_parser::no  },
     { 'k', "ignore-clear",    Arg_parser::no  },
     { 'y', "derived-styles",  Arg_parser::no  },
+    { 'S', "svg",        Arg_parser::no  },
+    { 'Q', "width",      Arg_parser::yes  },
+    { 'E', "height",     Arg_parser::yes  },
+
    
     {  0,  0,           Arg_parser::no  }
 };
@@ -215,6 +219,9 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
         case 'R':
             outputType = ansifilter::RTF;
             break;
+        case 'S':
+            outputType = ansifilter::SVG;
+            break;
         case 's':
             fontSize = arg;
             break;
@@ -264,6 +271,13 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
         case 'y':
             opt_applyDynStyles=true;
             break;
+        case 'Q':
+            width=arg;
+            break;
+        case 'E':
+            height=arg;
+            break;
+        
         default:
             cerr << "ansifilter: option parsing failed" << endl;
         }
@@ -380,6 +394,9 @@ string CmdLineOptions::getOutFileSuffix()const
         return ".tex";
     case ansifilter::BBCODE:
         return ".bbcode";
+    case ansifilter::SVG:
+        return ".svg";
+    
     default:
         return ".txt";
     }
@@ -472,3 +489,12 @@ int CmdLineOptions::getWrapLineLength() const
     return wrapLineLen;
 }
 
+string CmdLineOptions::getWidth() const
+{
+    return width;
+}
+
+string CmdLineOptions::getHeight() const
+{
+    return height;
+}

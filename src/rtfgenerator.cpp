@@ -2,7 +2,7 @@
                           rtfcode.cpp  -  description
                              -------------------
     copyright            : (C) 2007-2017 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
  ***************************************************************************/
 
 /*

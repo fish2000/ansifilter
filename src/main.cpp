@@ -3,7 +3,7 @@
                              -------------------
 
     copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
 
    Highlight is a universal source code to HTML converter. Syntax highlighting
    is formatted by Cascading Style Sheets. It's possible to easily enhance
@@ -39,7 +39,7 @@ void ANSIFilterApp::printVersionInfo()
 {
     cout << "\n ansifilter version "
          << ANSIFILTER_VERSION
-         << "\n Copyright (C) 2007-2018 Andre Simon <andre.simon1 at gmx.de>"
+         << "\n Copyright (C) 2007-2018 Andre Simon <a dot simon at mailbox.org>"
          << "\n\n Argparser class"
          << "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>"
          << "\n\n This software is released under the terms of the GNU General "
@@ -64,6 +64,7 @@ void ANSIFilterApp::printHelp()
     cout << "  -L, --latex            Output LaTeX\n";
     cout << "  -P, --tex              Output Plain TeX\n";
     cout << "  -R, --rtf              Output RTF\n";
+    cout << "  -S, --svg              Output SVG\n";
     cout << "  -B, --bbcode           Output BBCode\n";
     cout << "\nFormat options:\n";
     cout << "  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)\n";
@@ -90,6 +91,10 @@ void ANSIFilterApp::printHelp()
     cout << "      --art-width        Set ANSI art width (default 80)\n";
     cout << "      --art-height       Set ANSI art height (default 150)\n";
     
+    cout << "\nSVG output options:\n";
+    cout << "      --height           set image height (units allowed)\n";
+    cout << "      --width            set image width (see --height)\n";
+
     cout << "\nOther options:\n";
     cout << "  -h, --help             Print help\n";
     cout << "  -v, --version          Print version and license info\n";
@@ -170,6 +175,8 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setAsciiArtSize(options.getAsciiArtWidth(), options.getAsciiArtHeight());
         generator->setOmitTrailingCR(options.omitTrailingCR());
         generator->setOmitVersionInfo(options.omitVersionInfo());
+        
+        generator->setSVGSize ( options.getWidth(), options.getHeight() );
         
         ansifilter::ParseError error = generator->generateFile(inFileList[i], outFilePath);
         
