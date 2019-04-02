@@ -67,6 +67,8 @@ MyDialog::MyDialog(QWidget * parent, Qt::WindowFlags f):QDialog(parent, f)
     dlg.sbHeight->setValue(settings.value("height").toInt());
     dlg.cbIgnClearSeq->setChecked(settings.value("ignoreclearseq").toBool());
     dlg.cbDeriveStyles->setChecked(settings.value("derivestyles").toBool());
+    dlg.leSvgWidth->setText(settings.value("svgwidth").toString());
+    dlg.leSvgHeight->setText(settings.value("svgheight").toString());
 
     settings.endGroup();
     settings.beginGroup("paths");
@@ -116,6 +118,9 @@ void MyDialog::closeEvent(QCloseEvent *event)
     settings.setValue("linewrap", dlg.spinBoxWrap->value());
     settings.setValue("width", dlg.sbWidth->value());
     settings.setValue("height", dlg.sbHeight->value());
+       settings.setValue("svgheight", dlg.leSvgHeight->text());
+       settings.setValue("svgwidth", dlg.leSvgWidth->text());
+
     settings.endGroup();
     settings.beginGroup("paths");
     settings.setValue("infile", inputFileName);
@@ -180,14 +185,14 @@ void MyDialog::plausibility()
 
     dlg.lblEncoding->setEnabled(selIdx==1|| selIdx==2 || selIdx==3);
     dlg.comboEncoding->setEnabled(selIdx==1 || selIdx==2 ||selIdx==3);
-    dlg.leTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4);
-    dlg.lblTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4);
-    dlg.cbDeriveStyles->setEnabled(selIdx==1);
+    dlg.leTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4|| selIdx==7);
+    dlg.lblTitle->setEnabled(selIdx==1||selIdx==3||selIdx==4|| selIdx==7);
+    dlg.cbDeriveStyles->setEnabled(selIdx==1|| selIdx==7);
 
-    dlg.comboFont->setEnabled(selIdx==1||selIdx==2||selIdx==6);
-    dlg.cbOmitVersion->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
-    dlg.leStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
-    dlg.lblStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4);
+    dlg.comboFont->setEnabled(selIdx==1||selIdx==2||selIdx==6|| selIdx==7);
+    dlg.cbOmitVersion->setEnabled(selIdx==1|| selIdx==3 || selIdx==4|| selIdx==7);
+    dlg.leStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4|| selIdx==7);
+    dlg.lblStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4|| selIdx==7);
 
     // dlg.gbAsciiArt->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.comboAnsiFormat->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
@@ -198,6 +203,12 @@ void MyDialog::plausibility()
     dlg.sbWidth->setEnabled(dlg.gbAsciiArt->isEnabled());
     dlg.cbIgnClearSeq->setEnabled(!dlg.cbParseAsciiArt->isChecked());
     dlg.cbWatchFile->setEnabled(!dlg.cbParseAsciiArt->isChecked());
+
+    dlg.leSvgHeight->setEnabled(selIdx==7);
+    dlg.leSvgWidth->setEnabled(selIdx==7);
+    dlg.lblSvgDim->setEnabled(selIdx==7);
+
+
 }
 
 ansifilter::OutputType MyDialog::getOutputType()
@@ -216,6 +227,9 @@ ansifilter::OutputType MyDialog::getOutputType()
         return ansifilter::BBCODE;
     case 6:
         return ansifilter::PANGO;
+    case 7:
+        return ansifilter::SVG;
+
     }
     return ansifilter::TEXT;
 }
@@ -235,6 +249,8 @@ QString MyDialog::getOutFileSuffix()
         return ".bbcode";
     case 6:
         return ".pango";
+    case 7:
+        return ".svg";
     }
     return ".txt";
 }
@@ -268,7 +284,10 @@ void MyDialog::on_pbSaveAs_clicked()
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
     generator->setApplyDynStyles(dlg.cbDeriveStyles->isChecked());
 
-    if (dlg.leStyleFile->text().isEmpty() && dlg.cbDeriveStyles->isChecked()&& dlg.comboFormat->currentIndex()==1)
+    generator->setSVGSize(dlg.leSvgWidth->text().toStdString(), dlg.leSvgHeight->text().toStdString());
+
+
+    if (dlg.leStyleFile->text().isEmpty() && dlg.cbDeriveStyles->isChecked()&& (dlg.comboFormat->currentIndex()==1 || dlg.comboFormat->currentIndex()==7) )
         dlg.leStyleFile->setText("derived_styles.css");
 
     generator->setStyleSheet(dlg.leStyleFile->text().toStdString());
@@ -306,7 +325,7 @@ void MyDialog::on_pbSaveAs_clicked()
     } else {
         outputFileName = outFileName;
 
-        if (dlg.cbDeriveStyles->isChecked() && dlg.comboFormat->currentIndex()==1) {
+        if (dlg.cbDeriveStyles->isChecked() && (dlg.comboFormat->currentIndex()==1 || dlg.comboFormat->currentIndex()==7) ) {
             QString styleStyleSheetPath =  QFileInfo(outFileName).absolutePath()  + QDir::separator() + "derived_styles.css";
             generator->printDynamicStyleFile(styleStyleSheetPath.toStdString());
         }
@@ -402,7 +421,7 @@ void MyDialog::on_pbAbout_clicked()
     QMessageBox::about(this,
                        "ANSIFilter Information", 
                        QString("ANSIFilter GUI %1\n" 
-                       "(c) 2007-2018 Andre Simon\n\n"
+                       "(c) 2007-2019 Andre Simon\n\n"
                        "Built with Qt version %2\n\n"
                        "Released under the terms of the GNU GPL license.\n\n"
                        "andre dot simon1 at gmx dot de\n"

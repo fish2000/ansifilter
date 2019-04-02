@@ -1,5 +1,11 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.14
+
+02.04.2019
+
+ - added SVG output option (https://gitlab.com/saalen/ansifilter/issues/20) 
+ 
 === ansifilter 2.13
 
 08.12.2018

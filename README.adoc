@@ -32,25 +32,26 @@ Output text formats:
   -L, --latex            Output LaTeX
   -P, --tex              Output Plain TeX
   -R, --rtf              Output RTF
+  -S, --svg              Output SVG
   -B, --bbcode           Output BBCode
 
 Format options:
   -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)
-  -d, --doc-title        Set HTML/LaTeX document title
+  -d, --doc-title        Set HTML/LaTeX/SVG document title
   -e, --encoding         Set HTML/RTF encoding (must match input file encoding)
   -f, --fragment         Omit HTML header and footer
-  -F, --font=<font>      Set HTML/RTF font face
+  -F, --font=<font>      Set HTML/RTF/SVG font face
   -k, --ignore-clear     Do not adhere to clear (ESC K) commands
   -l, --line-numbers     Print line numbers in output file
   -m, --map=<path>       Read color mapping file (see README)
-  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX stylesheet path
-  -s, --font-size=<fs>   Set HTML/RTF font size
+  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX/SVG stylesheet path
+  -s, --font-size=<fs>   Set HTML/RTF/SVG font size
   -p, --plain            Ignore ANSI formatting information
   -w, --wrap=<len>       Wrap long lines
       --no-trailing-nl   Omit trailing newline
       --no-version-info  Omit version info comment
       --wrap-no-numbers  Omit line numbers of wrapped lines (assumes -l)
-      --derived-styles   Output dynamic stylesheets (assumes -H)
+      --derived-styles   Output dynamic stylesheets (HTML/SVG)
 
 ANSI art options:
       --art-cp437        Parse codepage 437 ANSI art (HTML and RTF output)
@@ -58,6 +59,10 @@ ANSI art options:
       --art-tundra       Parse Tundra ANSI art (HTML output, no stdin)
       --art-width        Set ANSI art width (default 80)
       --art-height       Set ANSI art height (default 150)
+
+SVG output options:
+      --height           set image height (units allowed)
+      --width            set image width (see --height)
 
 Other options:
   -h, --help             Print help
@@ -71,14 +76,11 @@ tail -f server.log | ansifilter
 Parsing XBIN files overrides --art-width, --art-height and --map options.
 The ANSI art file formats BIN, XBIN and TND cannot be read from stdin.
 
-The GUI version (ansifilter-gui) also accepts the first command line argument
-as input file name.
 ................................................................................
 
 === Platforms
 
 Ansifilter is currently available for Linux and Win32 platforms.
-
 
 === Features
 
@@ -156,7 +158,7 @@ Andre Simon
 a.simon@mailbox.org
 http://www.andre-simon.de/
 
-Github project with Git repository, bug tracker:
+Git project with Git repository, bug tracker:
 https://gitlab.com/saalen/ansifilter
 
 sf.net project with SVN repository, download mirror, bug tracker, help forum:

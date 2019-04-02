@@ -39,7 +39,7 @@ void ANSIFilterApp::printVersionInfo()
 {
     cout << "\n ansifilter version "
          << ANSIFILTER_VERSION
-         << "\n Copyright (C) 2007-2018 Andre Simon <a dot simon at mailbox.org>"
+         << "\n Copyright (C) 2007-2019 Andre Simon <a dot simon at mailbox.org>"
          << "\n\n Argparser class"
          << "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>"
          << "\n\n This software is released under the terms of the GNU General "
@@ -68,21 +68,21 @@ void ANSIFilterApp::printHelp()
     cout << "  -B, --bbcode           Output BBCode\n";
     cout << "\nFormat options:\n";
     cout << "  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)\n";
-    cout << "  -d, --doc-title        Set HTML/LaTeX document title\n";
+    cout << "  -d, --doc-title        Set HTML/LaTeX/SVG document title\n";
     cout << "  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
-    cout << "  -F, --font=<font>      Set HTML/RTF font face\n";
+    cout << "  -F, --font=<font>      Set HTML/RTF/SVG font face\n";
     cout << "  -k, --ignore-clear     Do not adhere to clear (ESC K) commands\n";
     cout << "  -l, --line-numbers     Print line numbers in output file\n";
     cout << "  -m, --map=<path>       Read color mapping file (see README)\n";
-    cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX stylesheet path\n";
-    cout << "  -s, --font-size=<fs>   Set HTML/RTF font size\n";
+    cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX/SVG stylesheet path\n";
+    cout << "  -s, --font-size=<fs>   Set HTML/RTF/SVG font size\n";
     cout << "  -p, --plain            Ignore ANSI formatting information\n";
     cout << "  -w, --wrap=<len>       Wrap long lines\n";
     cout << "      --no-trailing-nl   Omit trailing newline\n";
     cout << "      --no-version-info  Omit version info comment\n";
     cout << "      --wrap-no-numbers  Omit line numbers of wrapped lines (assumes -l)\n";
-    cout << "      --derived-styles   Output dynamic stylesheets (assumes -H)\n";
+    cout << "      --derived-styles   Output dynamic stylesheets (HTML/SVG)\n";
     
     cout << "\nANSI art options:\n";
     cout << "      --art-cp437        Parse codepage 437 ANSI art (HTML and RTF output)\n";
