@@ -15,7 +15,7 @@ win32:QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += ../main.cpp ../cmdlineoptions.cpp ../arg_parser.cpp
 SOURCES += ../elementstyle.cpp ../plaintextgenerator.cpp ../codegenerator.cpp
-SOURCES += ../platform_fs.cpp ../rtfgenerator.cpp ../htmlgenerator.cpp ../texgenerator.cpp ../latexgenerator.cpp ../bbcodegenerator.cpp ../pangogenerator.cpp
-SOURCES += ../stringtools.cpp ../stylecolour.cpp  ../preformatter.cpp
+SOURCES += ../platform_fs.cpp ../rtfgenerator.cpp ../htmlgenerator.cpp ../texgenerator.cpp ../latexgenerator.cpp ../bbcodegenerator.cpp ../pangogenerator.cpp ../svggenerator.cpp
+SOURCES += ../stringtools.cpp ../stylecolour.cpp
 
 win32:QMAKE_POST_LINK = E:\Devel\upx393w\upx.exe --best ../../ansifilter.exe

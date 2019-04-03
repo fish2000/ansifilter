@@ -236,23 +236,25 @@ string SVGGenerator::maskCharacter ( unsigned  char c )
 void SVGGenerator::insertLineNumber()
 {
 
+    int fontSizeSVG=10;
+    StringTools::str2num<int>(fontSizeSVG, fontSize, std::dec);
+
     if ( showLineNumbers ) {
         ostringstream lnum;
         lnum << setw ( 5 ) << right;
         
         if ( numberCurrentLine ) {
             lnum << lineNumber;
-        
-            int fontSizeSVG=10;
-            StringTools::str2num<int>(fontSizeSVG, fontSize, std::dec);
             *out<< "</text>\n<text x=\"10\" y=\""<< ( lineNumber*fontSizeSVG*2 ) <<"\">";
-            *out <<lnum.str() ;
-                
+            *out << lnum.str() ;
         } else {
             *out << lnum.str(); //for indentation
         }
         *out << " ";
-    } 
+    } else {
+        *out<< "</text>\n<text x=\"10\" y=\""<< ( lineNumber*fontSizeSVG*2 ) <<"\">";
+
+    }
 }
 
 
