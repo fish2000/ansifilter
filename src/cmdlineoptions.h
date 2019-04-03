@@ -3,7 +3,7 @@
                              -------------------
     begin                : Sun Oct 13 2007
     copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
  ***************************************************************************/
 
 /*
@@ -143,6 +143,9 @@ public:
     
     int getAsciiArtWidth() const;
     int getAsciiArtHeight() const;
+    
+    string getWidth() const;
+    string getHeight() const;
 
 private:
     ansifilter::OutputType outputType;
@@ -167,7 +170,6 @@ private:
     bool opt_genDynStyles;
     bool opt_funny_anchors;
 
-    
     // name of single output file
     string outFilename;
     string docTitle;
@@ -177,6 +179,8 @@ private:
     string fontSize;
     string styleSheetPath;
     string colorMapPath;
+    string width;
+    string height;
 
     int wrapLineLen;
     int asciiArtWidth;

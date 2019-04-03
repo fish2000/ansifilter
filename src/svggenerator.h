@@ -1,33 +1,32 @@
 /***************************************************************************
-                         bbcdegenerator.h  -  description
+                    SVGGenerator.h  -  description
                              -------------------
-
-    copyright            : (C) 2011 by Andre Simon
+    begin                : Mo 23.06.2008
+    copyright            : (C) 2019 by Andre Simon
     email                : a.simon@mailbox.org
  ***************************************************************************/
 
-/*
-This file is part of ANSIFilter.
 
-ANSIFilter is free software: you can redistribute it and/or modify
+/*
+This file is part of Highlight.
+
+Highlight is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-ANSIFilter is distributed in the hope that it will be useful,
+Highlight is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
+along with Highlight.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef BBCodeGenerator_H
-#define BBCodeGenerator_H
-
-#include <string>
+#ifndef SVGGenerator_H
+#define SVGGenerator_H
 
 #include "codegenerator.h"
 
@@ -35,7 +34,7 @@ namespace ansifilter
 {
 
 /**
-   \brief This class generates HTML.
+   \brief This class generates SVG.
 
    It contains information about the resulting document structure (document
    header and footer), the colour system, white space handling and text
@@ -44,20 +43,26 @@ namespace ansifilter
 * @author Andre Simon
 */
 
-class BBCodeGenerator  : public ansifilter::CodeGenerator
+class SVGGenerator : public ansifilter::CodeGenerator
 {
 public:
 
-    BBCodeGenerator();
-
-    virtual ~BBCodeGenerator() {};
+    SVGGenerator();
+    ~SVGGenerator();
 
 protected:
 
     string fileSuffix;   ///< filename extension
 
-private:
+    /** \return Comment with program information */
+    string getGeneratorComment();
 
+    void insertLineNumber ();
+    
+    bool printDynamicStyleFile ( const string &outPath );
+
+
+private:
     string getOpenTag();
     string getCloseTag();
 
@@ -73,6 +78,7 @@ private:
 
     /** \return escaped character*/
     virtual string maskCharacter(unsigned char );
+    
 };
 
 }

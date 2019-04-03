@@ -14,7 +14,7 @@ HEADERS += mydialog.h
 FORMS += ansifilter.ui
 SOURCES += main.cpp mydialog.cpp 
 SOURCES += ../elementstyle.cpp ../plaintextgenerator.cpp ../codegenerator.cpp 
-SOURCES += ../platform_fs.cpp ../rtfgenerator.cpp ../htmlgenerator.cpp ../pangogenerator.cpp ../texgenerator.cpp ../latexgenerator.cpp ../bbcodegenerator.cpp
+SOURCES += ../platform_fs.cpp ../rtfgenerator.cpp ../htmlgenerator.cpp ../pangogenerator.cpp ../texgenerator.cpp ../latexgenerator.cpp ../bbcodegenerator.cpp ../svggenerator.cpp
 SOURCES += ../stringtools.cpp ../stylecolour.cpp ../preformatter.cpp
 
 RESOURCES += ansifilter.qrc

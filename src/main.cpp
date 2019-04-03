@@ -3,7 +3,7 @@
                              -------------------
 
     copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    email                : a.simon@mailbox.org
 
    Highlight is a universal source code to HTML converter. Syntax highlighting
    is formatted by Cascading Style Sheets. It's possible to easily enhance
@@ -39,7 +39,7 @@ void ANSIFilterApp::printVersionInfo()
 {
     cout << "\n ansifilter version "
          << ANSIFILTER_VERSION
-         << "\n Copyright (C) 2007-2018 Andre Simon <andre.simon1 at gmx.de>"
+         << "\n Copyright (C) 2007-2019 Andre Simon <a dot simon at mailbox.org>"
          << "\n\n Argparser class"
          << "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>"
          << "\n\n This software is released under the terms of the GNU General "
@@ -64,24 +64,25 @@ void ANSIFilterApp::printHelp()
     cout << "  -L, --latex            Output LaTeX\n";
     cout << "  -P, --tex              Output Plain TeX\n";
     cout << "  -R, --rtf              Output RTF\n";
+    cout << "  -S, --svg              Output SVG\n";
     cout << "  -B, --bbcode           Output BBCode\n";
     cout << "\nFormat options:\n";
     cout << "  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)\n";
-    cout << "  -d, --doc-title        Set HTML/LaTeX document title\n";
+    cout << "  -d, --doc-title        Set HTML/LaTeX/SVG document title\n";
     cout << "  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
-    cout << "  -F, --font=<font>      Set HTML/RTF font face\n";
+    cout << "  -F, --font=<font>      Set HTML/RTF/SVG font face\n";
     cout << "  -k, --ignore-clear     Do not adhere to clear (ESC K) commands\n";
     cout << "  -l, --line-numbers     Print line numbers in output file\n";
     cout << "  -m, --map=<path>       Read color mapping file (see README)\n";
-    cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX stylesheet path\n";
-    cout << "  -s, --font-size=<fs>   Set HTML/RTF font size\n";
+    cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX/SVG stylesheet path\n";
+    cout << "  -s, --font-size=<fs>   Set HTML/RTF/SVG font size\n";
     cout << "  -p, --plain            Ignore ANSI formatting information\n";
     cout << "  -w, --wrap=<len>       Wrap long lines\n";
     cout << "      --no-trailing-nl   Omit trailing newline\n";
     cout << "      --no-version-info  Omit version info comment\n";
     cout << "      --wrap-no-numbers  Omit line numbers of wrapped lines (assumes -l)\n";
-    cout << "      --derived-styles   Output dynamic stylesheets (assumes -H)\n";
+    cout << "      --derived-styles   Output dynamic stylesheets (HTML/SVG)\n";
     
     cout << "\nANSI art options:\n";
     cout << "      --art-cp437        Parse codepage 437 ANSI art (HTML and RTF output)\n";
@@ -90,6 +91,10 @@ void ANSIFilterApp::printHelp()
     cout << "      --art-width        Set ANSI art width (default 80)\n";
     cout << "      --art-height       Set ANSI art height (default 150)\n";
     
+    cout << "\nSVG output options:\n";
+    cout << "      --height           set image height (units allowed)\n";
+    cout << "      --width            set image width (see --height)\n";
+
     cout << "\nOther options:\n";
     cout << "  -h, --help             Print help\n";
     cout << "  -v, --version          Print version and license info\n";
@@ -170,6 +175,8 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setAsciiArtSize(options.getAsciiArtWidth(), options.getAsciiArtHeight());
         generator->setOmitTrailingCR(options.omitTrailingCR());
         generator->setOmitVersionInfo(options.omitVersionInfo());
+        
+        generator->setSVGSize ( options.getWidth(), options.getHeight() );
         
         ansifilter::ParseError error = generator->generateFile(inFileList[i], outFilePath);
         

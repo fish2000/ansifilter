@@ -1,8 +1,8 @@
 /***************************************************************************
                       codegenerator.cpp  -  description
                              -------------------
-    copyright            : (C) 2007-2018 by Andre Simon
-    email                : andre.simon1@gmx.de
+    copyright            : (C) 2007-2019 by Andre Simon
+    email                : a.simon@mailbox.org
  ***************************************************************************/
 
 
@@ -43,6 +43,7 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #include "texgenerator.h"
 #include "latexgenerator.h"
 #include "bbcodegenerator.h"
+#include "svggenerator.h"
 
 namespace ansifilter
 {
@@ -72,6 +73,10 @@ CodeGenerator * CodeGenerator::getInstance(OutputType type)
     case BBCODE:
         generator = new BBCodeGenerator();
         break;
+    case SVG:
+        generator = new SVGGenerator();
+        break;
+    
     default:
         break;
     }
@@ -208,6 +213,12 @@ void CodeGenerator::setPreformatting ( WrapMode lineWrappingStyle,
 
 void CodeGenerator::setApplyDynStyles(bool flag) {
     applyDynStyles = flag;
+}
+
+void CodeGenerator::setSVGSize ( const string& w, const string& h )
+{
+    width=w;
+    height=h;
 }
 
 ParseError CodeGenerator::generateFile (const string &inFileName,

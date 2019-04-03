@@ -16,7 +16,7 @@ CXXFLAGS= -Wall -O2 -DNDEBUG -std=c++11 -fPIC
 LDFLAGS=
 
 SOURCES=arg_parser.o stringtools.o cmdlineoptions.o main.o platform_fs.o\
-codegenerator.o htmlgenerator.o pangogenerator.o texgenerator.o latexgenerator.o rtfgenerator.o\
+codegenerator.o htmlgenerator.o pangogenerator.o texgenerator.o latexgenerator.o rtfgenerator.o svggenerator.o\
 plaintextgenerator.o bbcodegenerator.o elementstyle.o stylecolour.o
 
 OBJECTS=$(SOURCES:.cpp=.o)
