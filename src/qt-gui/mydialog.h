@@ -61,6 +61,8 @@ private:
                 void openFile(const QString & path);
                 void showFile();
 
+                QString getWindowsShortPath(const QString & path);
+
                 void dropEvent(QDropEvent* event);
                 void dragEnterEvent(QDragEnterEvent *event);
                 void dragLeaveEvent(QDragLeaveEvent* event);

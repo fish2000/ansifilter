@@ -1,5 +1,7 @@
 = Ansifilter ChangeLog
 
+  - GUI: improved UTF16 input path handling on Windows
+
 === ansifilter 2.14
 
 02.04.2019

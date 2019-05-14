@@ -26,6 +26,11 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QtGlobal>
 
+
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
 #if (QT_VERSION < QT_VERSION_CHECK(5,0,0))
 #include <QtWidgets/QMessageBox>
 #include <QtWidgets/QFileDialog>
@@ -118,8 +123,8 @@ void MyDialog::closeEvent(QCloseEvent *event)
     settings.setValue("linewrap", dlg.spinBoxWrap->value());
     settings.setValue("width", dlg.sbWidth->value());
     settings.setValue("height", dlg.sbHeight->value());
-       settings.setValue("svgheight", dlg.leSvgHeight->text());
-       settings.setValue("svgwidth", dlg.leSvgWidth->text());
+    settings.setValue("svgheight", dlg.leSvgHeight->text());
+    settings.setValue("svgwidth", dlg.leSvgWidth->text());
 
     settings.endGroup();
     settings.beginGroup("paths");
@@ -160,6 +165,7 @@ void MyDialog::dropEvent(QDropEvent* event)
 void MyDialog::openFile(const QString & path){
     if (!path.isEmpty()) {
         inputFileName=path;
+
         if (!dlg.cbParseAsciiArt->isChecked()){
             dlg.cbWatchFile->setEnabled(true);
             dlg.cbWatchFile->setChecked(false);
@@ -194,7 +200,6 @@ void MyDialog::plausibility()
     dlg.leStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4|| selIdx==7);
     dlg.lblStyleFile->setEnabled(selIdx==1|| selIdx==3 || selIdx==4|| selIdx==7);
 
-    // dlg.gbAsciiArt->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.comboAnsiFormat->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.artSizeFrame->setEnabled(dlg.cbParseAsciiArt->isEnabled() && dlg.cbParseAsciiArt->isChecked());
     dlg.lblHeight->setEnabled(dlg.gbAsciiArt->isEnabled());
@@ -207,8 +212,6 @@ void MyDialog::plausibility()
     dlg.leSvgHeight->setEnabled(selIdx==7);
     dlg.leSvgWidth->setEnabled(selIdx==7);
     dlg.lblSvgDim->setEnabled(selIdx==7);
-
-
 }
 
 ansifilter::OutputType MyDialog::getOutputType()
@@ -229,7 +232,6 @@ ansifilter::OutputType MyDialog::getOutputType()
         return ansifilter::PANGO;
     case 7:
         return ansifilter::SVG;
-
     }
     return ansifilter::TEXT;
 }
@@ -274,8 +276,10 @@ void MyDialog::on_pbSaveAs_clicked()
     QString outFileName =QFileDialog::getSaveFileName(this, tr("Save File"), outputFileName,
                          outFileSuffix.mid(1).toUpper() + " (*" + outFileSuffix+")" );
 
+    QString title(QFileInfo(outFileName).fileName());
+
     unique_ptr<ansifilter::CodeGenerator> generator(ansifilter::CodeGenerator::getInstance(getOutputType()));
-    generator->setTitle( (dlg.leTitle->text().isEmpty()? QFileInfo(outFileName).fileName() : dlg.leTitle->text()).toStdString());
+    generator->setTitle( (dlg.leTitle->text().isEmpty()? title : dlg.leTitle->text()).toStdString());
     generator->setEncoding(dlg.comboEncoding->currentText().toStdString());
     generator->setFragmentCode(dlg.cbFragment->isChecked());
     generator->setPlainOutput(dlg.cbIgnoreSequences->isChecked());
@@ -317,7 +321,20 @@ void MyDialog::on_pbSaveAs_clicked()
     }
 
     this->setCursor(Qt::WaitCursor);
-    ansifilter::ParseError result= generator->generateFile( inputFileName.toStdString (), outFileName.toStdString () ) ;
+
+    QString inputFileNameShort(inputFileName);
+    QString outFileNameShort(outFileName);
+
+#ifdef Q_OS_WIN
+    QFile file( outFileName );
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        outFileNameShort = getWindowsShortPath(outFileName);
+    }
+    inputFileNameShort = getWindowsShortPath(inputFileName);
+#endif
+
+    ansifilter::ParseError result= generator->generateFile( inputFileNameShort.toStdString (), outFileNameShort.toStdString () ) ;
     if (result==ansifilter::BAD_OUTPUT) {
         QMessageBox::warning(this, "IO Error", "Could not write output file");
     } else if (result==ansifilter::BAD_INPUT) {
@@ -347,7 +364,11 @@ void MyDialog::on_pbClipboard_clicked()
     generator->setPreformatting ( ansifilter::WRAP_SIMPLE, static_cast<unsigned int>(dlg.spinBoxWrap->value()));
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
 
-    QString outString = QString(generator->generateStringFromFile( inputFileName.toStdString ()).c_str() ) ;
+    QString inputFileNameShort(inputFileName);
+#ifdef Q_OS_WIN
+    inputFileNameShort = getWindowsShortPath(inputFileName);
+#endif
+    QString outString = QString(generator->generateStringFromFile( inputFileNameShort.toStdString ()).c_str() ) ;
 
     if(!outString.isEmpty()) {
         QClipboard *clipboard = QApplication::clipboard();
@@ -407,7 +428,11 @@ void MyDialog::showFile()
 
     this->setCursor(Qt::WaitCursor);
 
-    string htmlStdString=generator->generateStringFromFile(inputFileName.toStdString ());
+    QString inputFileNameShort(inputFileName);
+#ifdef Q_OS_WIN
+    inputFileNameShort = getWindowsShortPath(inputFileName);
+#endif
+    string htmlStdString=generator->generateStringFromFile(inputFileNameShort.toStdString ());
     QString htmlString( htmlStdString.c_str() );
     if (!htmlString.isEmpty()) {
         dlg.textEdit->setText(htmlString);
@@ -475,3 +500,15 @@ void MyDialog::on_cbWatchFile_stateChanged()
         fileWatcher.removePath(inputFileName);
 }
 
+QString MyDialog::getWindowsShortPath(const QString & path){
+    QString shortPath(path);
+#ifdef Q_OS_WIN
+        int length = GetShortPathName( (const wchar_t*)path.utf16(),0,0);
+        wchar_t* buffer = new wchar_t[length];
+
+        length = GetShortPathName( (const wchar_t*)path.utf16(), buffer, length);
+        shortPath = QString::fromUtf16((const char16_t*)buffer, length);
+        delete[] buffer;
+#endif
+    return shortPath;
+}
