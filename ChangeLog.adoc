@@ -1,5 +1,11 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.15
+
+22.10.2019
+
+ - added optional argument to --ignore-clear, the default setting is now true
+
 === ansifilter 2.14
 
 02.04.2019

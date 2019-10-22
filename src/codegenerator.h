@@ -180,14 +180,14 @@ public:
 
     /** Generate a stylesheet with the styles found in the document
     \param outPath Output path
-    \return true if successfull
+    \return true if successful
      */
     virtual bool printDynamicStyleFile ( const string &outPath );
     
     /**
      Overrides default colours by user defined values; resets palette to default if mapPath is empty
      \param mapPath path of map file
-     \return true if parsing was successfull
+     \return true if parsing was successful
     */
     bool setColorMap(const string& mapPath);
 

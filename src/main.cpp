@@ -72,7 +72,7 @@ void ANSIFilterApp::printHelp()
     cout << "  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
     cout << "  -F, --font=<font>      Set HTML/RTF/SVG font face\n";
-    cout << "  -k, --ignore-clear     Do not adhere to clear (ESC K) commands\n";
+    cout << "  -k, --ignore-clear(=0) Do not adhere to clear (ESC K) commands (default: true)\n";
     cout << "  -l, --line-numbers     Print line numbers in output file\n";
     cout << "  -m, --map=<path>       Read color mapping file (see README)\n";
     cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX/SVG stylesheet path\n";

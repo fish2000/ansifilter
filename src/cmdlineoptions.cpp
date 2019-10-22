@@ -69,7 +69,7 @@ const Arg_parser::Option options[] = {
     { 'm', "map",        Arg_parser::yes },
     { 'N', "no-trailing-nl",  Arg_parser::no  },
     { 'C', "no-version-info", Arg_parser::no  },
-    { 'k', "ignore-clear",    Arg_parser::no  },
+    { 'k', "ignore-clear",    Arg_parser::maybe  },
     { 'y', "derived-styles",  Arg_parser::no  },
     { 'S', "svg",        Arg_parser::no  },
     { 'Q', "width",      Arg_parser::yes  },
@@ -94,7 +94,7 @@ CmdLineOptions::CmdLineOptions( const int argc, const char *argv[] ):
     opt_asciiTundra(false),
     opt_omit_trailing_cr(false),
     opt_omit_version_info(false),
-    opt_ignoreClear(false),
+    opt_ignoreClear(true),
     opt_applyDynStyles(false),
     opt_genDynStyles(false),
     opt_funny_anchors(false),
@@ -266,7 +266,8 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
             opt_omit_version_info=true;
             break;
         case 'k':
-            opt_ignoreClear=true;
+            if (arg.size())
+                opt_ignoreClear = ( arg=="true" || arg=="1" ) ;
             break;
         case 'y':
             opt_applyDynStyles=true;

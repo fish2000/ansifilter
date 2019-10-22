@@ -1241,6 +1241,7 @@ void CodeGenerator::processInput()
                     || (isKSeq && !isGrepOutput) ){
                       i=line.length()+1;
                       omitNewLine = isKSeq; // \n may follow K
+                      //FIXME std::cerr << "K CASE!\n";
                   }
                   else {
                       i = 1 + ((seqEnd!=line.length())?seqEnd:i);
