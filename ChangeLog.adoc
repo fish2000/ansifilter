@@ -6,6 +6,7 @@
 
  - added optional argument to --ignore-clear, the default setting is now true
  - GUI: improved UTF16 input path handling on Windows
+ - CLI: fixed -e argument description (thanks to Jens Schleusener)
 
 === ansifilter 2.14
 

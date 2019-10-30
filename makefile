@@ -23,6 +23,7 @@ desktop_apps = ${PREFIX}/share/applications/
 desktop_pixmaps = ${PREFIX}/share/pixmaps/
 
 # Commands:
+GZIP=gzip -9f
 QMAKE=qmake
 
 INSTALL_DATA=install -m644
@@ -51,7 +52,8 @@ install:
 	${MKDIR} ${DESTDIR}${man_dir}
 	${MKDIR} ${DESTDIR}${bin_dir}
 
-	${INSTALL_DATA} ./man/ansifilter.1.gz ${DESTDIR}${man_dir}
+	${INSTALL_DATA} ./man/ansifilter.1 ${DESTDIR}${man_dir}
+	-${GZIP} ${DESTDIR}${man_dir}ansifilter.1
 	${INSTALL_DATA} ./README.adoc ${DESTDIR}${doc_dir}
 	${INSTALL_DATA} ./ChangeLog.adoc ${DESTDIR}${doc_dir}
 	${INSTALL_DATA} ./COPYING ${DESTDIR}${doc_dir}

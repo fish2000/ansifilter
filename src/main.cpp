@@ -69,7 +69,8 @@ void ANSIFilterApp::printHelp()
     cout << "\nFormat options:\n";
     cout << "  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)\n";
     cout << "  -d, --doc-title        Set HTML/LaTeX/SVG document title\n";
-    cout << "  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)\n";
+    cout << "  -e, --encoding=<name>  Set HTML/RTF encoding (must match input file encoding);\n"; 
+    cout << "                         omit encoding information if enc=NONE\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
     cout << "  -F, --font=<font>      Set HTML/RTF/SVG font face\n";
     cout << "  -k, --ignore-clear(=0) Do not adhere to clear (ESC K) commands (default: true)\n";
