@@ -1,6 +1,6 @@
 = ANSIFILTER MANUAL
 André Simon
-v2.13, December 2018
+v2.15, November 2019
 
 
 OSI Certified Open Source Software
@@ -38,10 +38,11 @@ Output text formats:
 Format options:
   -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)
   -d, --doc-title        Set HTML/LaTeX/SVG document title
-  -e, --encoding         Set HTML/RTF encoding (must match input file encoding)
+  -e, --encoding=<enc>   Set HTML/RTF encoding (must match input file encoding);
+                         omit encoding information if enc=NONE
   -f, --fragment         Omit HTML header and footer
   -F, --font=<font>      Set HTML/RTF/SVG font face
-  -k, --ignore-clear     Do not adhere to clear (ESC K) commands
+  -k, --ignore-clear(=0) Do not adhere to clear (ESC K) commands (default: true)
   -l, --line-numbers     Print line numbers in output file
   -m, --map=<path>       Read color mapping file (see README)
   -r, --style-ref=<rf>   Set HTML/TeX/LaTeX/SVG stylesheet path
@@ -149,7 +150,6 @@ Example file content:
 14= #ffff55
 15= #ffffff
 ................................................................................
-
 
 
 === Contact
