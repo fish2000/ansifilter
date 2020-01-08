@@ -70,6 +70,7 @@ const Arg_parser::Option options[] = {
     { 'N', "no-trailing-nl",  Arg_parser::no  },
     { 'C', "no-version-info", Arg_parser::no  },
     { 'k', "ignore-clear",    Arg_parser::maybe  },
+    { 'c', "ignore-csi",      Arg_parser::no  },
     { 'y', "derived-styles",  Arg_parser::no  },
     { 'S', "svg",        Arg_parser::no  },
     { 'Q', "width",      Arg_parser::yes  },
@@ -95,6 +96,7 @@ CmdLineOptions::CmdLineOptions( const int argc, const char *argv[] ):
     opt_omit_trailing_cr(false),
     opt_omit_version_info(false),
     opt_ignoreClear(true),
+    opt_ignoreCSI(false),
     opt_applyDynStyles(false),
     opt_genDynStyles(false),
     opt_funny_anchors(false),
@@ -269,6 +271,9 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
             if (arg.size())
                 opt_ignoreClear = ( arg=="true" || arg=="1" ) ;
             break;
+        case 'c':
+            opt_ignoreCSI = true;
+            break;
         case 'y':
             opt_applyDynStyles=true;
             break;
@@ -370,6 +375,10 @@ bool CmdLineOptions::parseAsciiTundra() const{
 
 bool CmdLineOptions::ignoreClearSeq() const {
     return opt_ignoreClear;
+}
+
+bool CmdLineOptions::ignoreCSISeq() const {
+    return opt_ignoreCSI;
 }
 
 int CmdLineOptions::getAsciiArtWidth() const {

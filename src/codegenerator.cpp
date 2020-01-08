@@ -111,6 +111,7 @@ CodeGenerator::CodeGenerator(ansifilter::OutputType type)
      readAfterEOF(false),
      omitTrailingCR(false),
      ignClearSeq(false),
+     ignCSISeq(false),
      termBuffer(NULL),
      curX(0),
      curY(0),
@@ -159,6 +160,10 @@ void CodeGenerator::setParseAsciiTundra(bool flag){
 
 void CodeGenerator::setIgnoreClearSeq(bool flag) {
     ignClearSeq = flag;
+}
+
+void CodeGenerator::setIgnoreCSISeq(bool flag) {
+    ignCSISeq = flag;
 }
 
 void CodeGenerator::setAsciiArtSize(int width, int height){
@@ -1184,7 +1189,7 @@ void CodeGenerator::processInput()
               insertLineNumber();
         }  
   
-          if (cur==0x1b || cur==0x9b || cur==0xc2) {
+          if ( cur==0x1b || (!ignCSISeq && ( cur==0x9b || cur==0xc2)) ) {
 
             if (line.length() - i > 2){              
               next = line[i+1]&0xff;
@@ -1283,7 +1288,7 @@ void CodeGenerator::processInput()
             } else {
                 ++i;
             }
-          } else if (cur==0x90 || cur==0x9d || cur==0x98 || cur==0x9e ||cur==0x9f) {
+          } else if (!ignCSISeq && (cur==0x90 || cur==0x9d || cur==0x98 || cur==0x9e ||cur==0x9f)) {
             seqEnd=i;
             //find string end
             while (   seqEnd<line.length() && (line[seqEnd]&0xff)!=0x9e

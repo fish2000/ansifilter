@@ -74,6 +74,7 @@ void ANSIFilterApp::printHelp()
     cout << "  -f, --fragment         Omit HTML header and footer\n";
     cout << "  -F, --font=<font>      Set HTML/RTF/SVG font face\n";
     cout << "  -k, --ignore-clear(=0) Do not adhere to clear (ESC K) commands (default: true)\n";
+    cout << "  -c, --ignore-csi       Do not adhere to CSI commands (useful for UTF-8 input)\n";
     cout << "  -l, --line-numbers     Print line numbers in output file\n";
     cout << "  -m, --map=<path>       Read color mapping file (see README)\n";
     cout << "  -r, --style-ref=<rf>   Set HTML/TeX/LaTeX/SVG stylesheet path\n";
@@ -171,6 +172,8 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setParseAsciiBin(options.parseAsciiBin());
         generator->setParseAsciiTundra(options.parseAsciiTundra());
         generator->setIgnoreClearSeq(options.ignoreClearSeq());
+        generator->setIgnoreCSISeq(options.ignoreCSISeq());
+
         generator->setApplyDynStyles(options.applyDynStyles());
 
         generator->setAsciiArtSize(options.getAsciiArtWidth(), options.getAsciiArtHeight());

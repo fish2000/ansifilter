@@ -1,5 +1,11 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.16
+
+08.01.2020
+
+ - CLI: added --ignore-csi option to improve UTF-8 input handling
+ 
 === ansifilter 2.15
 
 08.11.2019

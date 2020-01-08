@@ -294,7 +294,9 @@ public:
     /** \param b set to true if K clear sequences should be ignored*/
     void setIgnoreClearSeq(bool flag);
 
-    
+    /** \param b set to true if CSI sequences should be ignored*/
+    void setIgnoreCSISeq(bool flag);
+
     /** \param b set dimensions of ASCII art virtual console */
     void setAsciiArtSize(int width, int height);
     
@@ -456,6 +458,7 @@ private:
     bool readAfterEOF;     ///< continue reading after EOF occoured
     bool omitTrailingCR;   ///< do not print EOL at the end of output
     bool ignClearSeq;      ///< ignore clear sequence ESC K
+    bool ignCSISeq;       ///< ignore CSIs (may interfere with UTF-8 input)
     
     TDChar* termBuffer;
     int curX, curY, memX, memY, maxY; ///< cursor position for Codepage 437 sequences

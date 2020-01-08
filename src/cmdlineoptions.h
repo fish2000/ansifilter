@@ -121,6 +121,9 @@ public:
     /** \return True if clear sequences (ESC K) should be ignored */
     bool ignoreClearSeq() const;
 
+        /** \return True if CSI sequences should be ignored */
+    bool ignoreCSISeq() const;
+    
     /** \return True if output should contain dynamic style classes instead of inline styles */
     bool applyDynStyles() const;
     
@@ -165,6 +168,7 @@ private:
     bool opt_omit_trailing_cr;
     bool opt_omit_version_info;
     bool opt_ignoreClear;
+    bool opt_ignoreCSI;
     
     bool opt_applyDynStyles;
     bool opt_genDynStyles;
