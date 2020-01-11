@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ansifilter.ui'
 **
-** Created by: Qt User Interface Compiler version 5.13.2
+** Created by: Qt User Interface Compiler version 5.14.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -52,14 +52,15 @@ public:
     QComboBox *comboFormat;
     QGridLayout *gridLayout_2;
     QCheckBox *cbIgnoreSequences;
-    QCheckBox *cbFragment;
-    QCheckBox *cbOmitVersion;
-    QCheckBox *cbIgnClearSeq;
-    QCheckBox *cbDeriveStyles;
     QHBoxLayout *horizontalLayout_2;
     QLabel *lblSvgDim;
     QLineEdit *leSvgWidth;
     QLineEdit *leSvgHeight;
+    QCheckBox *cbOmitVersion;
+    QCheckBox *cbIgnClearSeq;
+    QCheckBox *cbFragment;
+    QCheckBox *cbIgnCSISeq;
+    QCheckBox *cbDeriveStyles;
     QSpacerItem *verticalSpacer_4;
     QGroupBox *gbAsciiArt;
     QGridLayout *gridLayout_5;
@@ -225,28 +226,6 @@ public:
 
         gridLayout_2->addWidget(cbIgnoreSequences, 0, 0, 1, 1);
 
-        cbFragment = new QCheckBox(groupBox);
-        cbFragment->setObjectName(QString::fromUtf8("cbFragment"));
-        sizePolicy4.setHeightForWidth(cbFragment->sizePolicy().hasHeightForWidth());
-        cbFragment->setSizePolicy(sizePolicy4);
-
-        gridLayout_2->addWidget(cbFragment, 0, 1, 1, 1);
-
-        cbOmitVersion = new QCheckBox(groupBox);
-        cbOmitVersion->setObjectName(QString::fromUtf8("cbOmitVersion"));
-
-        gridLayout_2->addWidget(cbOmitVersion, 1, 0, 1, 1);
-
-        cbIgnClearSeq = new QCheckBox(groupBox);
-        cbIgnClearSeq->setObjectName(QString::fromUtf8("cbIgnClearSeq"));
-
-        gridLayout_2->addWidget(cbIgnClearSeq, 1, 1, 1, 1);
-
-        cbDeriveStyles = new QCheckBox(groupBox);
-        cbDeriveStyles->setObjectName(QString::fromUtf8("cbDeriveStyles"));
-
-        gridLayout_2->addWidget(cbDeriveStyles, 2, 0, 1, 1);
-
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         lblSvgDim = new QLabel(groupBox);
@@ -274,7 +253,35 @@ public:
         horizontalLayout_2->addWidget(leSvgHeight);
 
 
-        gridLayout_2->addLayout(horizontalLayout_2, 2, 1, 1, 1);
+        gridLayout_2->addLayout(horizontalLayout_2, 3, 1, 1, 1);
+
+        cbOmitVersion = new QCheckBox(groupBox);
+        cbOmitVersion->setObjectName(QString::fromUtf8("cbOmitVersion"));
+
+        gridLayout_2->addWidget(cbOmitVersion, 1, 0, 1, 1);
+
+        cbIgnClearSeq = new QCheckBox(groupBox);
+        cbIgnClearSeq->setObjectName(QString::fromUtf8("cbIgnClearSeq"));
+        cbIgnClearSeq->setToolTipDuration(-5);
+
+        gridLayout_2->addWidget(cbIgnClearSeq, 1, 1, 1, 1);
+
+        cbFragment = new QCheckBox(groupBox);
+        cbFragment->setObjectName(QString::fromUtf8("cbFragment"));
+        sizePolicy4.setHeightForWidth(cbFragment->sizePolicy().hasHeightForWidth());
+        cbFragment->setSizePolicy(sizePolicy4);
+
+        gridLayout_2->addWidget(cbFragment, 0, 1, 1, 1);
+
+        cbIgnCSISeq = new QCheckBox(groupBox);
+        cbIgnCSISeq->setObjectName(QString::fromUtf8("cbIgnCSISeq"));
+
+        gridLayout_2->addWidget(cbIgnCSISeq, 2, 1, 1, 1);
+
+        cbDeriveStyles = new QCheckBox(groupBox);
+        cbDeriveStyles->setObjectName(QString::fromUtf8("cbDeriveStyles"));
+
+        gridLayout_2->addWidget(cbDeriveStyles, 2, 0, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout_2);
@@ -587,22 +594,6 @@ public:
         cbIgnoreSequences->setToolTip(QCoreApplication::translate("Dialog", "Show and save files ignoring the contained ANSI formatting information.", nullptr));
 #endif // QT_CONFIG(tooltip)
         cbIgnoreSequences->setText(QCoreApplication::translate("Dialog", "Omit styling in output", nullptr));
-#if QT_CONFIG(tooltip)
-        cbFragment->setToolTip(QCoreApplication::translate("Dialog", "Save HTML without header and footer to paste it into existing documents.", nullptr));
-#endif // QT_CONFIG(tooltip)
-        cbFragment->setText(QCoreApplication::translate("Dialog", "Omit header and footer", nullptr));
-#if QT_CONFIG(tooltip)
-        cbOmitVersion->setToolTip(QCoreApplication::translate("Dialog", "Do not include version info comment", nullptr));
-#endif // QT_CONFIG(tooltip)
-        cbOmitVersion->setText(QCoreApplication::translate("Dialog", "Omit version info", nullptr));
-#if QT_CONFIG(tooltip)
-        cbIgnClearSeq->setToolTip(QCoreApplication::translate("Dialog", "Do not adhere to clear (ESC K) commands", nullptr));
-#endif // QT_CONFIG(tooltip)
-        cbIgnClearSeq->setText(QCoreApplication::translate("Dialog", "Ignore Clear Sequences", nullptr));
-#if QT_CONFIG(tooltip)
-        cbDeriveStyles->setToolTip(QCoreApplication::translate("Dialog", "Generate Stylesheets based on the formatting information", nullptr));
-#endif // QT_CONFIG(tooltip)
-        cbDeriveStyles->setText(QCoreApplication::translate("Dialog", "Derive Stylesheets", nullptr));
         lblSvgDim->setText(QCoreApplication::translate("Dialog", "SVG dim.:", nullptr));
 #if QT_CONFIG(tooltip)
         leSvgWidth->setToolTip(QCoreApplication::translate("Dialog", "Document width (units allowed)", nullptr));
@@ -615,6 +606,26 @@ public:
         leSvgHeight->setStatusTip(QString());
 #endif // QT_CONFIG(statustip)
         leSvgHeight->setPlaceholderText(QCoreApplication::translate("Dialog", "450px", nullptr));
+#if QT_CONFIG(tooltip)
+        cbOmitVersion->setToolTip(QCoreApplication::translate("Dialog", "Do not include version info comment", nullptr));
+#endif // QT_CONFIG(tooltip)
+        cbOmitVersion->setText(QCoreApplication::translate("Dialog", "Omit version info", nullptr));
+#if QT_CONFIG(tooltip)
+        cbIgnClearSeq->setToolTip(QCoreApplication::translate("Dialog", "Do not adhere to clear (ESC K) commands", nullptr));
+#endif // QT_CONFIG(tooltip)
+        cbIgnClearSeq->setText(QCoreApplication::translate("Dialog", "Ignore Clear Sequences", nullptr));
+#if QT_CONFIG(tooltip)
+        cbFragment->setToolTip(QCoreApplication::translate("Dialog", "Save HTML without header and footer to paste it into existing documents.", nullptr));
+#endif // QT_CONFIG(tooltip)
+        cbFragment->setText(QCoreApplication::translate("Dialog", "Omit header and footer", nullptr));
+#if QT_CONFIG(tooltip)
+        cbIgnCSISeq->setToolTip(QCoreApplication::translate("Dialog", "Set this option if UTF-8 input is affected by CSI parsing", nullptr));
+#endif // QT_CONFIG(tooltip)
+        cbIgnCSISeq->setText(QCoreApplication::translate("Dialog", "Ignore CSI Sequences", nullptr));
+#if QT_CONFIG(tooltip)
+        cbDeriveStyles->setToolTip(QCoreApplication::translate("Dialog", "Generate Stylesheets based on the formatting information", nullptr));
+#endif // QT_CONFIG(tooltip)
+        cbDeriveStyles->setText(QCoreApplication::translate("Dialog", "Derive Stylesheets", nullptr));
         gbAsciiArt->setTitle(QCoreApplication::translate("Dialog", "ANSI art options", nullptr));
 #if QT_CONFIG(tooltip)
         cbParseAsciiArt->setToolTip(QCoreApplication::translate("Dialog", "Enable parsing of ANSI art files.", nullptr));

@@ -78,7 +78,7 @@ public slots:
                 void on_pbSelectMapFile_clicked();
                 void on_cbParseAsciiArt_clicked();
                 void on_cbIgnClearSeq_clicked();
-
+                void on_cbIgnCSISeq_clicked();
 
                 void on_cbIgnoreSequences_stateChanged();
                 void on_cbWatchFile_stateChanged();

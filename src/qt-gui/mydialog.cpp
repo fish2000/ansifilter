@@ -71,6 +71,8 @@ MyDialog::MyDialog(QWidget * parent, Qt::WindowFlags f):QDialog(parent, f)
     dlg.sbWidth->setValue(settings.value("width").toInt());
     dlg.sbHeight->setValue(settings.value("height").toInt());
     dlg.cbIgnClearSeq->setChecked(settings.value("ignoreclearseq").toBool());
+    dlg.cbIgnCSISeq->setChecked(settings.value("ignorecsiseq").toBool());
+
     dlg.cbDeriveStyles->setChecked(settings.value("derivestyles").toBool());
     dlg.leSvgWidth->setText(settings.value("svgwidth").toString());
     dlg.leSvgHeight->setText(settings.value("svgheight").toString());
@@ -112,6 +114,8 @@ void MyDialog::closeEvent(QCloseEvent *event)
     settings.setValue("fragment", dlg.cbFragment->isChecked());
     settings.setValue("ignoreseq", dlg.cbIgnoreSequences->isChecked());
     settings.setValue("ignoreclearseq", dlg.cbIgnClearSeq->isChecked());
+    settings.setValue("ignorecsiseq", dlg.cbIgnCSISeq->isChecked());
+
     settings.setValue("parseart", dlg.cbParseAsciiArt->isChecked());
     settings.setValue("cbOmitVersion", dlg.cbOmitVersion->isChecked());
     settings.setValue("derivestyles", dlg.cbDeriveStyles->isChecked());
@@ -207,6 +211,8 @@ void MyDialog::plausibility()
     dlg.lblWidth->setEnabled(dlg.gbAsciiArt->isEnabled());
     dlg.sbWidth->setEnabled(dlg.gbAsciiArt->isEnabled());
     dlg.cbIgnClearSeq->setEnabled(!dlg.cbParseAsciiArt->isChecked());
+    dlg.cbIgnCSISeq->setEnabled(!dlg.cbParseAsciiArt->isChecked());
+
     dlg.cbWatchFile->setEnabled(!dlg.cbParseAsciiArt->isChecked());
 
     dlg.leSvgHeight->setEnabled(selIdx==7);
@@ -286,6 +292,8 @@ void MyDialog::on_pbSaveAs_clicked()
     generator->setOmitVersionInfo(dlg.cbOmitVersion->isChecked());
 
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+    generator->setIgnoreCSISeq(dlg.cbIgnCSISeq->isChecked());
+
     generator->setApplyDynStyles(dlg.cbDeriveStyles->isChecked());
 
     generator->setSVGSize(dlg.leSvgWidth->text().toStdString(), dlg.leSvgHeight->text().toStdString());
@@ -363,6 +371,7 @@ void MyDialog::on_pbClipboard_clicked()
     unique_ptr<ansifilter::CodeGenerator> generator(ansifilter::CodeGenerator::getInstance(ansifilter::TEXT));
     generator->setPreformatting ( ansifilter::WRAP_SIMPLE, static_cast<unsigned int>(dlg.spinBoxWrap->value()));
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+    generator->setIgnoreCSISeq(dlg.cbIgnCSISeq->isChecked());
 
     QString inputFileNameShort(inputFileName);
 #ifdef Q_OS_WIN
@@ -402,6 +411,7 @@ void MyDialog::showFile()
     generator->setFragmentCode(false);
     generator->setPlainOutput(dlg.cbIgnoreSequences->isChecked());
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
+    generator->setIgnoreCSISeq(dlg.cbIgnCSISeq->isChecked());
 
     if (dlg.cbParseAsciiArt->isChecked()){
         switch (dlg.comboAnsiFormat->currentIndex()){
@@ -446,7 +456,7 @@ void MyDialog::on_pbAbout_clicked()
     QMessageBox::about(this,
                        "ANSIFilter Information", 
                        QString("ANSIFilter GUI %1\n" 
-                       "(c) 2007-2019 Andre Simon\n\n"
+                       "(c) 2007-2020 Andre Simon\n\n"
                        "Built with Qt version %2\n\n"
                        "Released under the terms of the GNU GPL license.\n\n"
                        "andre dot simon1 at gmx dot de\n"
@@ -488,6 +498,11 @@ void MyDialog::on_comboEncoding_currentIndexChanged(int idx)
 }
 
 void MyDialog::on_cbIgnClearSeq_clicked()
+{
+    showFile();
+}
+
+void MyDialog::on_cbIgnCSISeq_clicked()
 {
     showFile();
 }
