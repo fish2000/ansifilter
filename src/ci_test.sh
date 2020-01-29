@@ -32,15 +32,15 @@ OUTPUT=`echo "123Л123" | ./src/ansifilter --ignore-csi`
 RETVAL=$?
 
 if [ $RETVAL -eq 0 ]; then
-  echo "Retval test #1 is 0, OK"
+  echo "Retval test #2 is 0, OK"
 else
-  echo "Retval test #1  is not 0, FAIL"
+  echo "Retval test #2 is not 0, FAIL"
   exit 1
 fi
 
 if [ "$OUTPUT" == "123Л123" ]; then
-  echo "Output test #1 is correct, OK"
+  echo "Output test #2 is correct, OK"
 else
-  echo "Output  test #1 is not right, FAIL"
+  echo "Output  test #2 is not right, FAIL"
   exit 1
 fi
