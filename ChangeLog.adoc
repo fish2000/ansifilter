@@ -1,5 +1,6 @@
 = Ansifilter ChangeLog
 
+
 === ansifilter 2.16
 
 08.01.2020
