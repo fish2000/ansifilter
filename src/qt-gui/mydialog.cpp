@@ -1,7 +1,7 @@
 /***************************************************************************
                         mydialog.h  -  description
                              -------------------
-    copyright            : (C) 2007-2016 by Andre Simon
+    copyright            : (C) 2007-2020 by Andre Simon
     email                : andre.simon1@gmx.de
  ***************************************************************************/
 
@@ -49,10 +49,46 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMimeData>
 #include <QMimeData>
 #include <QFileInfo>
-
+#include <QStyleFactory>
 
 MyDialog::MyDialog(QWidget * parent, Qt::WindowFlags f):QDialog(parent, f)
 {
+
+#ifdef Q_OS_WIN
+// https://forum.qt.io/topic/101391/windows-10-dark-theme/
+if (QSysInfo::productVersion()=="10") {
+    QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",QSettings::NativeFormat);
+    if(settings.value("AppsUseLightTheme")==0){
+        qApp->setStyle(QStyleFactory::create("Fusion"));
+        QPalette darkPalette;
+        QColor darkColor = QColor(45,45,45);
+        QColor disabledColor = QColor(127,127,127);
+        darkPalette.setColor(QPalette::Window, darkColor);
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Base, QColor(18,18,18));
+        darkPalette.setColor(QPalette::AlternateBase, darkColor);
+        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Disabled, QPalette::Text, disabledColor);
+        darkPalette.setColor(QPalette::Button, darkColor);
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, disabledColor);
+        darkPalette.setColor(QPalette::BrightText, Qt::red);
+        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+
+        darkPalette.setColor(QPalette::Highlight, QColor(153, 153, 153));
+        darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+        darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabledColor);
+
+        qApp->setPalette(darkPalette);
+        qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #404040; border: 1px solid white; }");
+    }
+}
+#endif
+
+
+
     dlg.setupUi(this);
     QSettings settings("andre-simon.de", "ansifilter-gui");
     settings.beginGroup("format");

@@ -1,5 +1,11 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.16.1
+
+30.06.2020
+
+ - W32: updated Qt, removed Mingw32 DLL dependencies
+ - W32 GUI: added dark mode
 
 === ansifilter 2.16
 
