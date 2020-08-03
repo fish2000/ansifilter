@@ -4,16 +4,11 @@
 
 # afl-g++ for preparing fuzzing tests
 
-CC=g++
-#CC=clang++
+CXX ?= g++
+#CC ?= clang++
 
 # Added -std=c++11 because of auto_ptr to unique_ptr transition
-CXXFLAGS= -Wall -O2 -DNDEBUG -std=c++11 -fPIC
-#CXXFLAGS= -O0 -ggdb -std=c++11 -fPIC
-#CXXFLAGS="-DNDEBUG -g2 -O3 -march=i686" 
-#cov-build --dir cov-int make -j 2
-
-LDFLAGS=
+CXXFLAGS := -Wall -O2 -DNDEBUG -std=c++11 -fPIC $(CXXFLAGS)
 
 SOURCES=arg_parser.o stringtools.o cmdlineoptions.o main.o platform_fs.o\
 codegenerator.o htmlgenerator.o pangogenerator.o texgenerator.o latexgenerator.o rtfgenerator.o svggenerator.o\
@@ -25,10 +20,10 @@ EXECUTABLE=ansifilter
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(EXTRA_LDFLAGS) $(OBJECTS) -o $@
+	$(CXX) $(LDFLAGS) $(EXTRA_LDFLAGS) $(OBJECTS) -o $@
 
 .cpp.o:
-	$(CC) -c $(CXXFLAGS) $(EXTRA_CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $(EXTRA_CXXFLAGS) $< -o $@
 
 clean:
 	@rm -f *.o

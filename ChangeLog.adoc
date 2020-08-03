@@ -1,5 +1,11 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.17
+
+02.08.2020
+
+ - applied makefile patch to address Portage warnings (https://gitlab.com/saalen/ansifilter/-/issues/24)
+
 === ansifilter 2.16.1
 
 30.06.2020

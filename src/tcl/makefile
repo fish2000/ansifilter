@@ -5,7 +5,7 @@ CC=g++
 
 CFLAGS= -c -Wall -O2 -fPIC
 
-LDFLAGS= -shared -fPIC
+LDFLAGS += -shared -fPIC
 
 SOURCES=stringtools.cpp platform_fs.cpp\
 codegenerator.cpp htmlgenerator.cpp pangogenerator.cpp texgenerator.cpp latexgenerator.cpp rtfgenerator.cpp\
