@@ -339,6 +339,9 @@ protected:
     /** file output*/
     ostream *out;
 
+    /** line buffer*/
+    ostringstream lineBuf;
+    
     bool tagIsOpen; ///< a reminder to close an open tag
 
     string styleCommentOpen,  ///< open comment delimiter
@@ -468,6 +471,8 @@ private:
 
     
     ElementStyle memStyle;
+    
+    void printNewLine(bool printEOL=true);
     
     /** convert an xterm color value (0-253) to 3 unsigned chars rgb
         @param color xterm color

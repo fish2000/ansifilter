@@ -481,6 +481,7 @@ void MyDialog::showFile()
     string htmlStdString=generator->generateStringFromFile(inputFileNameShort.toStdString ());
     QString htmlString( htmlStdString.c_str() );
     if (!htmlString.isEmpty()) {
+
         dlg.textEdit->setText(htmlString);
         this->setWindowTitle("ANSIFilter - " + inputFileName);
     }

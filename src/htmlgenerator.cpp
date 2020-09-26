@@ -205,7 +205,7 @@ void HtmlGenerator::insertLineNumber ()
         ostringstream lnum;
         lnum << setw ( 5 ) << right;
         if ( numberCurrentLine ) {
-            //*out << getCloseTag();
+   
             lnum << lineNumber;
             if (addFunnyAnchors)
                 *out << "<a href=\"#l_" << lineNumber<< "\"";
@@ -218,7 +218,6 @@ void HtmlGenerator::insertLineNumber ()
             *out << " class=\"af_line\">";
 
             *out <<lnum.str() << ( addFunnyAnchors  ? "</a> " : "</span> ");
-            //*out << getOpenTag();
         } else {
             *out << lnum.str(); //for indentation
         }

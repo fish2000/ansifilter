@@ -1110,12 +1110,12 @@ void CodeGenerator::processInput()
         sleep(1);
         #endif
       } else {
-        if (!parseCP437 && !omitTrailingCR) *out << newLineTag;
+        if (!parseCP437 && !omitTrailingCR) printNewLine();
         break;
       }
     } else {
         
-      if (!omitNewLine && !parseCP437 && lineNumber>1) *out << newLineTag;  
+      if (!omitNewLine && !parseCP437 && lineNumber>1) printNewLine();  
      
       if (!omitNewLine ) insertLineNumber();
       omitNewLine = false;
@@ -1172,11 +1172,16 @@ void CodeGenerator::processInput()
             ++i;
           }  
         } else {
+
+        if ( (cur&0xff)==0x0d && i<line.length()-2) {
+              plainTxtCnt-=i;
+              lineBuf.seekp(showLineNumbers ? 0 : 0, ios::beg);
+        }
             
             // wrap line
           if (lineWrapLen && plainTxtCnt && plainTxtCnt % lineWrapLen==0) {
               ++lineNumber;
-              *out << newLineTag; 
+              printNewLine(); 
               insertLineNumber();
               plainTxtCnt=0;
            }
@@ -1185,7 +1190,7 @@ void CodeGenerator::processInput()
           if ( line.length() - i > 2 && (line[i+1]&0xff)==0x08) i++;  
           if ( cur==0x07) {
               ++lineNumber;
-              *out << newLineTag;  
+              printNewLine();  
               insertLineNumber();
         }  
   
@@ -1201,7 +1206,7 @@ void CodeGenerator::processInput()
                   // restore a unicode sequence if the two digit CSI is not matched
                   // ansiweather -l Berlin,DE | ansifilter -T
                   if (cur==0xc2 || cur==0x1b) {
-                      *out << maskCharacter(cur);
+                      lineBuf << maskCharacter(cur);
                       ++plainTxtCnt;
                 }
 
@@ -1228,12 +1233,12 @@ void CodeGenerator::processInput()
                   
                   if (   line[seqEnd]=='m' && !ignoreFormatting ) {
                     if (!elementStyle.isReset()) {
-                      *out <<getCloseTag();
+                      lineBuf <<getCloseTag();
                       tagOpen=false;
                     }
                     parseSGRParameters(line, i, seqEnd);
                     if (!elementStyle.isReset()) {
-                      *out <<getOpenTag();
+                      lineBuf <<getOpenTag();
                       tagOpen=true;
                     }
                   }
@@ -1300,13 +1305,13 @@ void CodeGenerator::processInput()
               if (seqEnd<line.length() ) {
                   i=seqEnd+1;
               } else {
-                *out << maskCharacter(line[i]);
+                lineBuf << maskCharacter(line[i]);
                 ++i;
                 ++plainTxtCnt;
               }
           } else {
             // output printable character
-            *out << maskCharacter(line[i]);
+            lineBuf << maskCharacter(line[i]);
             ++i;
             ++plainTxtCnt;
           }
@@ -1314,7 +1319,6 @@ void CodeGenerator::processInput()
           
         }
       }
-      //if (!parseCP437 && !omitTrailingCR) *out << newLineTag;
     }
   } // while (true)
   
@@ -1327,6 +1331,17 @@ void CodeGenerator::processInput()
   }
   out->flush();
 }
+
+
+void CodeGenerator::printNewLine(bool printEOL) {
+
+    *out << lineBuf.str();
+    if (printEOL) *out << newLineTag;
+
+    lineBuf.clear();
+    lineBuf.str(std::string());
+}
+
 
 /* the following functions are based on Wolfgang Frischs xterm256 converter utility:
    http://frexx.de/xterm-256-notes/
