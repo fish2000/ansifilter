@@ -1,0 +1,26 @@
+# Compiled Object files
+*.o
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dll
+
+*.a
+*.lib
+
+# Executables
+*.exe
+
+src/qt-gui/*user*
+src/ansifilter
+src/qt-gui/ansifilter-gui
+src/qt-gui/qrc_*
+src/qt-gui/ui_*
+src/qt-gui/moc_*
+src/qt-gui/.qmake.stash
+
+cov-int
