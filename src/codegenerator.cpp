@@ -1,7 +1,7 @@
 /***************************************************************************
                       codegenerator.cpp  -  description
                              -------------------
-    copyright            : (C) 2007-2019 by Andre Simon
+    copyright            : (C) 2007-2020 by Andre Simon
     email                : a.simon@mailbox.org
  ***************************************************************************/
 
@@ -190,6 +190,10 @@ void CodeGenerator::setTitle(const string & title)
 {
     if (!title.empty())
         docTitle= title;
+    std::size_t found = docTitle.rfind("/");
+    if (found!=std::string::npos){
+        docTitle = docTitle.substr(found+1);
+    }
 }
 
 string CodeGenerator::getTitle()
@@ -1173,11 +1177,14 @@ void CodeGenerator::processInput()
           }  
         } else {
 
-        if ( (cur&0xff)==0x0d && i<line.length()-2) {
+          if ( (cur&0xff)==0x0d && i<line.length()-2) {
               plainTxtCnt-=i;
+
               lineBuf.seekp(showLineNumbers ? 0 : 0, ios::beg);
-        }
-            
+              if (tagIsOpen) {
+                  lineBuf<<getOpenTag();
+              }
+          }
             // wrap line
           if (lineWrapLen && plainTxtCnt && plainTxtCnt % lineWrapLen==0) {
               ++lineNumber;
@@ -1185,20 +1192,19 @@ void CodeGenerator::processInput()
               insertLineNumber();
               plainTxtCnt=0;
            }
-          
-          
+
           if ( line.length() - i > 2 && (line[i+1]&0xff)==0x08) i++;  
           if ( cur==0x07) {
               ++lineNumber;
               printNewLine();  
               insertLineNumber();
         }  
-  
+
           if ( cur==0x1b || (!ignCSISeq && ( cur==0x9b || cur==0xc2)) ) {
 
-            if (line.length() - i > 2){              
+            if (line.length() - i > 2){
               next = line[i+1]&0xff;
-              
+
               //move index behind CSI
               if ( (cur==0x1b && next==0x5b) || ( cur==0xc2 && next==0x9b) ) {
                   ++i;
@@ -1211,7 +1217,7 @@ void CodeGenerator::processInput()
                 }
 
               }
-              
+
               // http://linuxcommand.org/lc3_adv_tput.php
               // http://ascii-table.com/ansi-escape-sequences-vt-100.php
               if (next==0x28){ // ( -> maybe need to handle more codes here
@@ -1228,7 +1234,7 @@ void CodeGenerator::processInput()
                 //find sequence end
                 while (   seqEnd<line.length() 
                   && (line[seqEnd]<0x40 || line[seqEnd]>0x7e )) {
-                    ++seqEnd;                    
+                    ++seqEnd;
                   }
                   
                   if (   line[seqEnd]=='m' && !ignoreFormatting ) {
@@ -1259,14 +1265,10 @@ void CodeGenerator::processInput()
               } else {
                 cur= line[i-1]&0xff;
                 next = line[i]&0xff;
-                
 
                 //ignore content of two and single byte sequences (no CSI)
                 if (cur==0x1b && (  next==0x50 || next==0x5d || next==0x58
-                  || next==0x5e||next==0x5f 
-                  // || next==0x37 || next==0x38
-                    
-                ) ) // DECSC seq
+                  || next==0x5e||next==0x5f ) ) // DECSC seq
                 {
                   seqEnd=i;
                   //find string end
@@ -1315,8 +1317,6 @@ void CodeGenerator::processInput()
             ++i;
             ++plainTxtCnt;
           }
-          
-          
         }
       }
     }

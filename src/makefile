@@ -8,7 +8,7 @@ CXX ?= g++
 #CC ?= clang++
 
 # Added -std=c++11 because of auto_ptr to unique_ptr transition
-CXXFLAGS := -Wall -O2 -DNDEBUG -std=c++11 -fPIC $(CXXFLAGS)
+CXXFLAGS := -Wall -O2 -DNDEBUG -std=c++11 -fPIC -D_FILE_OFFSET_BITS=64 $(CXXFLAGS)
 
 SOURCES=arg_parser.o stringtools.o cmdlineoptions.o main.o platform_fs.o\
 codegenerator.o htmlgenerator.o pangogenerator.o texgenerator.o latexgenerator.o rtfgenerator.o svggenerator.o\

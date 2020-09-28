@@ -2,7 +2,7 @@
                           cmdlineoptions.cpp  -  description
                              -------------------
     begin                : Sun Oct 13 2007
-    copyright            : (C) 2007-2018 by Andre Simon
+    copyright            : (C) 2007-2020 by Andre Simon
     email                : a.simon@mailbox.org
  ***************************************************************************/
 
@@ -75,8 +75,8 @@ const Arg_parser::Option options[] = {
     { 'S', "svg",        Arg_parser::no  },
     { 'Q', "width",      Arg_parser::yes  },
     { 'E', "height",     Arg_parser::yes  },
+    { 'x', "max-size",     Arg_parser::yes  },
 
-   
     {  0,  0,           Arg_parser::no  }
 };
 
@@ -105,7 +105,8 @@ CmdLineOptions::CmdLineOptions( const int argc, const char *argv[] ):
     fontSize("10pt"),
     wrapLineLen(0),
     asciiArtWidth(80),
-    asciiArtHeight(100)
+    asciiArtHeight(100),
+    maxFileSize(268435456)
 {
     char* hlEnvOptions=getenv("ANSIFILTER_OPTIONS");
     if (hlEnvOptions!=NULL) {
@@ -284,6 +285,15 @@ void CmdLineOptions::parseRuntimeOptions( const int argc, const char *argv[], bo
             height=arg;
             break;
         
+        case 'x': {
+            StringTools::str2num<off_t> ( maxFileSize, arg, std::dec );
+            switch (arg[arg.size()-1]) {
+                case 'G': maxFileSize *= 1024;
+                case 'M': maxFileSize *= 1024;
+                case 'K': maxFileSize *= 1024;
+            }
+            break;
+        }
         default:
             cerr << "ansifilter: option parsing failed" << endl;
         }
@@ -508,3 +518,9 @@ string CmdLineOptions::getHeight() const
 {
     return height;
 }
+
+off_t CmdLineOptions::getMaxFileSize() const
+{
+    return maxFileSize;
+}
+

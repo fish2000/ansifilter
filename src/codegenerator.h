@@ -1,7 +1,7 @@
 /***************************************************************************
                           codegenerator.h  -  description
                              -------------------
-    copyright            : (C) 2007-2018 by Andre Simon
+    copyright            : (C) 2007-2020 by Andre Simon
     email                : a.simon@mailbox.org
  ***************************************************************************/
 
@@ -95,11 +95,11 @@ public:
         return *this;
     }
     
-    
     bool operator==(const StyleInfo& r)
     {
-        return this->fgColor==r.fgColor && this->bgColor==r.bgColor && this->isBold==r.isBold && this->isItalic==r.isItalic && this->isConcealed==r.isConcealed && this->isBlink==r.isBlink && this->isUnderLine==r.isUnderLine;
-              
+        return this->fgColor==r.fgColor && this->bgColor==r.bgColor && this->isBold==r.isBold 
+                && this->isItalic==r.isItalic && this->isConcealed==r.isConcealed 
+                && this->isBlink==r.isBlink && this->isUnderLine==r.isUnderLine;
     }
 
     ~StyleInfo()
@@ -111,8 +111,6 @@ public:
     bool isBold, isItalic, isConcealed, isBlink, isUnderLine;  ///< style properties
    };
 
-  
-  
 /** \brief Base class for escape sequence parsing.
 
     The virtual class provides escape sequence parsing functionality.<br>
@@ -311,7 +309,6 @@ public:
     */
     void setSVGSize ( const string& w, const string& h );
 
-    
 protected:
 
     /** \param type Output type */
@@ -377,7 +374,6 @@ protected:
          numberCurrentLine,   ///< output number of current line
          addAnchors,          ///< add HTML anchor to line number
          addFunnyAnchors,     ///< add HTML links to themselves
-
          applyDynStyles;      ///< insert dynamic style references instead of inline styles 
     
     bool omitVersionInfo;     ///< do not print version info comment
@@ -432,7 +428,6 @@ private:
         @param line text line                     
         @param begin starting position within line
         @param end ending position within line
-        
         */
     void parseCodePage437Seq(string line, size_t begin, size_t end);
 
@@ -469,9 +464,11 @@ private:
     int asciiArtHeight;       ///< virtual console line count
     unsigned int lineWrapLen; ///< max line length before wrapping
 
-    
     ElementStyle memStyle;
-    
+
+    /** clear line buffer
+        @param printEOL true if newLineTag should be outputted
+    */
     void printNewLine(bool printEOL=true);
     
     /** convert an xterm color value (0-253) to 3 unsigned chars rgb
@@ -503,7 +500,6 @@ private:
     /// the 6 value iterations in the xterm color cube
     static const unsigned char valuerange[] ;
 };
-
 
 }
 

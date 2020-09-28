@@ -1,4 +1,4 @@
-.TH ansifilter 1 "2019-10-22" "Andre Simon" "user documentation"
+.TH ansifilter 1 "2020-09-28" "Andre Simon" "user documentation"
 
 .SH NAME
 Ansifilter - ANSI escape code processor and converter
@@ -23,6 +23,8 @@ Name of output file
 Name of output directory
 .IP "-t, --tail"
 Continue reading after end-of-file (like tail -f). Use system tail if available.
+.IP "-x, --max-size=<size>"
+Set maximum input file size (examples: 512M, 1G; default: 256M) 
 
 .SH Output formats
 .IP "-T, --text"

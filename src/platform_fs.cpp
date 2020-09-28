@@ -1,3 +1,10 @@
+/***************************************************************************
+                          platform_fs.cpp  -  description
+                             -------------------
+    begin                : Sun Oct 13 2007
+    copyright            : (C) 2007-2020 by Andre Simon
+    email                : a.simon@mailbox.org
+ ***************************************************************************/
 /*
 This file is part of ANSIFilter.
 
@@ -17,6 +24,8 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "platform_fs.h"
 
+#include <sys/stat.h>
+
 using namespace std;
 
 namespace Platform {
@@ -26,6 +35,17 @@ namespace Platform {
 #else
     const char pathSeparator = '/';
 #endif
+
+//-D_FILE_OFFSET_BITS=64
+//268435456 256 MB
+
+off_t fileSize(const string& fName) {
+    struct stat fileInfo;
+    if(stat(fName.c_str(), &fileInfo) != 0) {
+        return 0;
+    }
+    return fileInfo.st_size;   
+}
 
 }
 

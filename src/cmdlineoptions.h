@@ -109,13 +109,14 @@ public:
     
     /** \return True if input should be treated as BIN ASCII art */
     bool parseAsciiBin() const;
-    
+
+    /** \return True if input should be treated as Tundra ASCII art */
     bool parseAsciiTundra() const;
    
      /** \return True if output should not be terminated with carriage return */
     bool omitTrailingCR() const;
 
-    /** \return True if output should not contain a version info comment */    
+    /** \return True if output should not contain a version info comment */
     bool omitVersionInfo() const;
     
     /** \return True if clear sequences (ESC K) should be ignored */
@@ -132,7 +133,6 @@ public:
     
     bool addFunnyAnchors() const;
 
-    
     /** \return Document title */
     string getDocumentTitle() const ;
 
@@ -143,12 +143,21 @@ public:
     const vector <string> & getInputFileNames() const;
 
     int getWrapLineLength() const;
-    
+
+    /** \return XBIN width */
     int getAsciiArtWidth() const;
+
+    /** \return XBIN height */
     int getAsciiArtHeight() const;
-    
+
+    /** \return SVG width */
     string getWidth() const;
+
+    /** \return SVG height */
     string getHeight() const;
+
+    /** \return Allowed input file size */
+    off_t getMaxFileSize() const;
 
 private:
     ansifilter::OutputType outputType;
@@ -189,6 +198,8 @@ private:
     int wrapLineLen;
     int asciiArtWidth;
     int asciiArtHeight;
+    
+    off_t maxFileSize;
 
     /** list of all input file names */
     vector <string> inputFileNames;
@@ -198,9 +209,8 @@ private:
 
     /** \return directory name of path */
     string getDirName( const string & path);
-    
-    void parseRuntimeOptions( const int argc, const char *argv[], bool readInputFilenames=true);
 
+    void parseRuntimeOptions( const int argc, const char *argv[], bool readInputFilenames=true);
 };
 
 #endif

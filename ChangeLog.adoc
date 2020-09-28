@@ -1,11 +1,15 @@
 = Ansifilter ChangeLog
 
+
 === ansifilter 2.17
 
-02.08.2020
-
+28.09.2020
+ 
+ - improved handling of carriage return (https://gitlab.com/saalen/ansifilter/-/issues/25)
  - applied makefile patch to address Portage warnings (https://gitlab.com/saalen/ansifilter/-/issues/24)
-
+ - fixed section naming of LaTeX files if input path contained slashes
+ - CLI: added `--max-size` option to limit input file size (default: 256 MB)
+ 
 === ansifilter 2.16.1
 
 30.06.2020
@@ -17,13 +21,13 @@
 
 08.01.2020
 
- - CLI: added --ignore-csi option to improve UTF-8 input handling
+ - CLI: added `--ignore-csi` option to improve UTF-8 input handling
  
 === ansifilter 2.15
 
 08.11.2019
 
- - added optional argument to --ignore-clear, the default setting is now true
+ - added optional argument to `--ignore-clear`, the default setting is now true
  - GUI: improved UTF16 input path handling on Windows
  - CLI: fixed -e argument description (thanks to Jens Schleusener)
 
@@ -39,8 +43,8 @@
 
  - line numbers do not trigger default style span in HTML (https://gitlab.com/saalen/ansifilter/issues/19)
  - fixed line numbering in batch mode
- - CLI: added --derived-styles option for HTML output (https://gitlab.com/saalen/ansifilter/issues/11)
- - CLI: added "self" argument to --anchors to generate self-referencing anchors
+ - CLI: added `--derived-styles` option for HTML output (https://gitlab.com/saalen/ansifilter/issues/11)
+ - CLI: added "self" argument to `--anchors` to generate self-referencing anchors
 
 === ansifilter 2.12
 
@@ -54,7 +58,7 @@
 10.10.2018
 
  - fixed parsing of "7" and "8" sequences (https://gitlab.com/saalen/ansifilter/issues/16)
- - added --ignore-clear option (https://gitlab.com/saalen/ansifilter/issues/16)
+ - added `--ignore-clear` option (https://gitlab.com/saalen/ansifilter/issues/16)
  - converted README and ChangeLog to AsciiDoc
 
 === ansifilter 2.10
@@ -70,7 +74,7 @@
 20.11.2017
 
  - fixed parsing of "(B" reset sequence (https://github.com/andre-simon/ansifilter/issues/10)
- - CLI: added --no-version-info option
+ - CLI: added `--no-version-info` option
  - GUI: layout adjustments
 
 
@@ -109,7 +113,7 @@
 
 21.06.2017
 
- - CLI: added --no-trailing-nl option
+ - CLI: added `--no-trailing-nl` option
  - CLI: added support for environment variable ANSIFILTER_OPTIONS
 
 
@@ -147,7 +151,7 @@
 20.07.2016
 
  - new CSI parser
- - CLI: new --art* options to parse ANSI and BIN/XBIN sequences used for ASCII art 
+ - CLI: new `--art*` options to parse ANSI and BIN/XBIN sequences used for ASCII art 
   (suggested by Phillip Li)  
  - GUI: added ASCII art options
 
@@ -211,7 +215,7 @@
 
 23.03.2015
 
- - added options --line-numbers, --wrap-no-numbers, --anchors 
+ - added options `--line-numbers`, `--wrap-no-numbers`, `--anchors`
   (suggested by Jens Schleusener)
 
 
@@ -249,7 +253,7 @@
 
 04.01.2012
 
- - added --wrap option to wrap long lines
+ - added `--wrap` option to wrap long lines
  - fixed tab output in plain text mode
 
 
@@ -289,8 +293,8 @@
 
 22.09.2008
 
- - added option -L, --latex for LaTeX output (patch by Hans Meine)
- - added option -P, --tex for TeX output
+ - added option -L, `--latex` for LaTeX output (patch by Hans Meine)
+ - added option -P, `--tex` for TeX output
  - fixed RTF invalid format error
  - removed useless files
 
@@ -321,7 +325,7 @@
 
 06.11.2007
 
- - added option --tail (suggested by Emmanuel Oga)
+ - added option `--tail` (suggested by Emmanuel Oga)
  - 256 color sequences are ignored
 
 

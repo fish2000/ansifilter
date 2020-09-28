@@ -57,6 +57,8 @@ void ANSIFilterApp::printHelp()
     cout << "  -o, --output=<file>    Name of output file\n";
     cout << "  -O, --outdir=<dir>     Name of output directory\n";
     cout << "  -t, --tail             Continue reading after end-of-file (like tail -f)\n";
+    cout << "  -x, --max-size=<size>  Set maximum input file size\n";
+    cout << "                         (examples: 512M, 1G; default: 256M)\n"; 
     cout << "\nOutput text formats:\n";
     cout << "  -T, --text (default)   Output text\n";
     cout << "  -H, --html             Output HTML\n";
@@ -141,7 +143,6 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         return EXIT_FAILURE;
     }
     
-    
     while (i < fileCount && !failure) {
 
         if (fileCount>1) {
@@ -152,6 +153,12 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
             outFilePath += options.getOutFileSuffix();
         } else {
             outFilePath = options.getSingleOutFilename();
+        }
+        
+        if ( inFileList[i].size() && Platform::fileSize(inFileList[i]) > options.getMaxFileSize() ) {
+            
+            std::cerr <<"file exceeds max size (see --max-size): " << inFileList[i] << "\n";
+            return EXIT_FAILURE;
         }
 
         generator->setTitle(options.getDocumentTitle().empty()?
