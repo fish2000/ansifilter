@@ -1114,7 +1114,7 @@ void CodeGenerator::processInput()
         sleep(1);
         #endif
       } else {
-        if (!parseCP437 && !omitTrailingCR) printNewLine();
+        if (!parseCP437 && !omitTrailingCR) printNewLine(true);
         break;
       }
     } else {
@@ -1177,11 +1177,11 @@ void CodeGenerator::processInput()
           }  
         } else {
 
-          if ( (cur&0xff)==0x0d && i<line.length()-2) {
+          if ( (cur&0xff)==0x0d && i<line.length()-1) {
               plainTxtCnt-=i;
 
               lineBuf.seekp(showLineNumbers ? 0 : 0, ios::beg);
-              if (tagIsOpen) {
+              if (1 || tagIsOpen) {
                   lineBuf<<getOpenTag();
               }
           }
@@ -1333,10 +1333,14 @@ void CodeGenerator::processInput()
 }
 
 
-void CodeGenerator::printNewLine(bool printEOL) {
+void CodeGenerator::printNewLine(bool eof) {
 
-    *out << lineBuf.str();
-    if (printEOL) *out << newLineTag;
+    string lineStr(lineBuf.str());
+    if (eof) {
+        lineStr = lineStr.substr(0, lineBuf.tellp());
+    }
+    *out << lineStr;
+    *out << newLineTag;
 
     lineBuf.clear();
     lineBuf.str(std::string());

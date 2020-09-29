@@ -467,9 +467,8 @@ private:
     ElementStyle memStyle;
 
     /** clear line buffer
-        @param printEOL true if newLineTag should be outputted
     */
-    void printNewLine(bool printEOL=true);
+    void printNewLine(bool eof=false);
     
     /** convert an xterm color value (0-253) to 3 unsigned chars rgb
         @param color xterm color
