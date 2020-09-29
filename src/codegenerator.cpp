@@ -1114,7 +1114,7 @@ void CodeGenerator::processInput()
         sleep(1);
         #endif
       } else {
-        if (!parseCP437 && !omitTrailingCR) printNewLine(true);
+        if (!parseCP437 && !omitTrailingCR) printNewLine(outputType!=TEXT);
         break;
       }
     } else {
@@ -1178,12 +1178,10 @@ void CodeGenerator::processInput()
         } else {
 
           if ( (cur&0xff)==0x0d && i<line.length()-1) {
-              plainTxtCnt-=i;
+            plainTxtCnt-=i;
 
-              lineBuf.seekp(showLineNumbers ? 0 : 0, ios::beg);
-              if (1 || tagIsOpen) {
-                  lineBuf<<getOpenTag();
-              }
+            lineBuf.seekp(showLineNumbers ? 0 : 0, ios::beg);
+            lineBuf<<getOpenTag();
           }
             // wrap line
           if (lineWrapLen && plainTxtCnt && plainTxtCnt % lineWrapLen==0) {
