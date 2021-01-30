@@ -82,7 +82,12 @@ string BBCodeGenerator::getCloseTag()
     return  s.str();
 }
 
-
+//[url=https://www.bbcode.org/]This be bbcode.org![/url]
+string BBCodeGenerator::getHyperlink(string uri, string txt){
+    ostringstream os;
+    os <<"[url="<<uri<<"]"<<txt<<"[/url]";
+    return os.str();
+}
 
 string BBCodeGenerator::getHeader()
 {

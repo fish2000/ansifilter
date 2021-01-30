@@ -93,11 +93,11 @@ private:
 
     /** name of page size which is mapped to page dimensions*/
     string pageSize;
-   
-    
+
+
     /** flag to enable Unicode conversion */
     bool isUtf8;
-    
+
     /** utf-8 to utf-16 conversion variables */
     unsigned long utf16Char;
     size_t utf8SeqLen;
@@ -108,7 +108,9 @@ private:
 
     /** \return escaped character*/
     virtual string maskCP437Character(unsigned char );
-    
+
+    virtual string getHyperlink(string uri, string txt);
+
     /**\return text formatting attributes in RTF format */
     string  getAttributes( const StyleColour & col);
 
@@ -124,7 +126,7 @@ private:
 
     void insertLineNumber ();
     string unicodeFromHTML(const string &);
-    
+
 };
 
 }

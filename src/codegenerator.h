@@ -1,7 +1,7 @@
 /***************************************************************************
                           codegenerator.h  -  description
                              -------------------
-    copyright            : (C) 2007-2020 by Andre Simon
+    copyright            : (C) 2007-2021 by Andre Simon
     email                : a.simon@mailbox.org
  ***************************************************************************/
 
@@ -50,8 +50,8 @@ namespace ansifilter
     unsigned char c;
     ElementStyle style;
   };
-  
-  
+
+
   class StyleInfo
 {
 public:
@@ -94,11 +94,11 @@ public:
 
         return *this;
     }
-    
+
     bool operator==(const StyleInfo& r)
     {
-        return this->fgColor==r.fgColor && this->bgColor==r.bgColor && this->isBold==r.isBold 
-                && this->isItalic==r.isItalic && this->isConcealed==r.isConcealed 
+        return this->fgColor==r.fgColor && this->bgColor==r.bgColor && this->isBold==r.isBold
+                && this->isItalic==r.isItalic && this->isConcealed==r.isConcealed
                 && this->isBlink==r.isBlink && this->isUnderLine==r.isUnderLine;
     }
 
@@ -181,7 +181,7 @@ public:
     \return true if successful
      */
     virtual bool printDynamicStyleFile ( const string &outPath );
-    
+
     /**
      Overrides default colours by user defined values; resets palette to default if mapPath is empty
      \param mapPath path of map file
@@ -251,13 +251,13 @@ public:
     {
         omitTrailingCR=b;
     }
-    
+
     /** \param b set to true if the output should not contain a version info comment*/
     void setOmitVersionInfo(bool b)
     {
         omitVersionInfo=b;
     }
-    
+
     /** \return plain outputting flag */
     bool getPlainOutput()
     {
@@ -285,7 +285,7 @@ public:
 
     /** \param b set to true if input is an ASCII art BIN file*/
     void setParseAsciiBin(bool flag);
-        
+
     /** \param b set to true if input is an Tundra art BIN file*/
     void setParseAsciiTundra(bool flag);
 
@@ -297,12 +297,12 @@ public:
 
     /** \param b set dimensions of ASCII art virtual console */
     void setAsciiArtSize(int width, int height);
-    
-    /** tell parser to use dynamic stylesheets derived from the document's formatting 
-       \param  flag true 
+
+    /** tell parser to use dynamic stylesheets derived from the document's formatting
+       \param  flag true
     */
     void setApplyDynStyles(bool flag);
-    
+
     /** Set SVG dimensions
         \param w page width
         \param h page height
@@ -323,13 +323,18 @@ protected:
     /** \param c Character to be masked
      \return Codepage 437 escape sequence of output format */
     virtual string maskCP437Character(unsigned char c) { return maskCharacter(c); }
-    
+
+    /** \param uri URI
+     *  \param txt Description
+     \return returns link formatting sequence */
+    virtual string getHyperlink(string uri, string txt) { return txt+"["+uri+"]"; }
+
     /** Tag for inserting line feeds*/
     string newLineTag;
 
     /** SVG document dimensions */
     string width, height;
-        
+
     /** file input*/
     istream *in;
 
@@ -338,7 +343,7 @@ protected:
 
     /** line buffer*/
     ostringstream lineBuf;
-    
+
     bool tagIsOpen; ///< a reminder to close an open tag
 
     string styleCommentOpen,  ///< open comment delimiter
@@ -374,13 +379,13 @@ protected:
          numberCurrentLine,   ///< output number of current line
          addAnchors,          ///< add HTML anchor to line number
          addFunnyAnchors,     ///< add HTML links to themselves
-         applyDynStyles;      ///< insert dynamic style references instead of inline styles 
-    
+         applyDynStyles;      ///< insert dynamic style references instead of inline styles
+
     bool omitVersionInfo;     ///< do not print version info comment
     bool parseCP437;          ///< treat input as CP437 file
     bool parseAsciiBin;       ///< treat input as BIN or XBIN file
     bool parseAsciiTundra;    ///< treat input as Tundra file
-         
+
     /** Processes input data */
     void processInput();
 
@@ -391,21 +396,21 @@ protected:
     {
         return StringTools::lowerCase(encoding)!="none";
     }
-    
+
     /** convert a rgb triple to HTML color notation
-    @param rgb RGB input values 
+    @param rgb RGB input values
     @return HTML color string
     */
     string rgb2html(unsigned char* rgb);
-    
+
     string rgb2html(int r, int g, int b);
-    
+
     /// 16 basic colors
     static unsigned char workingPalette[16][3];
     static unsigned char defaultPalette[16][3];
-    
+
     ElementStyle elementStyle;
-    
+
     vector<StyleInfo> documentStyles;
 
 private:
@@ -423,9 +428,9 @@ private:
         @param end ending position within line
         @return true if sequence was recognized */
     bool parseSGRParameters(const string& line, size_t begin, size_t end);
-    
+
     /** parses Codepage 437 sequence information
-        @param line text line                     
+        @param line text line
         @param begin starting position within line
         @param end ending position within line
         */
@@ -457,7 +462,7 @@ private:
     bool omitTrailingCR;   ///< do not print EOL at the end of output
     bool ignClearSeq;      ///< ignore clear sequence ESC K
     bool ignCSISeq;       ///< ignore CSIs (may interfere with UTF-8 input)
-    
+
     TDChar* termBuffer;
     int curX, curY, memX, memY, maxY; ///< cursor position for Codepage 437 sequences
     int asciiArtWidth;        ///< virtual console column count
@@ -469,33 +474,33 @@ private:
     /** clear line buffer
     */
     void printNewLine(bool eof=false);
-    
+
     /** convert an xterm color value (0-253) to 3 unsigned chars rgb
         @param color xterm color
         @param rgb RGB output values */
     void xterm2rgb(unsigned char color, unsigned char* rgb);
-    
+
     /**Print content of virtual terminal buffer. Deletes buffer. */
     void printTermBuffer();
-    
+
     /**Parses BIN ASCII art file */
     void parseBinFile();
-    
+
     /**Parses XBIN ASCII art file */
     void parseXBinFile();
 
-    /**Parses Tundra ASCII art file */    
+    /**Parses Tundra ASCII art file */
     void parseTundraFile();
-    
+
     /**allocate virtual terminal buffer */
     void allocateTermBuffer();
-    
+
     /** @return true if stream begins with XBIN id  */
     bool streamIsXBIN();
-   
+
      /** @return true if stream begins with Tundra id  */
     bool streamIsTundra();
-   
+
     /// the 6 value iterations in the xterm color cube
     static const unsigned char valuerange[] ;
 };

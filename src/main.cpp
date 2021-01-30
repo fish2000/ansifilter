@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
 
-    copyright            : (C) 2007-2018 by Andre Simon
+    copyright            : (C) 2007-2021 by Andre Simon
     email                : a.simon@mailbox.org
 
    Highlight is a universal source code to HTML converter. Syntax highlighting
@@ -38,8 +38,8 @@ using namespace std;
 void ANSIFilterApp::printVersionInfo()
 {
     cout << "\n ansifilter version "
-         << ANSIFILTER_VERSION
-         << "\n Copyright (C) 2007-2020 Andre Simon <a dot simon at mailbox.org>"
+         << Info::getVersion()
+         << "\n Copyright (C) 2007-2021 Andre Simon <a dot simon at mailbox.org>"
          << "\n\n Argparser class"
          << "\n Copyright (C) 2006-2008 Antonio Diaz Diaz <ant_diaz at teleline.es>"
          << "\n\n This software is released under the terms of the GNU General "
@@ -58,7 +58,7 @@ void ANSIFilterApp::printHelp()
     cout << "  -O, --outdir=<dir>     Name of output directory\n";
     cout << "  -t, --tail             Continue reading after end-of-file (like tail -f)\n";
     cout << "  -x, --max-size=<size>  Set maximum input file size\n";
-    cout << "                         (examples: 512M, 1G; default: 256M)\n"; 
+    cout << "                         (examples: 512M, 1G; default: 256M)\n";
     cout << "\nOutput text formats:\n";
     cout << "  -T, --text (default)   Output text\n";
     cout << "  -H, --html             Output HTML\n";
@@ -71,7 +71,7 @@ void ANSIFilterApp::printHelp()
     cout << "\nFormat options:\n";
     cout << "  -a, --anchors(=self)   Add HTML line anchors (opt: self referencing, assumes -l)\n";
     cout << "  -d, --doc-title        Set HTML/LaTeX/SVG document title\n";
-    cout << "  -e, --encoding=<enc>   Set HTML/RTF encoding (must match input file encoding);\n"; 
+    cout << "  -e, --encoding=<enc>   Set HTML/RTF encoding (must match input file encoding);\n";
     cout << "                         omit encoding information if enc=NONE\n";
     cout << "  -f, --fragment         Omit HTML header and footer\n";
     cout << "  -F, --font=<font>      Set HTML/RTF/SVG font face\n";
@@ -87,14 +87,14 @@ void ANSIFilterApp::printHelp()
     cout << "      --no-version-info  Omit version info comment\n";
     cout << "      --wrap-no-numbers  Omit line numbers of wrapped lines (assumes -l)\n";
     cout << "      --derived-styles   Output dynamic stylesheets (HTML/SVG)\n";
-    
+
     cout << "\nANSI art options:\n";
     cout << "      --art-cp437        Parse codepage 437 ANSI art (HTML and RTF output)\n";
     cout << "      --art-bin          Parse BIN/XBIN ANSI art (HTML output, no stdin)\n";
     cout << "      --art-tundra       Parse Tundra ANSI art (HTML output, no stdin)\n";
     cout << "      --art-width        Set ANSI art width (default 80)\n";
     cout << "      --art-height       Set ANSI art height (default 150)\n";
-    
+
     cout << "\nSVG output options:\n";
     cout << "      --height           set image height (units allowed)\n";
     cout << "      --width            set image width (see --height)\n";
@@ -108,8 +108,8 @@ void ANSIFilterApp::printHelp()
     cout << "tail -f server.log | ansifilter\n\n";
     cout << "Parsing XBIN files overrides --art-width, --art-height and --map options.\n";
     cout << "The ANSI art file formats BIN, XBIN and TND cannot be read from stdin.\n";
-    cout << "\nPlease report bugs to " ANSIFILTER_EMAIL "\n";
-    cout << "For updates see " ANSIFILTER_URL "\n";
+    cout << "\nPlease report bugs to " << Info::getEmail()<< "\n";
+    cout << "For updates see " << Info::getWebsite()<< "\n";
 }
 
 int ANSIFilterApp::run( const int argc, const char *argv[] )
@@ -142,7 +142,7 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         std::cerr <<"could not read map file: " << mapPath << "\n";
         return EXIT_FAILURE;
     }
-    
+
     while (i < fileCount && !failure) {
 
         if (fileCount>1) {
@@ -154,9 +154,9 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         } else {
             outFilePath = options.getSingleOutFilename();
         }
-        
+
         if ( inFileList[i].size() && Platform::fileSize(inFileList[i]) > options.getMaxFileSize() ) {
-            
+
             std::cerr <<"file exceeds max size (see --max-size): " << inFileList[i] << "\n";
             return EXIT_FAILURE;
         }
@@ -186,11 +186,11 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         generator->setAsciiArtSize(options.getAsciiArtWidth(), options.getAsciiArtHeight());
         generator->setOmitTrailingCR(options.omitTrailingCR());
         generator->setOmitVersionInfo(options.omitVersionInfo());
-        
+
         generator->setSVGSize ( options.getWidth(), options.getHeight() );
-        
+
         ansifilter::ParseError error = generator->generateFile(inFileList[i], outFilePath);
-        
+
         if (error==ansifilter::BAD_INPUT) {
             std::cerr << "could not read input: " << inFileList[i] << "\n";
             failure=true;
@@ -200,12 +200,12 @@ int ANSIFilterApp::run( const int argc, const char *argv[] )
         }
         ++i;
     }
-    
+
     if (options.applyDynStyles() && !failure) {
         string styleStyleSheetPath = outDirectory + "derived_styles.css";
         generator->printDynamicStyleFile(styleStyleSheetPath);
     }
-    
+
     return (failure) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 

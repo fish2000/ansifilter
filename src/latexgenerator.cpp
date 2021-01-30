@@ -72,6 +72,12 @@ string LaTeXGenerator::getCloseTag()
     return "}";
 }
 
+string LaTeXGenerator::getHyperlink(string uri, string txt){
+    ostringstream os;
+    os <<"\\href{"<<uri<<"}{"<<txt<<"}";
+    return os.str();
+}
+
 string LaTeXGenerator::getGeneratorComment()
 {
     ostringstream s;
@@ -86,6 +92,8 @@ string LaTeXGenerator::getHeader()
     ostringstream os;
     os << "\\documentclass{article}\n";
     os << "\\usepackage{color}\n";
+    os << "\\usepackage{hyperref}\n";
+
     os << "\\newcommand{\\ws}[1]{\\textcolor[rgb]{0,0,0}{#1}}\n";
     if (encodingDefined()) {
         os << "%\\usepackage[" << encoding << "]{inputenc}\n";
@@ -103,10 +111,10 @@ string LaTeXGenerator::getFooter()
 {
     string footer;
     footer = "\\end{document}\n";
-    
+
     if (!omitVersionInfo)
         footer += getGeneratorComment();
-    
+
     return footer;
 }
 

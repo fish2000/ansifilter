@@ -403,7 +403,7 @@ void MyDialog::on_pbClipboard_clicked()
         QMessageBox::information(this, "Note", "Please select an input file.");
         return;
     }
-	
+
     unique_ptr<ansifilter::CodeGenerator> generator(ansifilter::CodeGenerator::getInstance(ansifilter::TEXT));
     generator->setPreformatting ( ansifilter::WRAP_SIMPLE, static_cast<unsigned int>(dlg.spinBoxWrap->value()));
     generator->setIgnoreClearSeq(dlg.cbIgnClearSeq->isChecked());
@@ -491,13 +491,13 @@ void MyDialog::showFile()
 void MyDialog::on_pbAbout_clicked()
 {
     QMessageBox::about(this,
-                       "ANSIFilter Information", 
-                       QString("ANSIFilter GUI %1\n" 
-                       "(c) 2007-2020 Andre Simon\n\n"
+                       "ANSIFilter Information",
+                       QString("ANSIFilter GUI %1\n"
+                       "(c) 2007-2021 Andre Simon\n\n"
                        "Built with Qt version %2\n\n"
                        "Released under the terms of the GNU GPL license.\n\n"
-                       "andre dot simon1 at gmx dot de\n"
-                       "See www.andre-simon.de for updates.").arg(ANSIFILTER_VERSION).arg(QString(qVersion ())) 
+                       "%3\n"
+                       "See %4 for updates.").arg(QString::fromStdString(Info::getVersion())).arg(QString(qVersion())).arg(QString::fromStdString(Info::getEmail())).arg(QString::fromStdString(Info::getWebsite()))
                       );
 }
 

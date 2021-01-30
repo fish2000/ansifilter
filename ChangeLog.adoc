@@ -1,15 +1,20 @@
 = Ansifilter ChangeLog
 
+=== ansifilter 2.18
+
+30.01.2021
+
+ - added support for OSC 8 (iterm2) Hyperlinks (https://gitlab.com/saalen/ansifilter/-/issues/27)
 
 === ansifilter 2.17
 
 28.09.2020
- 
+
  - improved handling of carriage return (https://gitlab.com/saalen/ansifilter/-/issues/25)
  - applied makefile patch to address Portage warnings (https://gitlab.com/saalen/ansifilter/-/issues/24)
  - fixed section naming of LaTeX files if input path contained slashes
  - CLI: added `--max-size` option to limit input file size (default: 256 MB)
- 
+
 === ansifilter 2.16.1
 
 30.06.2020
@@ -22,7 +27,7 @@
 08.01.2020
 
  - CLI: added `--ignore-csi` option to improve UTF-8 input handling
- 
+
 === ansifilter 2.15
 
 08.11.2019
@@ -35,8 +40,8 @@
 
 02.04.2019
 
- - added SVG output option (https://gitlab.com/saalen/ansifilter/issues/20) 
- 
+ - added SVG output option (https://gitlab.com/saalen/ansifilter/issues/20)
+
 === ansifilter 2.13
 
 08.12.2018
@@ -52,7 +57,7 @@
 
  - fixed -w char count if line contains escape sequences (thanks to Jason James)
  - GUI: added stylesheet input filed (suggested by Davor Petri?)
- 
+
 === ansifilter 2.11
 
 10.10.2018
@@ -151,8 +156,8 @@
 20.07.2016
 
  - new CSI parser
- - CLI: new `--art*` options to parse ANSI and BIN/XBIN sequences used for ASCII art 
-  (suggested by Phillip Li)  
+ - CLI: new `--art*` options to parse ANSI and BIN/XBIN sequences used for ASCII art
+  (suggested by Phillip Li)
  - GUI: added ASCII art options
 
 
@@ -160,7 +165,7 @@
 
 29.06.2016
 
- - fixed RTF output of UTF-8 input; needs input encoding set to utf-8 
+ - fixed RTF output of UTF-8 input; needs input encoding set to utf-8
  - GUI: fixed issue with color map setting
 
 
@@ -206,7 +211,7 @@
 
  - fixed missing close tags in HTML output
  - fixed TeX output for cweb documents (patch by Ingo Krabbe)
- - HTML and LaTeX output size reduced 
+ - HTML and LaTeX output size reduced
  - HTML output adjusted to HTML5 doctype
  - added TCL extension in src/tcl (thanks to Martin Heinrich)
 
@@ -225,7 +230,7 @@
 
  - fixed bold and italic in LaTeX output (patch by Antonio Dominguez)
 
- 
+
 === ansifilter 1.10
 
 01.09.2014
@@ -266,7 +271,7 @@
  - added bbcode output
  - brightened default colours
 
- 
+
 === ansifilter 1.5
 
 12.11.2010

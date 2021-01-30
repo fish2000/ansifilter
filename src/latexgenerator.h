@@ -77,6 +77,8 @@ private:
     /** \return escaped character*/
     virtual string maskCharacter(unsigned char );
 
+    virtual string getHyperlink(string uri, string txt);
+
     void insertLineNumber();
 };
 

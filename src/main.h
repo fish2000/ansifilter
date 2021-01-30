@@ -28,9 +28,7 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 #include <cassert>
 
 #include "cmdlineoptions.h"
-//#include "codegenerator.h"
 #include "version.h"
-//#include "platform_fs.h"
 
 /// Main application class of the command line interface
 
@@ -51,7 +49,6 @@ public:
 
 private:
 
-    /** print version info*/
     void printVersionInfo();
     void printHelp();
 

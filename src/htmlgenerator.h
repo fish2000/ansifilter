@@ -32,7 +32,7 @@ along with ANSIFilter.  If not, see <http://www.gnu.org/licenses/>.
 namespace ansifilter
 {
 
-    
+
 /**
    \brief This class generates HTML.
 
@@ -60,31 +60,29 @@ protected:
     string getGeneratorComment();
 
     void insertLineNumber ();
-    
-    bool printDynamicStyleFile ( const string &outPath );
 
+    bool printDynamicStyleFile ( const string &outPath );
 
 private:
 
     string getOpenTag();
     string getCloseTag();
 
-    /** Print document header
-    */
+    /** Print document header */
     string getHeader();
 
-    /** Print document body*/
+    /** Print document body */
     void printBody();
 
-    /** Print document footer*/
+    /** Print document footer */
     string getFooter();
 
-    /** \return escaped character*/
+    /** \return escaped character */
     virtual string maskCharacter(unsigned char );
     virtual string maskCP437Character(unsigned char);
-    
-};
 
+    virtual string getHyperlink(string uri, string txt);
+};
 
 }
 
